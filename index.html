@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>CarSearchBuddy — Michigan Used Cars</title>
+    <meta name="description" content="Search hundreds of used cars across Michigan dealerships. Fast, free, no app download required.">
+
+    <!-- PWA / iOS Native Mimicry -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="CarSearch">
+    <meta name="theme-color" content="#0a0e1a">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Status Bar Spacer for PWA -->
+    <div class="safe-area-top"></div>
+
+    <!-- Header -->
+    <header id="app-header">
+        <div class="header-content">
+            <h1>🚗 CarSearchBuddy</h1>
+            <p class="subtitle">Michigan Used Cars</p>
+        </div>
+    </header>
+
+    <!-- Search & Filters -->
+    <section id="search-section">
+        <div class="search-bar">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input type="text" id="search-input" placeholder="Search make, model, dealer..." autocomplete="off">
+            <button id="clear-search" class="clear-btn" aria-label="Clear search">✕</button>
+        </div>
+        <div class="filter-row">
+            <select id="filter-make"><option value="">All Makes</option></select>
+            <select id="filter-year"><option value="">All Years</option></select>
+            <select id="filter-price"><option value="">Any Price</option>
+                <option value="0-10000">Under $10k</option>
+                <option value="10000-20000">$10k – $20k</option>
+                <option value="20000-30000">$20k – $30k</option>
+                <option value="30000-50000">$30k – $50k</option>
+                <option value="50000-999999">$50k+</option>
+            </select>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <div id="stats-bar">
+        <span id="results-count">Loading...</span>
+        <span id="last-updated"></span>
+    </div>
+
+    <!-- Vehicle List -->
+    <main id="vehicle-list"></main>
+
+    <!-- Empty State -->
+    <div id="empty-state" class="hidden">
+        <div class="empty-icon">🔍</div>
+        <p>No vehicles match your search.</p>
+        <button id="reset-filters" class="reset-btn">Reset Filters</button>
+    </div>
+
+    <!-- Loading State -->
+    <div id="loading-state">
+        <div class="loader"></div>
+        <p>Loading inventory...</p>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

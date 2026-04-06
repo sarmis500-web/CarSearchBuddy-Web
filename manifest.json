@@ -1,0 +1,18 @@
+{
+    "name": "CarSearchBuddy",
+    "short_name": "CarSearch",
+    "description": "Search hundreds of used cars across Michigan dealerships.",
+    "start_url": "./",
+    "display": "standalone",
+    "background_color": "#0a0e1a",
+    "theme_color": "#0a0e1a",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "apple-touch-icon.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
