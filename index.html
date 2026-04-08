@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>CarSearchBuddy — Michigan Used Cars</title>
-    <meta name="description" content="Search hundreds of used cars across Michigan dealerships. Fast, free, no app download required.">
+    <title>CarSearchBuddy</title>
+    <meta name="description" content="Search used cars and lease deals across Michigan dealerships. Fast, free, no app download required.">
 
     <!-- PWA / iOS Native Mimicry -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -28,53 +28,85 @@
     <!-- Header -->
     <header id="app-header">
         <div class="header-content">
-            <h1>🚗 CarSearchBuddy</h1>
-            <p class="subtitle">Michigan Used Cars</p>
+            <h1>CarSearchBuddy</h1>
+        </div>
+        <!-- Tab Bar -->
+        <div class="tab-bar">
+            <button class="tab active" data-tab="inventory">Inventory</button>
+            <button class="tab" data-tab="leases">Leases</button>
         </div>
     </header>
 
-    <!-- Search & Filters -->
-    <section id="search-section">
-        <div class="search-bar">
-            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-            </svg>
-            <input type="text" id="search-input" placeholder="Search make, model, dealer..." autocomplete="off">
-            <button id="clear-search" class="clear-btn" aria-label="Clear search">✕</button>
-        </div>
-        <div class="filter-row">
-            <select id="filter-make"><option value="">All Makes</option></select>
-            <select id="filter-year"><option value="">All Years</option></select>
-            <select id="filter-price"><option value="">Any Price</option>
-                <option value="0-10000">Under $10k</option>
-                <option value="10000-20000">$10k – $20k</option>
-                <option value="20000-30000">$20k – $30k</option>
-                <option value="30000-50000">$30k – $50k</option>
-                <option value="50000-999999">$50k+</option>
-            </select>
-        </div>
-    </section>
+    <!-- ====== INVENTORY TAB ====== -->
+    <div id="tab-inventory" class="tab-content active">
+        <!-- Search & Filters -->
+        <section id="search-section">
+            <div class="search-bar">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                </svg>
+                <input type="text" id="search-input" placeholder="Search make, model, dealer..." autocomplete="off">
+                <button id="clear-search" class="clear-btn" aria-label="Clear search">&#10005;</button>
+            </div>
+            <div class="filter-row">
+                <select id="filter-make"><option value="">All Makes</option></select>
+                <select id="filter-year"><option value="">All Years</option></select>
+                <select id="filter-price"><option value="">Any Price</option>
+                    <option value="0-10000">Under $10k</option>
+                    <option value="10000-20000">$10k - $20k</option>
+                    <option value="20000-30000">$20k - $30k</option>
+                    <option value="30000-50000">$30k - $50k</option>
+                    <option value="50000-999999">$50k+</option>
+                </select>
+            </div>
+        </section>
 
-    <!-- Stats Bar -->
-    <div id="stats-bar">
-        <span id="results-count">Loading...</span>
-        <span id="last-updated"></span>
+        <div id="stats-bar">
+            <span id="results-count">Loading...</span>
+            <span id="last-updated"></span>
+        </div>
+
+        <main id="vehicle-list"></main>
+
+        <div id="empty-state" class="hidden">
+            <div class="empty-icon">&#128269;</div>
+            <p>No vehicles match your search.</p>
+            <button id="reset-filters" class="reset-btn">Reset Filters</button>
+        </div>
     </div>
 
-    <!-- Vehicle List -->
-    <main id="vehicle-list"></main>
+    <!-- ====== LEASES TAB ====== -->
+    <div id="tab-leases" class="tab-content">
+        <!-- Lease Filters -->
+        <section id="lease-search-section">
+            <div class="filter-row">
+                <input type="text" id="lease-zip" placeholder="Your ZIP code" maxlength="5" inputmode="numeric" class="zip-input">
+                <select id="lease-filter-make"><option value="">All Makes</option></select>
+                <select id="lease-filter-body"><option value="">All Body Styles</option></select>
+            </div>
+            <div class="filter-row" style="margin-top:6px">
+                <label class="slider-label">Max Monthly: <span id="lease-max-label">$1,500</span></label>
+                <input type="range" id="lease-max-payment" min="100" max="1500" step="50" value="1500" class="range-slider">
+            </div>
+        </section>
 
-    <!-- Empty State -->
-    <div id="empty-state" class="hidden">
-        <div class="empty-icon">🔍</div>
-        <p>No vehicles match your search.</p>
-        <button id="reset-filters" class="reset-btn">Reset Filters</button>
+        <div id="lease-stats-bar">
+            <span id="lease-results-count">Loading...</span>
+        </div>
+
+        <main id="lease-list"></main>
+
+        <div id="lease-empty-state" class="hidden">
+            <div class="empty-icon">&#128269;</div>
+            <p>No lease offers match your filters.</p>
+            <button id="lease-reset-filters" class="reset-btn">Reset Filters</button>
+        </div>
     </div>
 
     <!-- Loading State -->
     <div id="loading-state">
         <div class="loader"></div>
-        <p>Loading inventory...</p>
+        <p>Loading data...</p>
     </div>
 
     <script src="app.js"></script>

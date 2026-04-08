@@ -1,0 +1,3140 @@
+{
+  "dealers_by_make": {
+    "Toyota": [
+      {
+        "name": "Bergeron Toyota",
+        "city": "Iron Mountain",
+        "state": "MI",
+        "lat": 45.8388014,
+        "lng": -88.05266999999999,
+        "phone": "(906) 774-2189",
+        "website": "http://www.bergerontoyota.net"
+      },
+      {
+        "name": "Crown Motors Toyota",
+        "city": "Holland",
+        "state": "MI",
+        "lat": 42.8026553,
+        "lng": -86.0597312,
+        "phone": "(616) 393-0400",
+        "website": "https://www.crownmotorstoyota.com"
+      },
+      {
+        "name": "Fernelius Toyota",
+        "city": "Cheboygan",
+        "state": "MI",
+        "lat": 45.622293899999995,
+        "lng": -84.4796556,
+        "phone": "(231) 627-5673",
+        "website": "https://www.ferneliustoyota.com"
+      },
+      {
+        "name": "Fox Toyota of Rochester Hills",
+        "city": "Rochester Hills",
+        "state": "MI",
+        "lat": 42.6694355,
+        "lng": -83.1325445,
+        "phone": "(947) 248-2033",
+        "website": "https://www.toyotabyfox.com"
+      },
+      {
+        "name": "Golling Toyota of Warren",
+        "city": "Warren",
+        "state": "MI",
+        "lat": 42.4926575,
+        "lng": -83.02712129999999,
+        "phone": "(586) 758-2000",
+        "website": "https://www.gollingtoyota.com"
+      },
+      {
+        "name": "Jim White Toyota",
+        "city": "Toledo",
+        "state": "OH",
+        "lat": 41.674931799999996,
+        "lng": -83.6882441,
+        "phone": "(888) 481-5036",
+        "website": "https://www.jimwhitetoyota.com"
+      },
+      {
+        "name": "Jordan Toyota",
+        "city": "Mishawaka",
+        "state": "IN",
+        "lat": 41.6736814,
+        "lng": -86.1703945,
+        "phone": "(877) 447-5859",
+        "website": "https://www.jordantoyota.com"
+      },
+      {
+        "name": "Kool Toyota",
+        "city": "Grand Rapids",
+        "state": "MI",
+        "lat": 43.031284,
+        "lng": -85.62599259999999,
+        "phone": "(616) 364-9700",
+        "website": "https://www.kooltoyota.com"
+      },
+      {
+        "name": "LaFontaine Toyota",
+        "city": "Dearborn",
+        "state": "MI",
+        "lat": 42.2962649,
+        "lng": -83.2708826,
+        "phone": "(313) 217-3338",
+        "website": "https://www.lafontainetoyota.com"
+      },
+      {
+        "name": "Labadie Toyota",
+        "city": "Bay City",
+        "state": "MI",
+        "lat": 43.6134084,
+        "lng": -83.9156285,
+        "phone": "(855) 664-1514",
+        "website": "https://www.labadietoyota.com"
+      },
+      {
+        "name": "Matick Toyota",
+        "city": "Macomb",
+        "state": "MI",
+        "lat": 42.6311082,
+        "lng": -82.87082889999999,
+        "phone": "(586) 701-7277",
+        "website": "https://www.maticktoyota.com"
+      },
+      {
+        "name": "Metro Toyota",
+        "city": "Kalamazoo",
+        "state": "MI",
+        "lat": 42.2671998,
+        "lng": -85.6651199,
+        "phone": "(269) 375-1000",
+        "website": "https://www.metro-toyota.com"
+      },
+      {
+        "name": "Page Toyota",
+        "city": "Southfield",
+        "state": "MI",
+        "lat": 42.4471918,
+        "lng": -83.27716000000001,
+        "phone": "(248) 352-8580",
+        "website": "https://www.pagetoyota.com"
+      },
+      {
+        "name": "Randy Wise Toyota",
+        "city": "Grand Blanc",
+        "state": "MI",
+        "lat": 42.905246299999995,
+        "lng": -83.6293675,
+        "phone": "(810) 344-9600",
+        "website": "https://www.randywisetoyota.com"
+      },
+      {
+        "name": "Riverside Toyota in Marquette",
+        "city": "Marquette",
+        "state": "MI",
+        "lat": 46.5503013,
+        "lng": -87.4616329,
+        "phone": "(906) 228-4900",
+        "website": "https://www.riversidetoyotamarquette.com"
+      },
+      {
+        "name": "Serra Toyota of Saginaw",
+        "city": "Saginaw",
+        "state": "MI",
+        "lat": 43.469817,
+        "lng": -83.974293,
+        "phone": "(989) 790-2929",
+        "website": "https://www.serratoyotasaginaw.com"
+      },
+      {
+        "name": "Serra Toyota of Traverse City",
+        "city": "Traverse City",
+        "state": "MI",
+        "lat": 44.7436589,
+        "lng": -85.5962011,
+        "phone": "(231) 486-0884",
+        "website": "https://www.serratoyotatraversecity.com"
+      },
+      {
+        "name": "Suburban Toyota of Troy",
+        "city": "Troy",
+        "state": "MI",
+        "lat": 42.5479505,
+        "lng": -83.1790936,
+        "phone": "(947) 447-2989",
+        "website": "https://www.suburbantoyotaoftroy.com"
+      },
+      {
+        "name": "Toyota of Grand Rapids",
+        "city": "Grand Rapids",
+        "state": "MI",
+        "lat": 42.91311090000001,
+        "lng": -85.6035821,
+        "phone": "(616) 333-6559",
+        "website": "https://www.toyotaofgrandrapids.com"
+      },
+      {
+        "name": "Victory Toyota of Canton",
+        "city": "Canton Township",
+        "state": "MI",
+        "lat": 42.2703597,
+        "lng": -83.4958559,
+        "phone": "(833) 283-6965",
+        "website": "https://www.victorytoyotacanton.com"
+      }
+    ],
+    "Honda": [
+      {
+        "name": "Basney Honda",
+        "city": "Mishawaka",
+        "state": "IN",
+        "lat": 41.695462000000006,
+        "lng": -86.186391,
+        "phone": "(574) 256-5550",
+        "website": "http://basneyhonda.com"
+      },
+      {
+        "name": "Betten Honda",
+        "city": "Muskegon",
+        "state": "MI",
+        "lat": 43.2067951,
+        "lng": -86.26380619999999,
+        "phone": "(231) 571-1395",
+        "website": "https://www.bettenbakerhonda.com"
+      },
+      {
+        "name": "Brown Honda",
+        "city": "Toledo",
+        "state": "OH",
+        "lat": 41.6757017,
+        "lng": -83.6771406,
+        "phone": "(419) 841-2222",
+        "website": "https://brownhonda.com"
+      },
+      {
+        "name": "Capital Honda",
+        "city": "Okemos",
+        "state": "MI",
+        "lat": 42.6820454,
+        "lng": -84.44819799999999,
+        "phone": "(517) 337-8383",
+        "website": "https://www.capital-honda.com"
+      },
+      {
+        "name": "Cawood Honda",
+        "city": "Port Huron",
+        "state": "MI",
+        "lat": 43.0011362,
+        "lng": -82.4375496,
+        "phone": "(810) 987-3030",
+        "website": "https://www.cawoodauto.com"
+      },
+      {
+        "name": "Crown Motors Honda",
+        "city": "Holland",
+        "state": "MI",
+        "lat": 42.7459687,
+        "lng": -86.1141784,
+        "phone": "(616) 396-5268",
+        "website": "https://www.crownhondami.com"
+      },
+      {
+        "name": "Fox Honda",
+        "city": "Grand Rapids",
+        "state": "MI",
+        "lat": 42.908550299999995,
+        "lng": -85.581536,
+        "phone": "(616) 956-0000",
+        "website": "https://www.foxhonda.com"
+      },
+      {
+        "name": "Germain Honda of Ann Arbor",
+        "city": "Ann Arbor",
+        "state": "MI",
+        "lat": 42.248653,
+        "lng": -83.73853799999999,
+        "phone": "(734) 470-2009",
+        "website": "https://www.germainhonda-annarbor.com"
+      },
+      {
+        "name": "Great Lakes Honda",
+        "city": "Sault Ste. Marie",
+        "state": "ON",
+        "lat": 46.5186626,
+        "lng": -84.3199887,
+        "phone": "(705) 910-0246",
+        "website": "http://www.greatlakeshonda.com"
+      },
+      {
+        "name": "Gurley Leep Honda",
+        "city": "Elkhart",
+        "state": "IN",
+        "lat": 41.7176015,
+        "lng": -85.9737244,
+        "phone": "(574) 522-2000",
+        "website": "https://www.gurleyleephonda.com"
+      },
+      {
+        "name": "Harbor Town Honda & Polaris",
+        "city": "Manitowoc",
+        "state": "WI",
+        "lat": 44.069225599999996,
+        "lng": -87.7102587,
+        "phone": "(920) 684-0237",
+        "website": "http://www.harbortownpolaris.com"
+      },
+      {
+        "name": "Honda of Grand Blanc",
+        "city": "Grand Blanc",
+        "state": "MI",
+        "lat": 42.9351145,
+        "lng": -83.6381297,
+        "phone": "(810) 209-3941",
+        "website": "https://www.hondaofgrandblanc.com"
+      },
+      {
+        "name": "Jeffrey Honda",
+        "city": "Roseville",
+        "state": "MI",
+        "lat": 42.523058,
+        "lng": -82.9183365,
+        "phone": "(586) 510-1362",
+        "website": "https://www.jeffreyhonda.com"
+      },
+      {
+        "name": "Jim Riehl's Friendly Honda",
+        "city": "Clinton Township",
+        "state": "MI",
+        "lat": 42.6273488,
+        "lng": -82.93399389999999,
+        "phone": "(586) 412-9600",
+        "website": "https://www.friendlyhonda.com"
+      },
+      {
+        "name": "LaFontaine Honda Dearborn",
+        "city": "Dearborn",
+        "state": "MI",
+        "lat": 42.295094999999996,
+        "lng": -83.27058679999999,
+        "phone": "(313) 769-2763",
+        "website": "https://www.lafontainehonda.com"
+      },
+      {
+        "name": "Page Honda of Bloomfield",
+        "city": "Bloomfield Hills",
+        "state": "MI",
+        "lat": 42.613828399999996,
+        "lng": -83.3078791,
+        "phone": "(248) 333-3200",
+        "website": "https://www.pagehondabloomfield.com"
+      },
+      {
+        "name": "Pure Honda Ferndale",
+        "city": "Ferndale",
+        "state": "MI",
+        "lat": 42.448889,
+        "lng": -83.125946,
+        "phone": "(248) 251-0901",
+        "website": "http://www.purehondami.com"
+      },
+      {
+        "name": "Riverside Honda in Marquette",
+        "city": "Marquette",
+        "state": "MI",
+        "lat": 46.5503013,
+        "lng": -87.4616329,
+        "phone": "(888) 809-6642",
+        "website": "https://www.riversidehondamarquette.com"
+      },
+      {
+        "name": "Serra Honda Brighton",
+        "city": "Brighton",
+        "state": "MI",
+        "lat": 42.5501455,
+        "lng": -83.79041980000001,
+        "phone": "(810) 494-6100",
+        "website": "https://www.serrahondabrighton.com"
+      },
+      {
+        "name": "Southgate Honda",
+        "city": "Southgate",
+        "state": "MI",
+        "lat": 42.1997222,
+        "lng": -83.2069444,
+        "phone": "(734) 283-2600",
+        "website": "https://www.southgatehonda.com"
+      },
+      {
+        "name": "Southgate Honda Powersports",
+        "city": "Southgate",
+        "state": "MI",
+        "lat": 42.1995152,
+        "lng": -83.20744780000001,
+        "phone": "(734) 374-7346",
+        "website": "https://www.southgatehondapowersports.com"
+      },
+      {
+        "name": "Suburban Honda",
+        "city": "Farmington Hills",
+        "state": "MI",
+        "lat": 42.476455699999995,
+        "lng": -83.43423299999999,
+        "phone": "(947) 254-0045",
+        "website": "https://www.suburbanhonda.com"
+      },
+      {
+        "name": "Tamaroff Honda",
+        "city": "Southfield",
+        "state": "MI",
+        "lat": 42.4980835,
+        "lng": -83.2857545,
+        "phone": "(248) 327-4881",
+        "website": "https://tamaroffhonda.com"
+      },
+      {
+        "name": "Tyler Honda",
+        "city": "Stevensville",
+        "state": "MI",
+        "lat": 42.038503600000006,
+        "lng": -86.5153658,
+        "phone": "(269) 926-6181",
+        "website": "https://www.tylershonda.com"
+      },
+      {
+        "name": "Victory Honda",
+        "city": "Monroe",
+        "state": "MI",
+        "lat": 41.939371699999995,
+        "lng": -83.3892177,
+        "phone": "(734) 344-5647",
+        "website": "https://www.victorymonroe.com"
+      },
+      {
+        "name": "Victory Honda of Plymouth",
+        "city": "Plymouth",
+        "state": "MI",
+        "lat": 42.35829890000001,
+        "lng": -83.463855,
+        "phone": "(734) 720-1520",
+        "website": "https://www.victoryplymouth.com"
+      },
+      {
+        "name": "Williams Honda",
+        "city": "Traverse City",
+        "state": "MI",
+        "lat": 44.7267125,
+        "lng": -85.6446939,
+        "phone": "(231) 928-5472",
+        "website": "http://williamshonda.com"
+      },
+      {
+        "name": "Zeigler Honda",
+        "city": "Kalamazoo",
+        "state": "MI",
+        "lat": 42.2698965,
+        "lng": -85.6410334,
+        "phone": "(269) 375-4500",
+        "website": "https://www.zeiglerhondakalamazoo.com"
+      }
+    ],
+    "Hyundai": [
+      {
+        "name": "Betten Hyundai Muskegon",
+        "city": "Muskegon",
+        "state": "MI",
+        "lat": 43.207797299999996,
+        "lng": -86.26422319999999,
+        "phone": "(231) 759-5900",
+        "website": "https://www.bettenhyundai.com"
+      },
+      {
+        "name": "Elder Hyundai",
+        "city": "Macomb",
+        "state": "MI",
+        "lat": 42.629336099999996,
+        "lng": -82.932028,
+        "phone": "(586) 838-1667",
+        "website": "http://www.elderhyundai.com"
+      },
+      {
+        "name": "Feldman Hyundai of New Hudson",
+        "city": "New Hudson",
+        "state": "MI",
+        "lat": 42.5161154,
+        "lng": -83.609073,
+        "phone": "(248) 292-3963",
+        "website": "https://www.feldmanhyundai.com"
+      },
+      {
+        "name": "Fernelius Hyundai",
+        "city": "Sault Ste. Marie",
+        "state": "MI",
+        "lat": 46.4634758,
+        "lng": -84.35532549999999,
+        "phone": "(906) 632-3300",
+        "website": "https://www.ferneliushyundai.com"
+      },
+      {
+        "name": "Fox Hyundai",
+        "city": "Kentwood",
+        "state": "MI",
+        "lat": 42.9136119,
+        "lng": -85.5652303,
+        "phone": "(616) 942-5000",
+        "website": "http://www.foxhyundaiusa.com"
+      },
+      {
+        "name": "Garber Hyundai",
+        "city": "Saginaw",
+        "state": "MI",
+        "lat": 43.4867181,
+        "lng": -83.97355209999999,
+        "phone": "(989) 783-9503",
+        "website": "https://www.garberhyundai.com"
+      },
+      {
+        "name": "Hyundai of Goshen",
+        "city": "Goshen",
+        "state": "IN",
+        "lat": 41.6105084,
+        "lng": -85.8824313,
+        "phone": "(574) 875-5106",
+        "website": "https://www.goshenhyundai.com"
+      },
+      {
+        "name": "LaFontaine Hyundai Dearborn",
+        "city": "Dearborn",
+        "state": "MI",
+        "lat": 42.2894948,
+        "lng": -83.2705032,
+        "phone": "(313) 996-6080",
+        "website": "https://www.detroithyundai.com"
+      },
+      {
+        "name": "Randy Wise Hyundai",
+        "city": "Flint",
+        "state": "MI",
+        "lat": 42.9882518,
+        "lng": -83.7659753,
+        "phone": "(810) 230-2500",
+        "website": "https://www.randywisehyundai.com"
+      },
+      {
+        "name": "Serra Hyundai Traverse City",
+        "city": "Traverse City",
+        "state": "MI",
+        "lat": 44.7371777,
+        "lng": -85.5945806,
+        "phone": "(231) 932-6240",
+        "website": "https://www.serrahyundaitraversecity.com"
+      },
+      {
+        "name": "Williams Hyundai",
+        "city": "Lansing",
+        "state": "MI",
+        "lat": 42.74208960000001,
+        "lng": -84.51090719999999,
+        "phone": "(517) 484-1341",
+        "website": "https://www.lansinghyundai.com"
+      },
+      {
+        "name": "Zeigler Hyundai of Holland",
+        "city": "Holland",
+        "state": "MI",
+        "lat": 42.7989672,
+        "lng": -86.0726066,
+        "phone": "(616) 392-8516",
+        "website": "https://www.zeiglerhyundaiofholland.com"
+      }
+    ],
+    "Ford": [
+      {
+        "name": "Albion Motors Ford, Inc.",
+        "city": "Albion",
+        "state": "MI",
+        "lat": 42.2600544,
+        "lng": -84.7574252,
+        "phone": "(517) 594-4879",
+        "website": "https://www.albionmotorsford.com"
+      },
+      {
+        "name": "Alma Ford",
+        "city": "Alma",
+        "state": "MI",
+        "lat": 43.4073588,
+        "lng": -84.6473402,
+        "phone": "(989) 681-5776",
+        "website": "https://www.jimnavarreford.com"
+      },
+      {
+        "name": "Atchinson Ford Sales, Inc.",
+        "city": "Belleville",
+        "state": "MI",
+        "lat": 42.2309215,
+        "lng": -83.48673289999999,
+        "phone": "(734) 697-9161",
+        "website": "https://www.atchinson.net"
+      },
+      {
+        "name": "Auto Park Ford",
+        "city": "Sturgis",
+        "state": "MI",
+        "lat": 41.7794861,
+        "lng": -85.42752949999999,
+        "phone": "(269) 651-7728",
+        "website": "https://www.autopark-fords.com"
+      },
+      {
+        "name": "Baker Ford Coopersville",
+        "city": "Coopersville",
+        "state": "MI",
+        "lat": 43.054229,
+        "lng": -85.950485,
+        "phone": "(616) 837-3930",
+        "website": "https://www.bakerfordcoopersville.com"
+      },
+      {
+        "name": "Barber Ford",
+        "city": "Holland",
+        "state": "MI",
+        "lat": 42.7897033,
+        "lng": -86.07947539999999,
+        "phone": "(616) 396-2361",
+        "website": "https://www.barberford.net"
+      },
+      {
+        "name": "Big Valley Ford, Inc.",
+        "city": "Ewen",
+        "state": "MI",
+        "lat": 46.5349645,
+        "lng": -89.2830213,
+        "phone": "(906) 988-2323",
+        "website": "https://www.bigvalleyfordewen.com"
+      },
+      {
+        "name": "Bill Brown Ford",
+        "city": "Livonia",
+        "state": "MI",
+        "lat": 42.368814199999996,
+        "lng": -83.36177789999999,
+        "phone": "(734) 399-4244",
+        "website": "https://www.billbrownford.net"
+      },
+      {
+        "name": "Bob Mathers Ford",
+        "city": "Boyne City",
+        "state": "MI",
+        "lat": 45.2133312,
+        "lng": -85.0122313,
+        "phone": "(231) 582-6543",
+        "website": "https://www.bobmathersford.com"
+      },
+      {
+        "name": "Bob Maxey Ford",
+        "city": "Detroit",
+        "state": "MI",
+        "lat": 42.335854999999995,
+        "lng": -83.029066,
+        "phone": "(313) 392-9200",
+        "website": "https://www.bobmaxeyfordinc.com"
+      },
+      {
+        "name": "Bob Maxey Ford in Fowlerville",
+        "city": "Fowlerville",
+        "state": "MI",
+        "lat": 42.6453971,
+        "lng": -84.0734939,
+        "phone": "(517) 223-7777",
+        "website": "https://www.bobmaxeyfordinfowlerville.com"
+      },
+      {
+        "name": "Bob Maxey Ford of Howell",
+        "city": "Howell",
+        "state": "MI",
+        "lat": 42.595534199999996,
+        "lng": -83.89938120000001,
+        "phone": "(517) 545-5700",
+        "website": "https://www.bobmaxeyfordofhowell.net"
+      },
+      {
+        "name": "Borgman Ford",
+        "city": "Grandville",
+        "state": "MI",
+        "lat": 42.912757899999995,
+        "lng": -85.74255800000002,
+        "phone": "(616) 534-7651",
+        "website": "https://www.borgmanford.com"
+      },
+      {
+        "name": "Briarwood Ford",
+        "city": "Saline",
+        "state": "MI",
+        "lat": 42.185832999999995,
+        "lng": -83.7403021,
+        "phone": "(734) 429-5478",
+        "website": "https://www.briarwoodford.com"
+      },
+      {
+        "name": "Brighton Ford",
+        "city": "Brighton",
+        "state": "MI",
+        "lat": 42.5518143,
+        "lng": -83.7918874,
+        "phone": "(810) 227-1171",
+        "website": "https://www.brightonford.com"
+      },
+      {
+        "name": "Brondes Ford Maumee",
+        "city": "Maumee",
+        "state": "OH",
+        "lat": 41.5831306,
+        "lng": -83.6881918,
+        "phone": "(419) 482-1871",
+        "website": "https://www.brondesfordmaumee.com"
+      },
+      {
+        "name": "Brondes Ford Toledo",
+        "city": "Toledo",
+        "state": "OH",
+        "lat": 41.716557099999996,
+        "lng": -83.625365,
+        "phone": "(419) 597-5018",
+        "website": "https://www.brondesfordtoledo.com"
+      },
+      {
+        "name": "Burt Watson Ford Pinconning",
+        "city": "Pinconning",
+        "state": "MI",
+        "lat": 43.8397897,
+        "lng": -83.9655791,
+        "phone": "(989) 879-2861",
+        "website": "https://www.burtwatsonford.com"
+      },
+      {
+        "name": "C. Wimberley Ford, Inc.",
+        "city": "Dowagiac",
+        "state": "MI",
+        "lat": 41.9827778,
+        "lng": -86.1244444,
+        "phone": "(269) 782-2151",
+        "website": "https://www.cwimberleyford.com"
+      },
+      {
+        "name": "Candy Ford, Inc.",
+        "city": "Charlotte",
+        "state": "MI",
+        "lat": 42.5698108,
+        "lng": -84.82618699999999,
+        "phone": "(888) 442-2639",
+        "website": "http://www.candyford.net"
+      },
+      {
+        "name": "Chuck Renze Ford, LLC",
+        "city": "Manistique",
+        "state": "MI",
+        "lat": 45.9485931,
+        "lng": -86.2315902,
+        "phone": "(906) 341-2124",
+        "website": "https://www.chuckrenzeford.net"
+      },
+      {
+        "name": "Cole Ford, LLC",
+        "city": "Coldwater",
+        "state": "MI",
+        "lat": 41.9370969,
+        "lng": -84.9842731,
+        "phone": "(517) 278-5661",
+        "website": "https://www.colefordlincoln.com"
+      },
+      {
+        "name": "Copper Country Ford, Inc.",
+        "city": "Houghton",
+        "state": "MI",
+        "lat": 47.1033453,
+        "lng": -88.5952655,
+        "phone": "(906) 482-1800",
+        "website": "https://www.coppercountryfordhoughton.com"
+      },
+      {
+        "name": "Crest Ford Flat Rock",
+        "city": "Flat Rock",
+        "state": "MI",
+        "lat": 42.0943921,
+        "lng": -83.2523042,
+        "phone": "(866) 360-4460",
+        "website": "https://www.crestfordflatrock.com"
+      },
+      {
+        "name": "Crest Ford in Center Line",
+        "city": "Center Line",
+        "state": "MI",
+        "lat": 42.4871516,
+        "lng": -83.02864249999999,
+        "phone": "(888) 388-5352",
+        "website": "https://www.crestfordcenterline.com"
+      },
+      {
+        "name": "DeNooyer Ford",
+        "city": "Vicksburg",
+        "state": "MI",
+        "lat": 42.1206878,
+        "lng": -85.5683597,
+        "phone": "(269) 649-1022",
+        "website": "https://www.denooyerford.net"
+      },
+      {
+        "name": "Dean Arbour Ford of Alpena",
+        "city": "Alpena",
+        "state": "MI",
+        "lat": 45.081764199999995,
+        "lng": -83.4557495,
+        "phone": "(888) 232-8051",
+        "website": "https://www.deanarbouralpena.com"
+      },
+      {
+        "name": "Dean Arbour Ford of West Branch, Inc.",
+        "city": "West Branch",
+        "state": "MI",
+        "lat": 44.2777767,
+        "lng": -84.2625666,
+        "phone": "(989) 345-1590",
+        "website": "https://www.deanarbourford.com"
+      },
+      {
+        "name": "Dorian Ford",
+        "city": "Clinton Township",
+        "state": "MI",
+        "lat": 42.5612346,
+        "lng": -82.8946818,
+        "phone": "(586) 792-4100",
+        "website": "https://www.dorianford.com"
+      },
+      {
+        "name": "Dorrance Ford, Inc.",
+        "city": "Galesburg",
+        "state": "MI",
+        "lat": 42.2753957,
+        "lng": -85.42638219999999,
+        "phone": "(269) 665-7015",
+        "website": "https://www.dorrancefordgalesburg.com"
+      },
+      {
+        "name": "Eby Ford",
+        "city": "Goshen",
+        "state": "IN",
+        "lat": 41.6055667,
+        "lng": -85.8748081,
+        "phone": "(574) 500-9302",
+        "website": "https://www.ebyford.com"
+      },
+      {
+        "name": "Ed Koehn Ford of Greenville",
+        "city": "Greenville",
+        "state": "MI",
+        "lat": 43.178118999999995,
+        "lng": -85.294518,
+        "phone": "(616) 754-4689",
+        "website": "https://www.edkoehn.net"
+      },
+      {
+        "name": "Feeny Ford of Grayling, Inc.",
+        "city": "Grayling",
+        "state": "MI",
+        "lat": 44.6575473,
+        "lng": -84.710359,
+        "phone": "(989) 348-3242",
+        "website": "https://www.feenyford.com"
+      },
+      {
+        "name": "Fernelius Ford",
+        "city": "Cheboygan",
+        "state": "MI",
+        "lat": 45.611224,
+        "lng": -84.47472400000001,
+        "phone": "(844) 327-8314",
+        "website": "https://www.ferneliusford.com"
+      },
+      {
+        "name": "Fox Ford",
+        "city": "Kentwood",
+        "state": "MI",
+        "lat": 42.9100411,
+        "lng": -85.57932629999999,
+        "phone": "(616) 956-5511",
+        "website": "https://www.foxfordusa.com"
+      },
+      {
+        "name": "Fox Ford of Cadillac",
+        "city": "Cadillac",
+        "state": "MI",
+        "lat": 44.271381299999994,
+        "lng": -85.4042875,
+        "phone": "(231) 266-3870",
+        "website": "https://www.foxfordofcadillac.com"
+      },
+      {
+        "name": "Fox Grand Traverse Ford",
+        "city": "Traverse City",
+        "state": "MI",
+        "lat": 44.7369294,
+        "lng": -85.6444704,
+        "phone": "(231) 729-6879",
+        "website": "https://www.fgtford.com"
+      },
+      {
+        "name": "Fox Marquette Ford",
+        "city": "Marquette",
+        "state": "MI",
+        "lat": 46.5462712,
+        "lng": -87.47623809999999,
+        "phone": "(906) 226-1600",
+        "website": "https://www.foxmarquetteford.com"
+      },
+      {
+        "name": "Fremont Ford, Inc.",
+        "city": "Fremont",
+        "state": "MI",
+        "lat": 43.466666700000005,
+        "lng": -85.97749999999999,
+        "phone": "(231) 924-3200",
+        "website": "https://www.fremontford.net"
+      },
+      {
+        "name": "Friendly Ford",
+        "city": "Monroe",
+        "state": "MI",
+        "lat": 41.9594088,
+        "lng": -83.3930204,
+        "phone": "(734) 415-2080",
+        "website": "http://www.yourfriendlyford.com"
+      },
+      {
+        "name": "Garber Ford Bay City",
+        "city": "Bay City",
+        "state": "MI",
+        "lat": 43.624455999999995,
+        "lng": -83.9152842,
+        "phone": "(989) 287-7650",
+        "website": "https://www.garberfordbaycity.com"
+      },
+      {
+        "name": "Gene Butman Ford",
+        "city": "Ypsilanti",
+        "state": "MI",
+        "lat": 42.2480647,
+        "lng": -83.6455448,
+        "phone": "(734) 544-2800",
+        "website": "https://www.butmanford.com"
+      },
+      {
+        "name": "George Ordus Ford - Used Car Lot",
+        "city": "Bad Axe",
+        "state": "MI",
+        "lat": 43.8014663,
+        "lng": -83.0205058,
+        "phone": "(989) 269-8472",
+        "website": "http://www.ordus.com"
+      },
+      {
+        "name": "Gorno Ford",
+        "city": "Woodhaven",
+        "state": "MI",
+        "lat": 42.1471741,
+        "lng": -83.225327,
+        "phone": "(734) 676-2200",
+        "website": "https://www.gornoford.com"
+      },
+      {
+        "name": "Great Lakes Ford of Muskegon",
+        "city": "Muskegon",
+        "state": "MI",
+        "lat": 43.2336711,
+        "lng": -86.1824613,
+        "phone": "(231) 777-2750",
+        "website": "https://www.greatlakesfordofmuskegon.net"
+      },
+      {
+        "name": "Gurley Leep Ford",
+        "city": "South Bend",
+        "state": "IN",
+        "lat": 41.6285891,
+        "lng": -86.2463381,
+        "phone": "(574) 465-7379",
+        "website": "https://www.gurleyleepford.com"
+      },
+      {
+        "name": "Hart Ford, Inc.",
+        "city": "Roscommon",
+        "state": "MI",
+        "lat": 44.488166799999995,
+        "lng": -84.5978164,
+        "phone": "(989) 275-8922",
+        "website": "https://www.hartfl.net"
+      },
+      {
+        "name": "Highland Ford",
+        "city": "Sault Ste. Marie",
+        "state": "ON",
+        "lat": 46.526651799999996,
+        "lng": -84.31845109999999,
+        "phone": "(705) 759-5050",
+        "website": "https://highlandford.com"
+      },
+      {
+        "name": "Hines Park Ford",
+        "city": "New Hudson",
+        "state": "MI",
+        "lat": 42.5211213,
+        "lng": -83.6109791,
+        "phone": "(248) 437-6700",
+        "website": "https://www.hinesparkfordinc.com"
+      },
+      {
+        "name": "Imlay City Ford, Inc.",
+        "city": "Imlay City",
+        "state": "MI",
+        "lat": 43.0130996,
+        "lng": -83.072525,
+        "phone": "(810) 642-5900",
+        "website": "https://www.imlaycityfordsales.com"
+      },
+      {
+        "name": "Jim Riehl's Friendly Ford",
+        "city": "Charlevoix",
+        "state": "MI",
+        "lat": 45.3014534,
+        "lng": -85.27704949999999,
+        "phone": "(231) 547-4401",
+        "website": "https://www.jimriehlfriendlyford.com"
+      },
+      {
+        "name": "Joe Ricci's Ordus Ford, LLC",
+        "city": "Bad Axe",
+        "state": "MI",
+        "lat": 43.8012455,
+        "lng": -83.0008012,
+        "phone": "(989) 269-9245",
+        "website": "https://www.foraford.com"
+      },
+      {
+        "name": "Jordan Ford",
+        "city": "Mishawaka",
+        "state": "IN",
+        "lat": 41.672376,
+        "lng": -86.17333649999999,
+        "phone": "(574) 259-1981",
+        "website": "https://www.jordanfordauto.net"
+      },
+      {
+        "name": "Ken Knapp Ford",
+        "city": "Essex",
+        "state": "ON",
+        "lat": 42.183410599999995,
+        "lng": -82.83341879999999,
+        "phone": "(519) 776-6447",
+        "website": "http://www.kenknappford.com"
+      },
+      {
+        "name": "Krapohl Ford",
+        "city": "Mt Pleasant",
+        "state": "MI",
+        "lat": 43.6123313,
+        "lng": -84.7591171,
+        "phone": "(989) 772-2991",
+        "website": "https://www.krapohlford.com"
+      },
+      {
+        "name": "Krapohl Ford & Lincoln",
+        "city": "Mt Pleasant",
+        "state": "MI",
+        "lat": 43.6123908,
+        "lng": -84.7588937,
+        "phone": "(989) 772-2991",
+        "website": "http://www.krapohl.com"
+      },
+      {
+        "name": "LaFontaine Ford Birch Run",
+        "city": "Birch Run",
+        "state": "MI",
+        "lat": 43.2544855,
+        "lng": -83.781342,
+        "phone": "(833) 941-0291",
+        "website": "https://www.lafontainefordbirchrun.com"
+      },
+      {
+        "name": "LaFontaine Ford Grand Blanc",
+        "city": "Flint",
+        "state": "MI",
+        "lat": 42.942954199999996,
+        "lng": -83.7214068,
+        "phone": "(810) 487-6502",
+        "website": "https://www.lafontaineford.com"
+      },
+      {
+        "name": "LaFontaine Ford Grand Rapids",
+        "city": "Grand Rapids",
+        "state": "MI",
+        "lat": 43.0251999,
+        "lng": -85.69048579999999,
+        "phone": "(616) 320-5167",
+        "website": "https://www.lafontainefordgrandrapids.com"
+      },
+      {
+        "name": "LaFontaine Ford Lansing",
+        "city": "Lansing",
+        "state": "MI",
+        "lat": 42.6724737,
+        "lng": -84.5376344,
+        "phone": "(517) 394-7000",
+        "website": "https://www.lafontainefordlansing.com"
+      },
+      {
+        "name": "LaFontaine Ford St. Clair",
+        "city": "St Clair",
+        "state": "MI",
+        "lat": 42.817858799999996,
+        "lng": -82.5045556,
+        "phone": "(810) 637-1224",
+        "website": "https://www.lafontainefordstclair.com"
+      },
+      {
+        "name": "Les Stanford Buick GMC",
+        "city": "Ferndale",
+        "state": "MI",
+        "lat": 42.4532862,
+        "lng": -83.1289804,
+        "phone": "(248) 658-8655",
+        "website": "https://www.lesstanfordbuickgmc.com"
+      },
+      {
+        "name": "Les Stanford Chevrolet",
+        "city": "Dearborn",
+        "state": "MI",
+        "lat": 42.307245099999996,
+        "lng": -83.24169390000002,
+        "phone": "(313) 444-7537",
+        "website": "https://www.lesstanfordchevrolet.com"
+      },
+      {
+        "name": "Maverick Ford",
+        "city": "Gladwin",
+        "state": "MI",
+        "lat": 43.9804828,
+        "lng": -84.5070361,
+        "phone": "(989) 426-9218",
+        "website": "https://www.maverickford.com"
+      },
+      {
+        "name": "McDonald Ford",
+        "city": "Freeland",
+        "state": "MI",
+        "lat": 43.5073808,
+        "lng": -84.1132511,
+        "phone": "(989) 695-5566",
+        "website": "https://www.mcdonaldford.com"
+      },
+      {
+        "name": "Midland Ford",
+        "city": "Midland",
+        "state": "MI",
+        "lat": 43.6592079,
+        "lng": -84.23123199999999,
+        "phone": "(989) 631-0040",
+        "website": "https://www.midlandford.com"
+      },
+      {
+        "name": "Milnes Ford, Inc.",
+        "city": "Lapeer",
+        "state": "MI",
+        "lat": 43.0515812,
+        "lng": -83.30193899999999,
+        "phone": "(810) 667-5000",
+        "website": "https://www.milnesfordoflapeer.com"
+      },
+      {
+        "name": "Mission Ford of Dearborn",
+        "city": "Dearborn",
+        "state": "MI",
+        "lat": 42.3190423,
+        "lng": -83.1862183,
+        "phone": "(313) 846-5000",
+        "website": "http://www.missionfordofdearborn.com"
+      },
+      {
+        "name": "Morrie's Grand Ledge Ford",
+        "city": "Grand Ledge",
+        "state": "MI",
+        "lat": 42.7399139,
+        "lng": -84.7189257,
+        "phone": "(517) 627-2168",
+        "website": "https://www.grandledgeford.com"
+      },
+      {
+        "name": "Morrie's Okemos Ford",
+        "city": "Okemos",
+        "state": "MI",
+        "lat": 42.7203477,
+        "lng": -84.4152148,
+        "phone": "(888) 392-4920",
+        "website": "https://www.morriesokemosford.com"
+      },
+      {
+        "name": "Northgate Ford, Inc.",
+        "city": "Port Huron",
+        "state": "MI",
+        "lat": 43.0174734,
+        "lng": -82.45056439999999,
+        "phone": "(810) 984-5011",
+        "website": "https://www.northgatefordporthuron.com"
+      },
+      {
+        "name": "Northwoods Ford",
+        "city": "Minocqua",
+        "state": "WI",
+        "lat": 45.8884148,
+        "lng": -89.7105041,
+        "phone": "(715) 356-3242",
+        "website": "https://www.northwoodsford.com"
+      },
+      {
+        "name": "Northwoods Ford",
+        "city": "Minocqua",
+        "state": "WI",
+        "lat": 45.888427899999996,
+        "lng": -89.7110398,
+        "phone": "(715) 356-3242",
+        "website": "http://www.northwoodsford.com"
+      },
+      {
+        "name": "Pat Milliken Ford",
+        "city": "Redford Township",
+        "state": "MI",
+        "lat": 42.366299999999995,
+        "lng": -83.27485999999999,
+        "phone": "(313) 246-8351",
+        "website": "http://patmillikenford.com"
+      },
+      {
+        "name": "Pauli Ford",
+        "city": "St Johns",
+        "state": "MI",
+        "lat": 42.9809865,
+        "lng": -84.5442897,
+        "phone": "(989) 224-6711",
+        "website": "https://www.pauliford.com"
+      },
+      {
+        "name": "Preferred Ford",
+        "city": "Grand Haven",
+        "state": "MI",
+        "lat": 43.04813000000001,
+        "lng": -86.22155760000001,
+        "phone": "(616) 333-6583",
+        "website": "https://www.preferredford.com"
+      },
+      {
+        "name": "Randy Wise Ford, Inc.",
+        "city": "Ortonville",
+        "state": "MI",
+        "lat": 42.8367241,
+        "lng": -83.4481701,
+        "phone": "(248) 627-3730",
+        "website": "https://www.randywiseford.net"
+      },
+      {
+        "name": "Richardson Ford",
+        "city": "Standish",
+        "state": "MI",
+        "lat": 43.9745557,
+        "lng": -83.9588691,
+        "phone": "(989) 846-4511",
+        "website": "https://www.richardsonford.net"
+      },
+      {
+        "name": "Roy O'Brien Ford",
+        "city": "St Clair Shores",
+        "state": "MI",
+        "lat": 42.466636,
+        "lng": -82.898304,
+        "phone": "(586) 496-5039",
+        "website": "https://www.royobrien.net"
+      },
+      {
+        "name": "Russ Milne Ford, Inc.",
+        "city": "Macomb",
+        "state": "MI",
+        "lat": 42.6316668,
+        "lng": -82.8580685,
+        "phone": "(586) 948-7700",
+        "website": "https://www.russmilneford.com"
+      },
+      {
+        "name": "Sarah Jones Ford of St. Ignace",
+        "city": "St Ignace",
+        "state": "MI",
+        "lat": 45.854807699999995,
+        "lng": -84.7573754,
+        "phone": "(906) 643-8040",
+        "website": "https://www.sarahjonesford.com"
+      },
+      {
+        "name": "Seelye Ford of Kalamazoo",
+        "city": "Kalamazoo",
+        "state": "MI",
+        "lat": 42.27195510000001,
+        "lng": -85.637479,
+        "phone": "(269) 375-3820",
+        "website": "http://www.seelyefordkalamazoo.com"
+      },
+      {
+        "name": "Serra Ford Gaylord",
+        "city": "Gaylord",
+        "state": "MI",
+        "lat": 45.004032099999996,
+        "lng": -84.6786698,
+        "phone": "(989) 732-6737",
+        "website": "https://www.serrafordgaylord.com"
+      },
+      {
+        "name": "Serra Ford Rochester Hills",
+        "city": "Rochester Hills",
+        "state": "MI",
+        "lat": 42.638180399999996,
+        "lng": -83.1323835,
+        "phone": "(248) 852-0400",
+        "website": "https://www.serrafordrochesterhills.com"
+      },
+      {
+        "name": "Seymour Ford",
+        "city": "Jackson",
+        "state": "MI",
+        "lat": 42.277509699999996,
+        "lng": -84.373192,
+        "phone": "(517) 787-9500",
+        "website": "https://www.seymourford.net"
+      },
+      {
+        "name": "Skalnek Ford, Inc.",
+        "city": "Lake Orion",
+        "state": "MI",
+        "lat": 42.76883,
+        "lng": -83.237747,
+        "phone": "(248) 609-1116",
+        "website": "https://www.skalnekford.com"
+      },
+      {
+        "name": "Southgate Ford",
+        "city": "Southgate",
+        "state": "MI",
+        "lat": 42.1878471,
+        "lng": -83.183403,
+        "phone": "(734) 282-3636",
+        "website": "https://www.southgateford.net"
+      },
+      {
+        "name": "Spirit Ford",
+        "city": "Dundee",
+        "state": "MI",
+        "lat": 41.9602669,
+        "lng": -83.6703332,
+        "phone": "(734) 529-5521",
+        "website": "https://www.spiritford.com"
+      },
+      {
+        "name": "Stillwell Ford",
+        "city": "Hillsdale",
+        "state": "MI",
+        "lat": 41.9542958,
+        "lng": -84.6637585,
+        "phone": "(517) 849-2121",
+        "website": "https://www.stillwellford.com"
+      },
+      {
+        "name": "Suburban Ford of Sterling Heights",
+        "city": "Sterling Heights",
+        "state": "MI",
+        "lat": 42.589842999999995,
+        "lng": -83.031858,
+        "phone": "(586) 393-7206",
+        "website": "https://www.suburbanfordofsterlingheights.com"
+      },
+      {
+        "name": "Tapper Ford, LLC",
+        "city": "Paw Paw",
+        "state": "MI",
+        "lat": 42.2105566,
+        "lng": -85.8919755,
+        "phone": "(269) 657-3134",
+        "website": "https://www.tapperford.com"
+      },
+      {
+        "name": "Taylor Ford",
+        "city": "Taylor",
+        "state": "MI",
+        "lat": 42.20761830000001,
+        "lng": -83.269668,
+        "phone": "(313) 889-7149",
+        "website": "https://www.shoptaylorford.com"
+      },
+      {
+        "name": "Tony Betten & Sons Ford",
+        "city": "Grand Rapids",
+        "state": "MI",
+        "lat": 43.033522999999995,
+        "lng": -85.6247769,
+        "phone": "(616) 363-6841",
+        "website": "https://www.bettenford.com"
+      },
+      {
+        "name": "Tubbs Brothers Ford",
+        "city": "Sandusky",
+        "state": "MI",
+        "lat": 43.4194447,
+        "lng": -82.86582899999999,
+        "phone": "(810) 648-0000",
+        "website": "https://www.tubbsbrothersford.com"
+      },
+      {
+        "name": "Vanderhyde Brothers Ford, Inc.",
+        "city": "Cedar Springs",
+        "state": "MI",
+        "lat": 43.2296949,
+        "lng": -85.55180109999999,
+        "phone": "(616) 696-1541",
+        "website": "https://www.vanderhydeford.com"
+      },
+      {
+        "name": "Varsity Ford",
+        "city": "Ann Arbor",
+        "state": "MI",
+        "lat": 42.286068799999995,
+        "lng": -83.7977672,
+        "phone": "(734) 996-2300",
+        "website": "https://www.varsityfordsales.com"
+      },
+      {
+        "name": "Village Ford Inc",
+        "city": "Dearborn",
+        "state": "MI",
+        "lat": 42.3008361,
+        "lng": -83.26561070000001,
+        "phone": "(313) 565-3900",
+        "website": "https://www.villageford.com"
+      },
+      {
+        "name": "Wilson Ford Lincoln",
+        "city": "Saginaw",
+        "state": "MI",
+        "lat": 43.4683418,
+        "lng": -83.9766387,
+        "phone": "(989) 792-1700",
+        "website": "https://www.wilsonfordsaginaw.com"
+      },
+      {
+        "name": "Wyatt Ford",
+        "city": "Manistee",
+        "state": "MI",
+        "lat": 44.1970688,
+        "lng": -86.3043114,
+        "phone": "(231) 723-9975",
+        "website": "https://www.wyattford.com"
+      },
+      {
+        "name": "Yark Ford",
+        "city": "Toledo",
+        "state": "OH",
+        "lat": 41.6755433,
+        "lng": -83.67581179999999,
+        "phone": "(419) 531-9911",
+        "website": "https://www.yarkford.com"
+      },
+      {
+        "name": "Zeigler Ford Lincoln",
+        "city": "Elkhart",
+        "state": "IN",
+        "lat": 41.685694999999996,
+        "lng": -86.0086929,
+        "phone": "(574) 622-5941",
+        "website": "https://www.zeiglerfordelkhart.com"
+      },
+      {
+        "name": "Zeigler Ford of Plainwell",
+        "city": "Plainwell",
+        "state": "MI",
+        "lat": 42.4493825,
+        "lng": -85.6673447,
+        "phone": "(269) 685-5801",
+        "website": "https://www.zeiglerfordplainwell.com"
+      },
+      {
+        "name": "Zubek Ford Oscoda",
+        "city": "Oscoda Township",
+        "state": "MI",
+        "lat": 44.42540820000001,
+        "lng": -83.33061119999999,
+        "phone": "(989) 739-3261",
+        "website": "https://www.zubekford.com"
+      }
+    ],
+    "Chevrolet": [
+      {
+        "name": "Al Serra Chevrolet",
+        "city": "Grand Blanc",
+        "state": "MI",
+        "lat": 42.941587,
+        "lng": -83.64574379999999,
+        "phone": "(810) 202-0013",
+        "website": "https://www.alserrachevy.com"
+      },
+      {
+        "name": "Allen Chevrolet",
+        "city": "Monroe",
+        "state": "MI",
+        "lat": 41.891618799999996,
+        "lng": -83.41800309999999,
+        "phone": "(734) 636-0839",
+        "website": "https://www.allenchevy.com"
+      },
+      {
+        "name": "Applegate Chevrolet",
+        "city": "Flint",
+        "state": "MI",
+        "lat": 42.990752,
+        "lng": -83.675732,
+        "phone": "(810) 238-7611",
+        "website": "https://www.applegatechev.com"
+      },
+      {
+        "name": "Art Moehn Chevrolet of Chelsea",
+        "city": "Chelsea",
+        "state": "MI",
+        "lat": 42.293876999999995,
+        "lng": -84.028277,
+        "phone": "(734) 719-0904",
+        "website": "https://www.artmoehnchelsea.com"
+      },
+      {
+        "name": "Art Moehn Chevrolet of Jackson",
+        "city": "Jackson",
+        "state": "MI",
+        "lat": 42.2778458,
+        "lng": -84.3787667,
+        "phone": "(517) 879-5625",
+        "website": "https://www.artmoehnchevy.com"
+      },
+      {
+        "name": "Axius Chevrolet",
+        "city": "Middlebury",
+        "state": "IN",
+        "lat": 41.6773647,
+        "lng": -85.7065951,
+        "phone": "(574) 400-2307",
+        "website": "https://www.axiuschevrolet.com"
+      },
+      {
+        "name": "Baker Chevrolet Allegan",
+        "city": "Allegan",
+        "state": "MI",
+        "lat": 42.511545299999995,
+        "lng": -85.8224115,
+        "phone": "(269) 259-6909",
+        "website": "https://www.bakerchevyallegan.com"
+      },
+      {
+        "name": "Baker Chevrolet Buick Coopersville",
+        "city": "Coopersville",
+        "state": "MI",
+        "lat": 43.0538258,
+        "lng": -85.94949729999999,
+        "phone": "(616) 837-3800",
+        "website": "https://www.bakerchevybuickcoopersville.com"
+      },
+      {
+        "name": "Baker Chevrolet GMC",
+        "city": "Big Rapids",
+        "state": "MI",
+        "lat": 43.6705639,
+        "lng": -85.48207099999999,
+        "phone": "(231) 796-7681",
+        "website": "https://www.bakerchevygmcbigrapids.com"
+      },
+      {
+        "name": "Baker Chevrolet GMC South Haven",
+        "city": "South Haven",
+        "state": "MI",
+        "lat": 42.3808574,
+        "lng": -86.2675371,
+        "phone": "(269) 906-9558",
+        "website": "https://www.bakerchevygmcsouthhaven.com"
+      },
+      {
+        "name": "Baker Chevrolet GMC of Alma",
+        "city": "Alma",
+        "state": "MI",
+        "lat": 43.3998072,
+        "lng": -84.6658113,
+        "phone": "(866) 897-1334",
+        "website": "https://www.bakerchevygmcalma.com"
+      },
+      {
+        "name": "Baker Chevrolet Ithaca",
+        "city": "Ithaca",
+        "state": "MI",
+        "lat": 43.2920799,
+        "lng": -84.5921401,
+        "phone": "(989) 875-4181",
+        "website": "https://www.bakerchevyithaca.com"
+      },
+      {
+        "name": "Baker Chevrolet of Cadillac",
+        "city": "Cadillac",
+        "state": "MI",
+        "lat": 44.275517099999995,
+        "lng": -85.40748699999999,
+        "phone": "(800) 446-3373",
+        "website": "https://www.bakerchevroletofcadillac.com"
+      },
+      {
+        "name": "Berger Chevrolet",
+        "city": "Grand Rapids",
+        "state": "MI",
+        "lat": 42.913109999999996,
+        "lng": -85.605526,
+        "phone": "(616) 949-5200",
+        "website": "https://www.bergerchevy.com"
+      },
+      {
+        "name": "Bergstrom Chevrolet GMC of Manitowoc",
+        "city": "Manitowoc",
+        "state": "WI",
+        "lat": 44.078459599999995,
+        "lng": -87.6970202,
+        "phone": "(920) 684-0224",
+        "website": "http://www.manitowocgm.com"
+      },
+      {
+        "name": "Betten Chevrolet, GMC, Buick Car Dealership",
+        "city": "Muskegon",
+        "state": "MI",
+        "lat": 43.207738600000006,
+        "lng": -86.2621234,
+        "phone": "(231) 903-4528",
+        "website": "http://www.bettengm.com"
+      },
+      {
+        "name": "Bierlein Moore Chevrolet",
+        "city": "Sebewaing",
+        "state": "MI",
+        "lat": 43.7238446,
+        "lng": -83.4446218,
+        "phone": "(866) 613-0329",
+        "website": "https://www.bierleinmoorechevrolet.com"
+      },
+      {
+        "name": "Bishop Chevrolet of Rogers City, Inc.",
+        "city": "Rogers City",
+        "state": "MI",
+        "lat": 45.4203639,
+        "lng": -83.8315944,
+        "phone": "(989) 488-4142",
+        "website": "https://www.bishopchevroletbuick.com"
+      },
+      {
+        "name": "Bookwalter Chevrolet",
+        "city": "Stanton",
+        "state": "MI",
+        "lat": 43.289415999999996,
+        "lng": -85.07310199999999,
+        "phone": "(989) 546-4156",
+        "website": "https://www.bookwalterchevy.com"
+      },
+      {
+        "name": "Bowman Chevrolet",
+        "city": "Village of Clarkston",
+        "state": "MI",
+        "lat": 42.7207492,
+        "lng": -83.4177035,
+        "phone": "(248) 795-1816",
+        "website": "https://www.bowmanchevy.com"
+      },
+      {
+        "name": "Bowman Chevrolet of Clinton",
+        "city": "Clinton",
+        "state": "MI",
+        "lat": 42.071911799999995,
+        "lng": -84.01108099999999,
+        "phone": "(517) 705-0020",
+        "website": "https://www.bowmanchevyofclinton.com"
+      },
+      {
+        "name": "Burt Watson Chevrolet Freeland",
+        "city": "Freeland",
+        "state": "MI",
+        "lat": 43.517406099999995,
+        "lng": -84.1187803,
+        "phone": "(989) 697-0279",
+        "website": "https://www.burtwatsonfreeland.com"
+      },
+      {
+        "name": "Burt Watson Chevrolet Reese",
+        "city": "Reese",
+        "state": "MI",
+        "lat": 43.451194199999996,
+        "lng": -83.75423289999999,
+        "phone": "(989) 244-1098",
+        "website": "https://www.burtwatsonreese.com"
+      },
+      {
+        "name": "C. Wimberley Chevrolet Buick GMC Dealership",
+        "city": "Dowagiac",
+        "state": "MI",
+        "lat": 41.9653622,
+        "lng": -86.1422272,
+        "phone": "(269) 782-5181",
+        "website": "https://www.cwimberleygm.com"
+      },
+      {
+        "name": "Champion Chevrolet of Fowlerville INC.",
+        "city": "Fowlerville",
+        "state": "MI",
+        "lat": 42.6506494,
+        "lng": -84.0733237,
+        "phone": "(517) 219-4082",
+        "website": "https://www.championchevyfowlerville.com"
+      },
+      {
+        "name": "Champion Chevrolet, INC.",
+        "city": "Howell",
+        "state": "MI",
+        "lat": 42.5790013,
+        "lng": -83.85418279999999,
+        "phone": "(517) 798-4414",
+        "website": "https://www.champion-chev.com"
+      },
+      {
+        "name": "Champion Hargreaves Chevrolet",
+        "city": "Royal Oak",
+        "state": "MI",
+        "lat": 42.5035696,
+        "lng": -83.120918,
+        "phone": "(248) 658-8649",
+        "website": "https://www.mhchevy.com"
+      },
+      {
+        "name": "Charlevoix Auto Chevrolet",
+        "city": "Charlevoix",
+        "state": "MI",
+        "lat": 45.299937899999996,
+        "lng": -85.27885069999999,
+        "phone": "(231) 547-9900",
+        "website": "https://www.charlevoixchevy.com"
+      },
+      {
+        "name": "Christy Chevrolet Buick Inc",
+        "city": "Archbold",
+        "state": "OH",
+        "lat": 41.523945999999995,
+        "lng": -84.3057544,
+        "phone": "(866) 677-0782",
+        "website": "https://www.christychevy.com"
+      },
+      {
+        "name": "Classic Chevrolet",
+        "city": "Lake City",
+        "state": "MI",
+        "lat": 44.267143399999995,
+        "lng": -85.2193523,
+        "phone": "(231) 825-3189",
+        "website": "https://www.classicchevymi.com"
+      },
+      {
+        "name": "Cliff Anschuetz Chevrolet, INC.",
+        "city": "Alpena",
+        "state": "MI",
+        "lat": 45.086555399999995,
+        "lng": -83.45592169999999,
+        "phone": "(989) 354-3157",
+        "website": "http://www.cliffanschuetz.com"
+      },
+      {
+        "name": "Cole Krum Chevrolet",
+        "city": "Schoolcraft",
+        "state": "MI",
+        "lat": 42.1325335,
+        "lng": -85.63644049999999,
+        "phone": "(269) 679-2653",
+        "website": "https://www.colekrum.com"
+      },
+      {
+        "name": "Cook Chevrolet, INC.",
+        "city": "Vassar",
+        "state": "MI",
+        "lat": 43.376556799999996,
+        "lng": -83.6025372,
+        "phone": "(989) 882-4088",
+        "website": "https://www.cookchevysuperstore.com"
+      },
+      {
+        "name": "Cool City Chevrolet",
+        "city": "Two Rivers",
+        "state": "WI",
+        "lat": 44.163716199999996,
+        "lng": -87.5594028,
+        "phone": "(920) 793-1361",
+        "website": "http://www.krajnikchev.com"
+      },
+      {
+        "name": "Dave Kring Chevrolet",
+        "city": "Petoskey",
+        "state": "MI",
+        "lat": 45.3977966,
+        "lng": -84.8907241,
+        "phone": "(231) 622-4025",
+        "website": "https://www.davekring.com"
+      },
+      {
+        "name": "Dave Kring Chevrolet Service",
+        "city": "Petoskey",
+        "state": "MI",
+        "lat": 45.3988113,
+        "lng": -84.890726,
+        "phone": "(866) 613-4057",
+        "website": "https://www.davekring.com"
+      },
+      {
+        "name": "DeNooyer Chevrolet",
+        "city": "Kalamazoo",
+        "state": "MI",
+        "lat": 42.267080299999996,
+        "lng": -85.66294859999999,
+        "phone": "(269) 389-0733",
+        "website": "https://www.denooyer.com"
+      },
+      {
+        "name": "DeNooyer Chevrolet",
+        "city": "Holland",
+        "state": "MI",
+        "lat": 42.789557699999996,
+        "lng": -86.08186959999999,
+        "phone": "(616) 499-3175",
+        "website": "https://www.denooyerchevy.com"
+      },
+      {
+        "name": "DeNooyer Chevrolet Marshall",
+        "city": "Marshall",
+        "state": "MI",
+        "lat": 42.271453099999995,
+        "lng": -84.9819873,
+        "phone": "(269) 558-4796",
+        "website": "https://www.denooyerchevymarshall.com"
+      },
+      {
+        "name": "Dean Arbour Chevrolet",
+        "city": "East Tawas",
+        "state": "MI",
+        "lat": 44.2933383,
+        "lng": -83.4478063,
+        "phone": "(989) 414-2068",
+        "website": "https://www.deanarbourchevy.com"
+      },
+      {
+        "name": "Don Nester Auto Group Chevrolet",
+        "city": "Houghton Lake",
+        "state": "MI",
+        "lat": 44.323648299999995,
+        "lng": -84.7764404,
+        "phone": "(989) 422-5126",
+        "website": "https://donnestercars.com"
+      },
+      {
+        "name": "Don Nester Chevrolet",
+        "city": "Roscommon",
+        "state": "MI",
+        "lat": 44.50375770000001,
+        "lng": -84.6026107,
+        "phone": "(989) 275-5105",
+        "website": "http://www.donnesterchevy.com"
+      },
+      {
+        "name": "Dunn Chevy",
+        "city": "Oregon",
+        "state": "OH",
+        "lat": 41.6336677,
+        "lng": -83.4766257,
+        "phone": "(419) 693-3000",
+        "website": "https://www.dunnchevy.com"
+      },
+      {
+        "name": "Ed Rinke Chevrolet Buick GMC CO.",
+        "city": "Center Line",
+        "state": "MI",
+        "lat": 42.4856027,
+        "lng": -83.0295922,
+        "phone": "(586) 519-0681",
+        "website": "https://www.edrinke.com"
+      },
+      {
+        "name": "Feldman Chevrolet Lansing",
+        "city": "Lansing",
+        "state": "MI",
+        "lat": 42.7338281,
+        "lng": -84.5122647,
+        "phone": "(517) 489-4858",
+        "website": "https://www.feldmanchevyoflansing.com"
+      },
+      {
+        "name": "Feldman Chevrolet Of New Hudson",
+        "city": "New Hudson",
+        "state": "MI",
+        "lat": 42.5154941,
+        "lng": -83.6086505,
+        "phone": "(248) 939-5399",
+        "website": "https://www.feldmanchevyofnewhudson.com"
+      },
+      {
+        "name": "Feldman Chevrolet Of Novi",
+        "city": "Novi",
+        "state": "MI",
+        "lat": 42.477741699999996,
+        "lng": -83.4647719,
+        "phone": "(248) 513-8923",
+        "website": "https://www.feldmanchevyofnovi.com"
+      },
+      {
+        "name": "Feldman Chevrolet of Highland",
+        "city": "Highland",
+        "state": "MI",
+        "lat": 42.6373618,
+        "lng": -83.663206,
+        "phone": "(248) 329-3540",
+        "website": "https://www.feldmanchevyofhighland.com"
+      },
+      {
+        "name": "Feldman Chevrolet of Livonia",
+        "city": "Livonia",
+        "state": "MI",
+        "lat": 42.36899,
+        "lng": -83.36516,
+        "phone": "(734) 237-1006",
+        "website": "https://www.feldmanchevyoflivonia.com"
+      },
+      {
+        "name": "Fernelius Chevrolet",
+        "city": "Rose City",
+        "state": "MI",
+        "lat": 44.420896299999995,
+        "lng": -84.1155678,
+        "phone": "(989) 685-2401",
+        "website": "http://www.ferneliuschevy.com"
+      },
+      {
+        "name": "Fox Chevrolet",
+        "city": "Rochester Hills",
+        "state": "MI",
+        "lat": 42.6708234,
+        "lng": -83.13211849999999,
+        "phone": "(248) 266-0563",
+        "website": "https://www.chevybyfox.com"
+      },
+      {
+        "name": "Fox Chevrolet",
+        "city": "Caledonia",
+        "state": "MI",
+        "lat": 42.788981199999995,
+        "lng": -85.5076459,
+        "phone": "(616) 891-8104",
+        "website": "https://www.foxchevrolet.com"
+      },
+      {
+        "name": "Fox Greenville Chevrolet GMC",
+        "city": "Greenville",
+        "state": "MI",
+        "lat": 43.176218299999995,
+        "lng": -85.2976688,
+        "phone": "(616) 754-3605",
+        "website": "https://www.foxgreenvillechevroletgmc.com"
+      },
+      {
+        "name": "Frank Beck Chevrolet",
+        "city": "Hillsdale",
+        "state": "MI",
+        "lat": 41.9533881,
+        "lng": -84.6630328,
+        "phone": "(517) 849-2886",
+        "website": "https://www.frankbeckchevrolet.com"
+      },
+      {
+        "name": "Freedom Chevrolet , INC.",
+        "city": "Fremont",
+        "state": "MI",
+        "lat": 43.466564999999996,
+        "lng": -85.97586969999999,
+        "phone": "(231) 924-0600",
+        "website": "https://www.freedomchevymi.com"
+      },
+      {
+        "name": "Garber Chevrolet Chesaning",
+        "city": "Chesaning",
+        "state": "MI",
+        "lat": 43.1863111,
+        "lng": -84.1630259,
+        "phone": "(989) 296-2687",
+        "website": "https://www.garberchesaning.com"
+      },
+      {
+        "name": "Garber Chevrolet Saginaw",
+        "city": "Saginaw",
+        "state": "MI",
+        "lat": 43.4166312,
+        "lng": -84.0877077,
+        "phone": "(989) 656-1902",
+        "website": "https://www.garberchevroletsaginaw.com"
+      },
+      {
+        "name": "Genesis Chevrolet",
+        "city": "Eastpointe",
+        "state": "MI",
+        "lat": 42.4585118,
+        "lng": -82.9613146,
+        "phone": "(586) 804-7977",
+        "website": "https://www.genesischevrolet.com"
+      },
+      {
+        "name": "George Matick Chevrolet",
+        "city": "Redford Township",
+        "state": "MI",
+        "lat": 42.387619,
+        "lng": -83.2781988,
+        "phone": "(313) 444-6230",
+        "website": "https://www.matickchevy.com"
+      },
+      {
+        "name": "Glenn Buege Chevrolet",
+        "city": "Eaton Rapids",
+        "state": "MI",
+        "lat": 42.4932784,
+        "lng": -84.65918070000001,
+        "phone": "(517) 233-1716",
+        "website": "https://www.glennbuegechevrolet.com"
+      },
+      {
+        "name": "Gordon Chevrolet, INC.",
+        "city": "Garden City",
+        "state": "MI",
+        "lat": 42.325708299999995,
+        "lng": -83.3539765,
+        "phone": "(734) 237-6089",
+        "website": "https://www.gordonchevrolet.com"
+      },
+      {
+        "name": "Graff Chevrolet Mt. Pleasant",
+        "city": "Mt Pleasant",
+        "state": "MI",
+        "lat": 43.6112488,
+        "lng": -84.7572254,
+        "phone": "(989) 773-3937",
+        "website": "https://www.hankgraffcars.com"
+      },
+      {
+        "name": "Graff Chevrolet of Sandusky",
+        "city": "Sandusky",
+        "state": "MI",
+        "lat": 43.4202222,
+        "lng": -82.84893579999999,
+        "phone": "(810) 648-9850",
+        "website": "https://www.graffsandusky.com"
+      },
+      {
+        "name": "Graff Chevrolet, INC.",
+        "city": "Bay City",
+        "state": "MI",
+        "lat": 43.623185899999996,
+        "lng": -83.90912039999999,
+        "phone": "(989) 391-5231",
+        "website": "https://www.graffbaycity.com"
+      },
+      {
+        "name": "Graff Chevrolet-Durand, INC",
+        "city": "Durand",
+        "state": "MI",
+        "lat": 42.9261111,
+        "lng": -83.98722219999999,
+        "phone": "(989) 315-8485",
+        "website": "https://www.graffchevydurand.com"
+      },
+      {
+        "name": "Graff Chevrolet-Okemos, INC.",
+        "city": "Okemos",
+        "state": "MI",
+        "lat": 42.7193277,
+        "lng": -84.41242199999999,
+        "phone": "(517) 325-9184",
+        "website": "https://www.graffokemos.com"
+      },
+      {
+        "name": "Gus Revenberg Chevrolet Buick GMC Ltd",
+        "city": "Windsor",
+        "state": "ON",
+        "lat": 42.3148596,
+        "lng": -82.91559579999999,
+        "phone": "(519) 979-2800",
+        "website": "http://www.gusrevenberg.com"
+      },
+      {
+        "name": "H&K Chevrolet of Archbold Inc.",
+        "city": "Archbold",
+        "state": "OH",
+        "lat": 41.5233896,
+        "lng": -84.3059622,
+        "phone": "(419) 445-4401",
+        "website": "http://www.hkchevyofarchbold.com"
+      },
+      {
+        "name": "Hamilton Chevrolet, INC.",
+        "city": "Warren",
+        "state": "MI",
+        "lat": 42.535277799999996,
+        "lng": -83.0491667,
+        "phone": "(586) 838-1768",
+        "website": "https://www.hamiltonchevy.com"
+      },
+      {
+        "name": "Hank Graff Chevrolet Davison",
+        "city": "Davison",
+        "state": "MI",
+        "lat": 43.0375345,
+        "lng": -83.5172053,
+        "phone": "(810) 653-4111",
+        "website": "https://www.hankgraffdavison.com"
+      },
+      {
+        "name": "Heidebreicht Chevrolet",
+        "city": "Washington",
+        "state": "MI",
+        "lat": 42.7659096,
+        "lng": -83.0176939,
+        "phone": "(586) 372-6569",
+        "website": "https://www.heidebreicht.com"
+      },
+      {
+        "name": "Heiser Chevrolet of Sturgeon Bay",
+        "city": "Sturgeon Bay",
+        "state": "WI",
+        "lat": 44.821866299999996,
+        "lng": -87.39507669999999,
+        "phone": "(920) 743-4461",
+        "website": "https://www.heiserchevroletsturgeonbay.com"
+      },
+      {
+        "name": "Hemel's Chevrolet, Inc.",
+        "city": "Colon",
+        "state": "MI",
+        "lat": 41.959104499999995,
+        "lng": -85.32373969999999,
+        "phone": "(269) 432-3281",
+        "website": "http://hemelschevrolet.com"
+      },
+      {
+        "name": "Heritage Chevrolet, Inc.",
+        "city": "Battle Creek",
+        "state": "MI",
+        "lat": 42.3195595,
+        "lng": -85.1953537,
+        "phone": "(269) 964-9431",
+        "website": "https://www.heritagechevy.com"
+      },
+      {
+        "name": "James-Martin Chevrolet, INC.",
+        "city": "Detroit",
+        "state": "MI",
+        "lat": 42.3673909,
+        "lng": -83.0702833,
+        "phone": "(313) 444-8226",
+        "website": "https://www.jamesmartindetroit.com"
+      },
+      {
+        "name": "Jim Stykemain Chevrolet GMC",
+        "city": "Sturgis",
+        "state": "MI",
+        "lat": 41.797236999999996,
+        "lng": -85.42941669999999,
+        "phone": "(269) 651-9304",
+        "website": "https://www.stykemainsturgis.com"
+      },
+      {
+        "name": "Joe Lunghamer Chevrolet",
+        "city": "Waterford",
+        "state": "MI",
+        "lat": 42.6462308,
+        "lng": -83.33458030000001,
+        "phone": "(248) 462-7397",
+        "website": "https://www.lunghamerchevy.com"
+      },
+      {
+        "name": "Jorns Chevrolet of Kewaunee INC.",
+        "city": "Kewaunee",
+        "state": "WI",
+        "lat": 44.455766399999995,
+        "lng": -87.5248639,
+        "phone": "(920) 449-4742",
+        "website": "https://www.jorns.com"
+      },
+      {
+        "name": "Keweenaw Chevrolet GMC",
+        "city": "Houghton",
+        "state": "MI",
+        "lat": 47.105228399999994,
+        "lng": -88.5908508,
+        "phone": "(906) 379-0164",
+        "website": "https://www.keweenawcars.com"
+      },
+      {
+        "name": "Kool Chevrolet",
+        "city": "Grand Rapids",
+        "state": "MI",
+        "lat": 43.0305153,
+        "lng": -85.6268328,
+        "phone": "(616) 364-9431",
+        "website": "https://www.koolchevy.com"
+      },
+      {
+        "name": "LaFontaine Chevrolet Buick GMC St. Clair",
+        "city": "China Township",
+        "state": "MI",
+        "lat": 42.81547760000001,
+        "lng": -82.51503939999999,
+        "phone": "(810) 329-1000",
+        "website": "https://www.lafontainechevroletbuickgmc.com"
+      },
+      {
+        "name": "LaFontaine Chevrolet Dexter",
+        "city": "Dexter",
+        "state": "MI",
+        "lat": 42.3280125,
+        "lng": -83.8710746,
+        "phone": "(734) 217-2430",
+        "website": "https://www.dexterchevrolet.com"
+      },
+      {
+        "name": "LaFontaine Chevrolet Plymouth",
+        "city": "Plymouth",
+        "state": "MI",
+        "lat": 42.3738272,
+        "lng": -83.4450537,
+        "phone": "(734) 228-4494",
+        "website": "https://www.lafontainechevroletplymouth.com"
+      },
+      {
+        "name": "LeValley Chevrolet GMC, INC.",
+        "city": "Benton Harbor",
+        "state": "MI",
+        "lat": 42.079269,
+        "lng": -86.438334,
+        "phone": "(269) 605-4340",
+        "website": "https://www.levalley.com"
+      },
+      {
+        "name": "Les Stanford Chevrolet",
+        "city": "Dearborn",
+        "state": "MI",
+        "lat": 42.307245099999996,
+        "lng": -83.24169390000002,
+        "phone": "(313) 444-7537",
+        "website": "https://www.lesstanfordchevrolet.com"
+      },
+      {
+        "name": "MINOCQUA CHEVROLET",
+        "city": "Minocqua",
+        "state": "WI",
+        "lat": 45.861797499999994,
+        "lng": -89.7072297,
+        "phone": "(715) 356-3262",
+        "website": "https://www.minocquacars.com"
+      },
+      {
+        "name": "McDonald Chevrolet Buick Inc",
+        "city": "Marlette",
+        "state": "MI",
+        "lat": 43.340413,
+        "lng": -83.0833631,
+        "phone": "(989) 634-1489",
+        "website": "http://www.mcdonaldchevybuick.com"
+      },
+      {
+        "name": "McDonald Chevrolet Buick Inc.",
+        "city": "Marlette",
+        "state": "MI",
+        "lat": 43.340413,
+        "lng": -83.0833631,
+        "phone": "(989) 747-4600",
+        "website": "https://www.mcdonaldchevybuick.com"
+      },
+      {
+        "name": "McDonald Chevrolet, INC.",
+        "city": "Millington",
+        "state": "MI",
+        "lat": 43.2660619,
+        "lng": -83.5281971,
+        "phone": "(989) 875-0028",
+        "website": "https://www.mcdonaldchevy.com"
+      },
+      {
+        "name": "McGuire Chevrolet",
+        "city": "Clare",
+        "state": "MI",
+        "lat": 43.823404499999995,
+        "lng": -84.7870196,
+        "phone": "(989) 424-5411",
+        "website": "https://www.mcguirechevrolet.com"
+      },
+      {
+        "name": "Meyers Brothers Chevrolet Sales, INC.",
+        "city": "New Era",
+        "state": "MI",
+        "lat": 43.5585588,
+        "lng": -86.3450902,
+        "phone": "(231) 861-1916",
+        "website": "https://www.meyerschevrolet.com"
+      },
+      {
+        "name": "Michael Bates Chevrolet Inc",
+        "city": "Woodhaven",
+        "state": "MI",
+        "lat": 42.136041,
+        "lng": -83.2246746,
+        "phone": "(734) 365-6790",
+        "website": "https://www.michaelbateschevy.com"
+      },
+      {
+        "name": "Midway Chevrolet Plainwell Auto Dealer",
+        "city": "Plainwell",
+        "state": "MI",
+        "lat": 42.447950999999996,
+        "lng": -85.660044,
+        "phone": "(269) 685-6871",
+        "website": "https://www.midwayplainwell.com"
+      },
+      {
+        "name": "Mike Savoie Chevrolet",
+        "city": "Troy",
+        "state": "MI",
+        "lat": 42.548055,
+        "lng": -83.17563799999999,
+        "phone": "(248) 781-8355",
+        "website": "https://www.mikesavoie.com"
+      },
+      {
+        "name": "Milnes Chevrolet",
+        "city": "Imlay City",
+        "state": "MI",
+        "lat": 43.0098646,
+        "lng": -83.0726964,
+        "phone": "(810) 724-0561",
+        "website": "https://www.milneschevy.com"
+      },
+      {
+        "name": "Moran Chevrolet Ft. Gratiot",
+        "city": "Fort Gratiot Township",
+        "state": "MI",
+        "lat": 43.04047,
+        "lng": -82.4581819,
+        "phone": "(812) 202-4062",
+        "website": "https://www.moranchevyfortgratiot.com"
+      },
+      {
+        "name": "Moran Chevrolet, INC.",
+        "city": "Clinton Township",
+        "state": "MI",
+        "lat": 42.5579743,
+        "lng": -82.8965286,
+        "phone": "(586) 307-5902",
+        "website": "https://www.moranchevrolet.com"
+      },
+      {
+        "name": "Preferred Chevrolet Buick GMC",
+        "city": "Grand Haven",
+        "state": "MI",
+        "lat": 43.0456493,
+        "lng": -86.2211466,
+        "phone": "(616) 310-8897",
+        "website": "https://www.preferredchevroletbuickgmc.com"
+      },
+      {
+        "name": "Premier Buick Chevrolet GMC",
+        "city": "Windsor",
+        "state": "ON",
+        "lat": 42.2707632,
+        "lng": -83.0001399,
+        "phone": "(519) 961-7026",
+        "website": "https://www.premierchev.com"
+      },
+      {
+        "name": "Randy Wise Chevrolet",
+        "city": "Flint",
+        "state": "MI",
+        "lat": 43.0790283,
+        "lng": -83.73249229999999,
+        "phone": "(810) 496-0094",
+        "website": "https://www.randywisechevy.com"
+      },
+      {
+        "name": "Richardson Chevrolet",
+        "city": "Standish",
+        "state": "MI",
+        "lat": 43.9730573,
+        "lng": -83.95777849999999,
+        "phone": "(989) 718-2226",
+        "website": "https://www.richardsonchevrolet.com"
+      },
+      {
+        "name": "Riverside Chevrolet & GMC",
+        "city": "Escanaba",
+        "state": "MI",
+        "lat": 45.745187699999995,
+        "lng": -87.1014836,
+        "phone": "(906) 379-0047",
+        "website": "https://www.escanabachevy.com"
+      },
+      {
+        "name": "Royal Chevrolet GMC",
+        "city": "Coldwater",
+        "state": "MI",
+        "lat": 41.9349743,
+        "lng": -84.9569629,
+        "phone": "(517) 227-5544",
+        "website": "https://www.royalchevy.net"
+      },
+      {
+        "name": "Saline Chevrolet",
+        "city": "Saline",
+        "state": "MI",
+        "lat": 42.184792,
+        "lng": -83.741534,
+        "phone": "(734) 470-2558",
+        "website": "http://www.salinechevy.com"
+      },
+      {
+        "name": "Sawyers Chevrolet",
+        "city": "DeWitt",
+        "state": "MI",
+        "lat": 42.824804,
+        "lng": -84.5438626,
+        "phone": "(517) 669-4100",
+        "website": "https://www.sawyerschevy.com"
+      },
+      {
+        "name": "Schafer Chevrolet",
+        "city": "Pinconning",
+        "state": "MI",
+        "lat": 43.859345999999995,
+        "lng": -83.96719019999999,
+        "phone": "(877) 293-7695",
+        "website": "http://www.schaferchevy.com"
+      },
+      {
+        "name": "Serra Chevrolet Saginaw",
+        "city": "Saginaw",
+        "state": "MI",
+        "lat": 43.4683943,
+        "lng": -83.97496869999999,
+        "phone": "(989) 528-8183",
+        "website": "https://www.serrachevroletsaginaw.com"
+      },
+      {
+        "name": "Serra Chevrolet Southfield",
+        "city": "Southfield",
+        "state": "MI",
+        "lat": 42.494942599999995,
+        "lng": -83.28675310000001,
+        "phone": "(248) 455-6693",
+        "website": "https://www.serrachevrolet.com"
+      },
+      {
+        "name": "Serra Chevrolet Sterling Heights",
+        "city": "Sterling Heights",
+        "state": "MI",
+        "lat": 42.5907947,
+        "lng": -83.0330979,
+        "phone": "(586) 413-7900",
+        "website": "https://www.serrasterlingheights.com"
+      },
+      {
+        "name": "Shaheen Chevrolet",
+        "city": "Lansing",
+        "state": "MI",
+        "lat": 42.6603095,
+        "lng": -84.5478543,
+        "phone": "(517) 394-0330",
+        "website": "https://www.shaheenchevrolet.com"
+      },
+      {
+        "name": "Shea Chevrolet",
+        "city": "Flint Township",
+        "state": "MI",
+        "lat": 43.0013106,
+        "lng": -83.7787122,
+        "phone": "(810) 230-4123",
+        "website": "https://www.sheachevrolet.com"
+      },
+      {
+        "name": "Simms Chevrolet Co",
+        "city": "Clio",
+        "state": "MI",
+        "lat": 43.1784734,
+        "lng": -83.76203749999999,
+        "phone": "(810) 686-1700",
+        "website": "http://www.simmschevrolet.com"
+      },
+      {
+        "name": "Sparta Chevrolet, INC.",
+        "city": "Sparta",
+        "state": "MI",
+        "lat": 43.127479900000004,
+        "lng": -85.71102440000001,
+        "phone": "(616) 887-1791",
+        "website": "https://www.spartachevy.com"
+      },
+      {
+        "name": "Sundance Chevrolet, INC.",
+        "city": "Grand Ledge",
+        "state": "MI",
+        "lat": 42.7414409,
+        "lng": -84.72216870000001,
+        "phone": "(517) 308-0547",
+        "website": "https://www.sundancechevyranch.com"
+      },
+      {
+        "name": "Suski Chevrolet INC",
+        "city": "Birch Run",
+        "state": "MI",
+        "lat": 43.249209799999996,
+        "lng": -83.7805716,
+        "phone": "(810) 891-0069",
+        "website": "https://www.suskiautomotive.com"
+      },
+      {
+        "name": "TEAM Chevrolet Automotive",
+        "city": "Manistique",
+        "state": "MI",
+        "lat": 45.954038100000005,
+        "lng": -86.2443394,
+        "phone": "(906) 451-4264",
+        "website": "http://teamchevyauto.com"
+      },
+      {
+        "name": "Taylor Chevrolet",
+        "city": "Taylor",
+        "state": "MI",
+        "lat": 42.205853,
+        "lng": -83.267344,
+        "phone": "(734) 287-2600",
+        "website": "https://www.taylorchevy.com"
+      },
+      {
+        "name": "Team Hodges Chevrolet",
+        "city": "West Branch",
+        "state": "MI",
+        "lat": 44.268855699999996,
+        "lng": -84.2176066,
+        "phone": "(989) 726-4370",
+        "website": "https://www.teamhodgeschevy.com"
+      },
+      {
+        "name": "Team One Chevrolet Buick GMC",
+        "city": "Charlotte",
+        "state": "MI",
+        "lat": 42.5830273,
+        "lng": -84.8054133,
+        "phone": "(517) 543-0200",
+        "website": "https://www.teamonecharlotte.com"
+      },
+      {
+        "name": "Thompson Chevrolet",
+        "city": "Ubly",
+        "state": "MI",
+        "lat": 43.725096,
+        "lng": -82.94035,
+        "phone": "(989) 658-8585",
+        "website": "http://www.thompsonchev.com"
+      },
+      {
+        "name": "Todd Wenzel Chevrolet of Hudsonville",
+        "city": "Hudsonville",
+        "state": "MI",
+        "lat": 42.8513011,
+        "lng": -85.85973899999999,
+        "phone": "(616) 433-2497",
+        "website": "https://www.toddwenzelchevrolet.com"
+      },
+      {
+        "name": "Tom Naquin Chevrolet Cadillac",
+        "city": "Elkhart",
+        "state": "IN",
+        "lat": 41.68608090000001,
+        "lng": -86.0108413,
+        "phone": "(574) 584-3328",
+        "website": "https://www.elkhartchevy.com"
+      },
+      {
+        "name": "Tyler Chevrolet",
+        "city": "Niles",
+        "state": "MI",
+        "lat": 41.799886699999995,
+        "lng": -86.2494456,
+        "phone": "(888) 219-7416",
+        "website": "https://www.tylerchevy.com"
+      },
+      {
+        "name": "Vetter-McGill Chevrolet, Inc.",
+        "city": "Three Rivers",
+        "state": "MI",
+        "lat": 41.924839,
+        "lng": -85.6591808,
+        "phone": "(269) 278-1485",
+        "website": "https://www.vettermcgillchevy.com"
+      },
+      {
+        "name": "Vic Canever Chevrolet, INC.",
+        "city": "Fenton",
+        "state": "MI",
+        "lat": 42.7905185,
+        "lng": -83.7308298,
+        "phone": "(810) 215-0443",
+        "website": "https://www.viccaneverchevy.com"
+      },
+      {
+        "name": "Victory Chevrolet",
+        "city": "Milan",
+        "state": "MI",
+        "lat": 42.0976061,
+        "lng": -83.67582000000002,
+        "phone": "(734) 403-4108",
+        "website": "https://www.victorychevymilan.com"
+      },
+      {
+        "name": "Wally Edgar Chevrolet",
+        "city": "Lake Orion",
+        "state": "MI",
+        "lat": 42.7262491,
+        "lng": -83.2419219,
+        "phone": "(248) 391-9900",
+        "website": "https://www.wallyedgar.com"
+      },
+      {
+        "name": "Williams Chevrolet",
+        "city": "Traverse City",
+        "state": "MI",
+        "lat": 44.7252903,
+        "lng": -85.6450697,
+        "phone": "(231) 486-5476",
+        "website": "https://www.williamschevy.com"
+      },
+      {
+        "name": "Yark Chevrolet",
+        "city": "Perrysburg",
+        "state": "OH",
+        "lat": 41.5452939,
+        "lng": -83.63627799999999,
+        "phone": "(419) 442-7731",
+        "website": "https://www.yarkchevrolet.com"
+      }
+    ],
+    "Kia": [
+      {
+        "name": "Fox Kia North",
+        "city": "Grand Rapids",
+        "state": "MI",
+        "lat": 43.0458268,
+        "lng": -85.60722229999999,
+        "phone": "(616) 323-1400",
+        "website": "https://www.foxkianorth.com"
+      },
+      {
+        "name": "Golling KIA of Madison Heights",
+        "city": "Madison Heights",
+        "state": "MI",
+        "lat": 42.5337545,
+        "lng": -83.10076010000002,
+        "phone": "(888) 697-4208",
+        "website": "https://www.gollingkia.com"
+      },
+      {
+        "name": "Gurley Leep Kia",
+        "city": "Mishawaka",
+        "state": "IN",
+        "lat": 41.6968347,
+        "lng": -86.18540809999999,
+        "phone": "(574) 258-6333",
+        "website": "http://www.gurleyleepkia.com"
+      },
+      {
+        "name": "Jeffrey Kia",
+        "city": "Roseville",
+        "state": "MI",
+        "lat": 42.523696799999996,
+        "lng": -82.9183731,
+        "phone": "(586) 460-7061",
+        "website": "http://www.jeffreykia.com"
+      },
+      {
+        "name": "Kia Of Lansing",
+        "city": "Lansing",
+        "state": "MI",
+        "lat": 42.6739718,
+        "lng": -84.5368699,
+        "phone": "(517) 393-5700",
+        "website": "https://www.kiaoflansing.com"
+      },
+      {
+        "name": "Kia of Jackson",
+        "city": "Jackson",
+        "state": "MI",
+        "lat": 42.2411842,
+        "lng": -84.3541259,
+        "phone": "(517) 764-4500",
+        "website": "https://www.kiaofjackson.com"
+      },
+      {
+        "name": "LaFontaine Kia",
+        "city": "Ypsilanti",
+        "state": "MI",
+        "lat": 42.2264299,
+        "lng": -83.6203881,
+        "phone": "(734) 249-7700",
+        "website": "http://www.lafontainekiaypsilanti.com"
+      },
+      {
+        "name": "McDonald Kia",
+        "city": "Saginaw",
+        "state": "MI",
+        "lat": 43.4361708,
+        "lng": -84.0216232,
+        "phone": "(989) 799-2277",
+        "website": "http://www.mcdonaldkia.com"
+      },
+      {
+        "name": "Seelye Kia of Battle Creek",
+        "city": "Battle Creek",
+        "state": "MI",
+        "lat": 42.318950799999996,
+        "lng": -85.2043072,
+        "phone": "(269) 441-8800",
+        "website": "http://www.seelyekiabattlecreek.com"
+      },
+      {
+        "name": "Seelye Kia of Kalamazoo",
+        "city": "Kalamazoo",
+        "state": "MI",
+        "lat": 42.2714835,
+        "lng": -85.63884440000001,
+        "phone": "(888) 343-9733",
+        "website": "http://www.seelyekiakalamazoo.com"
+      },
+      {
+        "name": "Summit Place Kia",
+        "city": "Auburn Hills",
+        "state": "MI",
+        "lat": 42.7051164,
+        "lng": -83.2412724,
+        "phone": "(248) 682-6002",
+        "website": "https://www.summitplacekiaauburnhills.com"
+      },
+      {
+        "name": "Summit Place Kia East",
+        "city": "Clinton Township",
+        "state": "MI",
+        "lat": 42.628890299999995,
+        "lng": -82.86028139999999,
+        "phone": "(586) 463-1521",
+        "website": "https://www.summitplacekiaeast.com"
+      },
+      {
+        "name": "Tyler KIA",
+        "city": "Niles",
+        "state": "MI",
+        "lat": 41.799824199999996,
+        "lng": -86.2493952,
+        "phone": "(269) 683-1710",
+        "website": "https://www.tylerskia.com"
+      },
+      {
+        "name": "Williams Kia",
+        "city": "Traverse City",
+        "state": "MI",
+        "lat": 44.728042099999996,
+        "lng": -85.64494599999999,
+        "phone": "(231) 946-1111",
+        "website": "http://www.williamskia.com"
+      },
+      {
+        "name": "Zeigler Kia of Holland",
+        "city": "Holland",
+        "state": "MI",
+        "lat": 42.7990001,
+        "lng": -86.07064,
+        "phone": "(616) 396-0232",
+        "website": "https://www.zeiglerkiaofholland.com"
+      }
+    ],
+    "Nissan": [
+      {
+        "name": "Cole Nissan",
+        "city": "Kalamazoo",
+        "state": "MI",
+        "lat": 42.2713889,
+        "lng": -85.6283333,
+        "phone": "(269) 743-4260",
+        "website": "https://www.cole-nissan.com"
+      },
+      {
+        "name": "Graff Nissan of Okemos",
+        "city": "Okemos",
+        "state": "MI",
+        "lat": 42.7188904,
+        "lng": -84.4114903,
+        "phone": "(517) 679-8900",
+        "website": "https://www.graffnissanofokemos.com"
+      },
+      {
+        "name": "Jackson Nissan",
+        "city": "Jackson",
+        "state": "MI",
+        "lat": 42.277863499999995,
+        "lng": -84.37577979999999,
+        "phone": "(517) 788-8300",
+        "website": "https://www.jacksonnissan.us"
+      },
+      {
+        "name": "Jeffrey Nissan",
+        "city": "Roseville",
+        "state": "MI",
+        "lat": 42.5242954,
+        "lng": -82.9182399,
+        "phone": "(586) 510-1378",
+        "website": "https://www.jeffreynissan.com"
+      },
+      {
+        "name": "My Nissan of Grand Rapids",
+        "city": "Grand Rapids",
+        "state": "MI",
+        "lat": 43.036195500000005,
+        "lng": -85.61843739999999,
+        "phone": "(616) 361-7361",
+        "website": "https://www.mynissanofgrandrapids.com"
+      },
+      {
+        "name": "My Nissan of Muskegon",
+        "city": "Muskegon",
+        "state": "MI",
+        "lat": 43.155108399999996,
+        "lng": -86.19880359999999,
+        "phone": "(231) 799-7100",
+        "website": "https://www.nissanofmuskegon.com"
+      },
+      {
+        "name": "Nissan of Macomb",
+        "city": "Clinton Township",
+        "state": "MI",
+        "lat": 42.627404,
+        "lng": -82.89224,
+        "phone": "(586) 913-0600",
+        "website": "https://www.nissanofmacomb.com"
+      },
+      {
+        "name": "Nissan of Windsor",
+        "city": "Windsor",
+        "state": "ON",
+        "lat": 42.314628,
+        "lng": -82.919837,
+        "phone": "(519) 735-7744",
+        "website": "https://www.nissanofwindsor.com"
+      },
+      {
+        "name": "Serra Nissan of Traverse City",
+        "city": "Traverse City",
+        "state": "MI",
+        "lat": 44.7439136,
+        "lng": -85.5942485,
+        "phone": "(231) 486-0881",
+        "website": "http://www.traversecitynissan.com"
+      },
+      {
+        "name": "Zeigler Nissan of Holland",
+        "city": "Holland",
+        "state": "MI",
+        "lat": 42.7990031,
+        "lng": -86.0706333,
+        "phone": "(877) 887-2970",
+        "website": "https://www.zeiglernissanofholland.com"
+      }
+    ],
+    "BMW": [
+      {
+        "name": "BMW Of Okemos",
+        "city": "Okemos",
+        "state": "MI",
+        "lat": 42.682237099999995,
+        "lng": -84.45194099999999,
+        "phone": "(517) 853-2600",
+        "website": "https://www.bmwofokemos.com"
+      },
+      {
+        "name": "BMW of Ann Arbor",
+        "city": "Ann Arbor",
+        "state": "MI",
+        "lat": 42.2868701,
+        "lng": -83.8212894,
+        "phone": "(734) 412-6676",
+        "website": "https://www.bmwofannarbor.com"
+      },
+      {
+        "name": "BMW of Bloomfield Hills",
+        "city": "Bloomfield Hills",
+        "state": "MI",
+        "lat": 42.613393900000005,
+        "lng": -83.3065044,
+        "phone": "(888) 495-6281",
+        "website": "https://www.bmwbloomfieldhills.com"
+      },
+      {
+        "name": "BMW of Rochester Hills",
+        "city": "Shelby Township",
+        "state": "MI",
+        "lat": 42.6281343,
+        "lng": -83.0902345,
+        "phone": "(888) 294-1015",
+        "website": "http://www.bmwofrochesterhills.com"
+      },
+      {
+        "name": "BMW of Traverse City",
+        "city": "Traverse City",
+        "state": "MI",
+        "lat": 44.7288454,
+        "lng": -85.6471802,
+        "phone": "(231) 922-2002",
+        "website": "https://www.foxbmwtc.com"
+      },
+      {
+        "name": "Basney BMW",
+        "city": "South Bend",
+        "state": "IN",
+        "lat": 41.734617,
+        "lng": -86.25110400000001,
+        "phone": "(574) 272-8504",
+        "website": "https://www.basneybmw.com"
+      },
+      {
+        "name": "Sharpe BMW",
+        "city": "Grand Rapids",
+        "state": "MI",
+        "lat": 42.9123182,
+        "lng": -85.64058419999999,
+        "phone": "(616) 452-5101",
+        "website": "http://www.sharpebmw.com"
+      },
+      {
+        "name": "Zeigler BMW of Kalamazoo",
+        "city": "Kalamazoo",
+        "state": "MI",
+        "lat": 42.2701238,
+        "lng": -85.6397937,
+        "phone": "(269) 375-4500",
+        "website": "https://www.haroldzeiglerbmw.com"
+      }
+    ],
+    "Lexus": [
+      {
+        "name": "Harvey Lexus of Grand Rapids",
+        "city": "Grand Rapids",
+        "state": "MI",
+        "lat": 42.9117913,
+        "lng": -85.6035605,
+        "phone": "(616) 949-1010",
+        "website": "https://www.harveylexusgrandrapids.com"
+      },
+      {
+        "name": "Jordan Lexus",
+        "city": "Mishawaka",
+        "state": "IN",
+        "lat": 41.6993675,
+        "lng": -86.1883561,
+        "phone": "(888) 773-4294",
+        "website": "https://www.jordanlexusofmishawaka.com"
+      },
+      {
+        "name": "Meade Lexus of Lakeside",
+        "city": "Utica",
+        "state": "MI",
+        "lat": 42.6279537,
+        "lng": -83.0010369,
+        "phone": "(586) 460-4303",
+        "website": "https://www.lexusoflakeside.com"
+      },
+      {
+        "name": "Meade Lexus of Southfield",
+        "city": "Southfield",
+        "state": "MI",
+        "lat": 42.4971994,
+        "lng": -83.2965933,
+        "phone": "(248) 826-2622",
+        "website": "https://www.lexusofsouthfield.com"
+      },
+      {
+        "name": "Serra Lexus Lansing",
+        "city": "Okemos",
+        "state": "MI",
+        "lat": 42.6818301,
+        "lng": -84.4504459,
+        "phone": "(517) 853-2600",
+        "website": "https://www.serralexuslansing.com"
+      }
+    ],
+    "Mercedes-Benz": [
+      {
+        "name": "Betten Imports Mercedes-Benz",
+        "city": "Grand Rapids",
+        "state": "MI",
+        "lat": 42.9136927,
+        "lng": -85.5241562,
+        "phone": "(866) 971-5654",
+        "website": "https://www.betten.mercedesdealer.com"
+      },
+      {
+        "name": "Mercedes-Benz Of Okemos",
+        "city": "Okemos",
+        "state": "MI",
+        "lat": 42.6820966,
+        "lng": -84.450466,
+        "phone": "(517) 686-8017",
+        "website": "https://www.mercedesbenzofokemos.com"
+      },
+      {
+        "name": "Mercedes-Benz Overseas Motors",
+        "city": "Windsor",
+        "state": "ON",
+        "lat": 42.3140222,
+        "lng": -82.9263915,
+        "phone": "(226) 781-3939",
+        "website": "https://www.mercedes-benz-overseasmotors.ca"
+      },
+      {
+        "name": "Mercedes-Benz of Ann Arbor",
+        "city": "Ann Arbor",
+        "state": "MI",
+        "lat": 42.286791199999996,
+        "lng": -83.82028439999999,
+        "phone": "(734) 412-6509",
+        "website": "https://www.mercedesofannarbor.com"
+      },
+      {
+        "name": "Mercedes-Benz of Kalamazoo",
+        "city": "Kalamazoo",
+        "state": "MI",
+        "lat": 42.291279700000004,
+        "lng": -85.59045909999999,
+        "phone": "(269) 345-0167",
+        "website": "https://www.mercedesbenzofkalamazoo.com"
+      },
+      {
+        "name": "Mercedes-Benz of Novi",
+        "city": "Novi",
+        "state": "MI",
+        "lat": 42.472460999999996,
+        "lng": -83.436326,
+        "phone": "(248) 426-9600",
+        "website": "http://www.mercedesbenzofnovi.com"
+      },
+      {
+        "name": "Mercedes-Benz of St. Clair Shores",
+        "city": "St Clair Shores",
+        "state": "MI",
+        "lat": 42.4653007,
+        "lng": -82.91411339999999,
+        "phone": "(586) 773-2369",
+        "website": "http://www.mercedesbenzofstclairshores.com"
+      },
+      {
+        "name": "Mercedes-Benz of Traverse City",
+        "city": "Traverse City",
+        "state": "MI",
+        "lat": 44.7342334,
+        "lng": -85.645253,
+        "phone": "(231) 938-3800",
+        "website": "https://www.foxmb.com"
+      }
+    ],
+    "Subaru": [
+      {
+        "name": "Fox Subaru",
+        "city": "Grand Rapids",
+        "state": "MI",
+        "lat": 42.913796399999995,
+        "lng": -85.51723679999999,
+        "phone": "(616) 800-7076",
+        "website": "https://www.foxsubaru.com"
+      },
+      {
+        "name": "Gurley Leep Subaru",
+        "city": "Mishawaka",
+        "state": "IN",
+        "lat": 41.7083416,
+        "lng": -86.1867996,
+        "phone": "(574) 258-7700",
+        "website": "https://www.gurleyleepsubaru.com"
+      },
+      {
+        "name": "LaFontaine Subaru",
+        "city": "Commerce Township",
+        "state": "MI",
+        "lat": 42.5439912,
+        "lng": -83.4442376,
+        "phone": "(248) 624-0400",
+        "website": "https://www.lafontainesubaru.com"
+      },
+      {
+        "name": "Maple Hill Subaru",
+        "city": "Kalamazoo",
+        "state": "MI",
+        "lat": 42.2965714,
+        "lng": -85.6585908,
+        "phone": "(269) 342-6600",
+        "website": "https://www.maplehillsubaru.com"
+      },
+      {
+        "name": "Serra Subaru of Traverse City",
+        "city": "Traverse City",
+        "state": "MI",
+        "lat": 44.735573099999996,
+        "lng": -85.5944755,
+        "phone": "(231) 486-0887",
+        "website": "https://www.serrasubaruoftraversecity.com"
+      },
+      {
+        "name": "Subaru of Ann Arbor",
+        "city": "Ann Arbor",
+        "state": "MI",
+        "lat": 42.2840158,
+        "lng": -83.8057799,
+        "phone": "(734) 336-1300",
+        "website": "https://www.subaruofannarbor.com"
+      },
+      {
+        "name": "Subaru of Grand Blanc",
+        "city": "Grand Blanc",
+        "state": "MI",
+        "lat": 42.9435605,
+        "lng": -83.6480595,
+        "phone": "(810) 202-0831",
+        "website": "https://www.subaruofgrandblanc.com"
+      },
+      {
+        "name": "Yark Subaru",
+        "city": "Toledo",
+        "state": "OH",
+        "lat": 41.6750119,
+        "lng": -83.6889463,
+        "phone": "(419) 481-8900",
+        "website": "https://www.yarksubaru.com"
+      }
+    ]
+  }
+}

@@ -1,10 +1,13 @@
-const CACHE_NAME = 'csb-v1';
+const CACHE_NAME = 'csb-v2';
 const ASSETS = [
     './',
     './index.html',
     './style.css',
     './app.js',
     './data.json',
+    './leases.json',
+    './dealers.json',
+    './zip_coords.json',
     './apple-touch-icon.png'
 ];
 
@@ -26,12 +29,12 @@ self.addEventListener('activate', event => {
     self.clients.claim();
 });
 
-// Fetch — network first for data.json (get fresh inventory), cache first for everything else
+// Fetch — network first for JSON data (get fresh data), cache first for everything else
 self.addEventListener('fetch', event => {
     const url = new URL(event.request.url);
 
-    if (url.pathname.endsWith('data.json')) {
-        // Network-first for data — always try to get latest inventory
+    if (url.pathname.endsWith('.json')) {
+        // Network-first for all JSON data — always try to get latest
         event.respondWith(
             fetch(event.request)
                 .then(resp => {
