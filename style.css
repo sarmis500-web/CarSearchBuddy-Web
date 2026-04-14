@@ -464,12 +464,34 @@ body {
 
 .reset-btn:hover { opacity: 0.85; }
 
+/* === LOAD MORE BUTTON === */
+.load-more-btn {
+    width: 100%;
+    padding: 14px 24px;
+    margin-top: 4px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius);
+    color: var(--accent);
+    font-size: 15px;
+    font-weight: 600;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.load-more-btn:active {
+    background: var(--bg-card-hover);
+    border-color: var(--accent);
+}
+
 /* === RESPONSIVE === */
 @media (min-width: 640px) {
     #vehicle-list, #lease-list {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
     }
+    .load-more-btn { grid-column: 1 / -1; }
 }
 
 @media (min-width: 1024px) {
@@ -478,6 +500,7 @@ body {
         max-width: 1100px;
         margin: 0 auto;
     }
+    .load-more-btn { grid-column: 1 / -1; }
     #search-section, #lease-search-section, #stats-bar, #lease-stats-bar, #app-header .header-content {
         max-width: 1100px;
         margin: 0 auto;

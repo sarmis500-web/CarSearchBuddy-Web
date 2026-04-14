@@ -16,6 +16,11 @@
     let userZipLat = null;
     let userZipLng = null;
 
+    // Pagination
+    const PAGE_SIZE = 50;
+    let inventoryShown = 0;
+    let leasesShown = 0;
+
     // ===== DOM REFS — Tabs =====
     const tabs = document.querySelectorAll('.tab');
     const tabContents = document.querySelectorAll('.tab-content');
@@ -175,46 +180,68 @@
         resultsCount.textContent = `${filteredVehicles.length} vehicle${filteredVehicles.length !== 1 ? 's' : ''}`;
     }
 
+    function buildVehicleCard(v) {
+        const card = document.createElement('article');
+        card.className = 'vehicle-card';
+
+        const priceStr = v.price > 0
+            ? `$${v.price.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`
+            : null;
+        const mileageStr = v.mileage
+            ? `${v.mileage.toLocaleString()} mi`
+            : null;
+
+        card.innerHTML = `
+            <div class="card-top">
+                <div class="card-title">${v.year} ${v.make} ${v.model}${v.trim ? ' ' + v.trim : ''}</div>
+                ${priceStr
+                    ? `<div class="card-price">${priceStr}</div>`
+                    : `<div class="card-price no-price">Call for Price</div>`
+                }
+            </div>
+            <div class="card-details">
+                ${v.condition ? `<span class="detail-chip">${v.condition}</span>` : ''}
+                ${mileageStr ? `<span class="detail-chip">${mileageStr}</span>` : ''}
+                ${v.platform ? `<span class="detail-chip">${v.platform}</span>` : ''}
+            </div>
+            <div class="card-dealer">${v.dealer_name}${v.dealer_city ? ', ' + v.dealer_city : ''}</div>
+        `;
+
+        if (v.source_url) {
+            card.addEventListener('click', () => window.open(v.source_url, '_blank'));
+        }
+
+        return card;
+    }
+
     function renderVehicleCards() {
-        const frag = document.createDocumentFragment();
-
-        filteredVehicles.forEach((v, i) => {
-            const card = document.createElement('article');
-            card.className = 'vehicle-card';
-            card.style.animationDelay = `${Math.min(i * 0.03, 0.5)}s`;
-
-            const priceStr = v.price > 0
-                ? `$${v.price.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`
-                : null;
-            const mileageStr = v.mileage
-                ? `${v.mileage.toLocaleString()} mi`
-                : null;
-
-            card.innerHTML = `
-                <div class="card-top">
-                    <div class="card-title">${v.year} ${v.make} ${v.model}${v.trim ? ' ' + v.trim : ''}</div>
-                    ${priceStr
-                        ? `<div class="card-price">${priceStr}</div>`
-                        : `<div class="card-price no-price">Call for Price</div>`
-                    }
-                </div>
-                <div class="card-details">
-                    ${v.condition ? `<span class="detail-chip">${v.condition}</span>` : ''}
-                    ${mileageStr ? `<span class="detail-chip">${mileageStr}</span>` : ''}
-                    ${v.platform ? `<span class="detail-chip">${v.platform}</span>` : ''}
-                </div>
-                <div class="card-dealer">${v.dealer_name}${v.dealer_city ? ', ' + v.dealer_city : ''}</div>
-            `;
-
-            if (v.source_url) {
-                card.addEventListener('click', () => window.open(v.source_url, '_blank'));
-            }
-
-            frag.appendChild(card);
-        });
-
         vehicleList.innerHTML = '';
+        inventoryShown = 0;
+        loadMoreVehicles();
+    }
+
+    function loadMoreVehicles() {
+        // Remove existing Load More button
+        const existingBtn = vehicleList.querySelector('.load-more-btn');
+        if (existingBtn) existingBtn.remove();
+
+        const frag = document.createDocumentFragment();
+        const end = Math.min(inventoryShown + PAGE_SIZE, filteredVehicles.length);
+
+        for (let i = inventoryShown; i < end; i++) {
+            frag.appendChild(buildVehicleCard(filteredVehicles[i]));
+        }
+
         vehicleList.appendChild(frag);
+        inventoryShown = end;
+
+        if (inventoryShown < filteredVehicles.length) {
+            const btn = document.createElement('button');
+            btn.className = 'load-more-btn';
+            btn.textContent = `Load More (${filteredVehicles.length - inventoryShown} remaining)`;
+            btn.addEventListener('click', loadMoreVehicles);
+            vehicleList.appendChild(btn);
+        }
     }
 
     function updateMeta() {
@@ -292,87 +319,105 @@
         return dealers.slice(0, count).map(d => ({ ...d, distance: null }));
     }
 
-    function renderLeaseCards() {
-        const frag = document.createDocumentFragment();
+    function buildLeaseCard(o) {
+        const card = document.createElement('article');
+        card.className = 'lease-card';
 
-        filteredLeases.forEach((o, i) => {
-            const card = document.createElement('article');
-            card.className = 'lease-card';
-            card.style.animationDelay = `${Math.min(i * 0.03, 0.5)}s`;
+        const monthlyStr = `$${Math.round(o.monthly_payment).toLocaleString()}`;
+        const dueStr = o.due_at_signing != null
+            ? `$${Math.round(o.due_at_signing).toLocaleString()} due at signing`
+            : '';
+        const termStr = o.term_months ? `${o.term_months} mo` : '';
+        const mileStr = o.annual_mileage
+            ? `${(o.annual_mileage / 1000).toFixed(0)}k mi/yr`
+            : '';
 
-            const monthlyStr = `$${Math.round(o.monthly_payment).toLocaleString()}`;
-            const dueStr = o.due_at_signing != null
-                ? `$${Math.round(o.due_at_signing).toLocaleString()} due at signing`
-                : '';
-            const termStr = o.term_months ? `${o.term_months} mo` : '';
-            const mileStr = o.annual_mileage
-                ? `${(o.annual_mileage / 1000).toFixed(0)}k mi/yr`
-                : '';
+        let effectiveStr = '';
+        if (o.due_at_signing != null && o.term_months) {
+            const eff = (o.due_at_signing + o.monthly_payment * o.term_months) / o.term_months;
+            effectiveStr = `$${Math.round(eff)}/mo effective`;
+        }
 
-            // Effective monthly = (due_at_signing + monthly * term) / term
-            let effectiveStr = '';
-            if (o.due_at_signing != null && o.term_months) {
-                const eff = (o.due_at_signing + o.monthly_payment * o.term_months) / o.term_months;
-                effectiveStr = `$${Math.round(eff)}/mo effective`;
-            }
+        let aprHtml = '';
+        if (o.money_factor != null) {
+            const apr = (o.money_factor * 2400).toFixed(1);
+            const aprNum = parseFloat(apr);
+            const aprClass = aprNum <= 3 ? 'apr-low' : aprNum <= 6 ? 'apr-mid' : 'apr-high';
+            aprHtml = `<span class="lease-detail-chip lease-apr ${aprClass}">${apr}% APR</span>`;
+        }
 
-            // APR display from money_factor if available
-            let aprHtml = '';
-            if (o.money_factor != null) {
-                const apr = (o.money_factor * 2400).toFixed(1);
-                const aprNum = parseFloat(apr);
-                const aprClass = aprNum <= 3 ? 'apr-low' : aprNum <= 6 ? 'apr-mid' : 'apr-high';
-                aprHtml = `<span class="lease-detail-chip lease-apr ${aprClass}">${apr}% APR</span>`;
-            }
+        const endDateStr = o.offer_end_date ? `Ends ${o.offer_end_date}` : '';
 
-            const endDateStr = o.offer_end_date ? `Ends ${o.offer_end_date}` : '';
+        const nearby = getNearbyDealers(o.make, 5);
 
-            // Get nearby dealers
-            const nearby = getNearbyDealers(o.make, 5);
+        let dealerChipsHtml = '';
+        if (nearby.length > 0) {
+            const chips = nearby.map(d => {
+                let url = d.website || '';
+                if (url && !url.startsWith('http')) url = 'https://' + url;
+                const distStr = d.distance != null ? ` <span class="dealer-distance">${Math.round(d.distance)} mi</span>` : '';
+                return `<a class="dealer-chip" href="${url}" target="_blank" rel="noopener">${d.name}${distStr}</a>`;
+            }).join('');
 
-            let dealerChipsHtml = '';
-            if (nearby.length > 0) {
-                const chips = nearby.map(d => {
-                    let url = d.website || '';
-                    if (url && !url.startsWith('http')) url = 'https://' + url;
-                    const distStr = d.distance != null ? ` <span class="dealer-distance">${Math.round(d.distance)} mi</span>` : '';
-                    return `<a class="dealer-chip" href="${url}" target="_blank" rel="noopener">${d.name}${distStr}</a>`;
-                }).join('');
-
-                dealerChipsHtml = `
-                    <hr class="lease-divider">
-                    <div class="dealer-section-title">Nearby ${o.make} Dealers</div>
-                    <div class="dealer-chips">${chips}</div>
-                `;
-            }
-
-            card.innerHTML = `
-                <div class="lease-header">
-                    <div>
-                        <div class="lease-vehicle-name">${o.year} ${o.make} ${o.model}${o.trim ? ' ' + o.trim : ''}</div>
-                        ${o.body_style ? `<div class="lease-body-style">${o.body_style}</div>` : ''}
-                    </div>
-                    <div class="lease-payment">
-                        <div class="lease-monthly">${monthlyStr}</div>
-                        <div class="lease-monthly-label">/month</div>
-                    </div>
-                </div>
-                <div class="lease-details">
-                    ${termStr ? `<span class="lease-detail-chip">${termStr}</span>` : ''}
-                    ${dueStr ? `<span class="lease-detail-chip">${dueStr}</span>` : ''}
-                    ${mileStr ? `<span class="lease-detail-chip">${mileStr}</span>` : ''}
-                    ${effectiveStr ? `<span class="lease-detail-chip">${effectiveStr}</span>` : ''}
-                    ${aprHtml}
-                    ${endDateStr ? `<span class="lease-detail-chip">${endDateStr}</span>` : ''}
-                </div>
-                ${dealerChipsHtml}
+            dealerChipsHtml = `
+                <hr class="lease-divider">
+                <div class="dealer-section-title">Nearby ${o.make} Dealers</div>
+                <div class="dealer-chips">${chips}</div>
             `;
+        }
 
-            frag.appendChild(card);
-        });
+        card.innerHTML = `
+            <div class="lease-header">
+                <div>
+                    <div class="lease-vehicle-name">${o.year} ${o.make} ${o.model}${o.trim ? ' ' + o.trim : ''}</div>
+                    ${o.body_style ? `<div class="lease-body-style">${o.body_style}</div>` : ''}
+                </div>
+                <div class="lease-payment">
+                    <div class="lease-monthly">${monthlyStr}</div>
+                    <div class="lease-monthly-label">/month</div>
+                </div>
+            </div>
+            <div class="lease-details">
+                ${termStr ? `<span class="lease-detail-chip">${termStr}</span>` : ''}
+                ${dueStr ? `<span class="lease-detail-chip">${dueStr}</span>` : ''}
+                ${mileStr ? `<span class="lease-detail-chip">${mileStr}</span>` : ''}
+                ${effectiveStr ? `<span class="lease-detail-chip">${effectiveStr}</span>` : ''}
+                ${aprHtml}
+                ${endDateStr ? `<span class="lease-detail-chip">${endDateStr}</span>` : ''}
+            </div>
+            ${dealerChipsHtml}
+        `;
 
+        return card;
+    }
+
+    function renderLeaseCards() {
         leaseList.innerHTML = '';
+        leasesShown = 0;
+        loadMoreLeases();
+    }
+
+    function loadMoreLeases() {
+        const existingBtn = leaseList.querySelector('.load-more-btn');
+        if (existingBtn) existingBtn.remove();
+
+        const frag = document.createDocumentFragment();
+        const end = Math.min(leasesShown + PAGE_SIZE, filteredLeases.length);
+
+        for (let i = leasesShown; i < end; i++) {
+            frag.appendChild(buildLeaseCard(filteredLeases[i]));
+        }
+
         leaseList.appendChild(frag);
+        leasesShown = end;
+
+        if (leasesShown < filteredLeases.length) {
+            const btn = document.createElement('button');
+            btn.className = 'load-more-btn';
+            btn.textContent = `Load More (${filteredLeases.length - leasesShown} remaining)`;
+            btn.addEventListener('click', loadMoreLeases);
+            leaseList.appendChild(btn);
+        }
     }
 
     // ===== ZIP CODE HANDLING =====
