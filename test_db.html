@@ -1,0 +1,28 @@
+<!doctype html><html><head><meta charset="utf-8"><title>DBTEST_RUN</title></head><body><pre id="o">…</pre>
+<script src="vendor/httpvfs.js"></script>
+<script src="db.js"></script>
+<script>
+(async()=>{
+const R={};
+const LAT=42.33,LNG=-83.05; // Detroit
+try{
+  // 1) browse all makes near me, sort by PRICE (the formerly-14s query — fix should kick in)
+  let t=performance.now();
+  const page=await CSBData.search({sort:"PRICE_LOW",userLat:LAT,userLng:LNG,radiusMiles:25,limit:5});
+  R.priceBrowse={ms:Math.round(performance.now()-t),rows:page.length,first:page[0]?`${page[0].year} ${page[0].make} ${page[0].model} $${page[0].price} ${page[0].dealer_city},${page[0].dealer_state}`:null};
+  // 2) count in box
+  t=performance.now();
+  R.count={n:await CSBData.count({userLat:LAT,userLng:LNG,radiusMiles:25}),ms:Math.round(performance.now()-t)};
+  // 3) make filter + distance sort
+  t=performance.now();
+  const toy=await CSBData.search({filter:{makes:["Toyota"],minPrice:15000,maxPrice:45000},sort:"DISTANCE",userLat:LAT,userLng:LNG,radiusMiles:25,limit:5});
+  R.toyota={ms:Math.round(performance.now()-t),rows:toy.length,first:toy[0]?`${toy[0].year} ${toy[0].make} ${toy[0].model} $${toy[0].price}`:null};
+  // 4) precomputed dropdowns
+  R.makesCount=(await CSBData.makes()).length;
+  R.toyotaModels=(await CSBData.modelsForMakes(["Toyota"])).length;
+  R.ok=true;
+}catch(e){R.ok=false;R.error=String(e&&e.stack||e);}
+window.__T=R; document.getElementById('o').textContent=JSON.stringify(R,null,2);
+document.title=R.ok?"DBTEST_OK":"DBTEST_ERR";
+})();
+</script></body></html>

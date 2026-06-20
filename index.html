@@ -1,114 +1,114 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>CarSearchBuddy</title>
-    <meta name="description" content="Search used cars and lease deals across Michigan dealerships. Fast, free, no app download required.">
-
-    <!-- PWA / iOS Native Mimicry -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="CarSearch">
-    <meta name="theme-color" content="#0a0e1a">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="manifest" href="manifest.json">
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0a">
+<title>Car Lease Buddy</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Status Bar Spacer for PWA -->
-    <div class="safe-area-top"></div>
+<div id="bg"></div>
 
-    <!-- Header -->
-    <header id="app-header">
-        <div class="header-content">
-            <h1>CarSearchBuddy</h1>
-        </div>
-        <!-- Tab Bar -->
-        <div class="tab-bar">
-            <button class="tab active" data-tab="inventory">Inventory</button>
-            <button class="tab" data-tab="leases">Leases</button>
-        </div>
+<!-- ===== HOME ===== -->
+<section id="home" class="screen active">
+  <div class="home-inner">
+    <h1 class="home-title">Car Lease Buddy</h1>
+    <p class="home-sub">Nationwide lease deals · used-car search · payment math</p>
+    <div class="home-buttons">
+      <button class="home-btn" data-go="leases"><span class="hb-title">Find Lease Deals</span><span class="hb-sub">Advertised leases, re-priced for any term</span></button>
+      <button class="home-btn" data-go="inventory"><span class="hb-title">Search Used Cars</span><span class="hb-sub">368k+ cars nationwide, near you</span></button>
+      <button class="home-btn" data-go="calculator"><span class="hb-title">Payment Calculator</span><span class="hb-sub">Auto-loan payment estimator</span></button>
+    </div>
+    <button class="home-saved" data-go="saved">★ Saved &amp; Alerts</button>
+  </div>
+</section>
+
+<!-- ===== INVENTORY ===== -->
+<section id="inventory" class="screen">
+  <header class="topbar">
+    <button class="tb-btn" data-go="home">‹ Back</button>
+    <span class="tb-title">Used Cars</span>
+    <button class="tb-btn" data-act="inv-filter">Filters</button>
+  </header>
+  <div class="loc-row">
+    <input id="inv-zip" class="zip-input" inputmode="numeric" maxlength="5" placeholder="ZIP for distance">
+    <button id="inv-geo" class="chip">📍 Near me</button>
+    <span id="inv-loc-label" class="loc-label"></span>
+  </div>
+  <div id="inv-count" class="count-row"></div>
+  <div id="inv-list" class="card-list"></div>
+  <div id="inv-more"></div>
+</section>
+
+<!-- ===== LEASES ===== -->
+<section id="leases" class="screen">
+  <header class="topbar">
+    <button class="tb-btn" data-go="home">‹ Back</button>
+    <span class="tb-title">Lease Deals</span>
+    <button class="tb-btn" data-act="lease-filter">Filters</button>
+  </header>
+  <div class="loc-row">
+    <input id="lease-zip" class="zip-input" inputmode="numeric" maxlength="5" placeholder="ZIP for dealers">
+    <div class="term-seg" id="lease-term">
+      <button class="seg active" data-term="adv">Advertised</button>
+      <button class="seg" data-term="24">24</button>
+      <button class="seg" data-term="36">36</button>
+      <button class="seg" data-term="39">39</button>
+      <button class="seg" data-term="48">48</button>
+    </div>
+  </div>
+  <div id="lease-count" class="count-row"></div>
+  <div id="lease-list" class="card-list"></div>
+  <div id="lease-more"></div>
+</section>
+
+<!-- ===== CALCULATOR ===== -->
+<section id="calculator" class="screen">
+  <header class="topbar">
+    <button class="tb-btn" data-go="home">‹ Back</button>
+    <span class="tb-title">Payment Calculator</span>
+    <span class="tb-btn ghost"></span>
+  </header>
+  <div class="calc-wrap glass">
+    <div id="calc-result" class="calc-result">
+      <div class="calc-monthly">$0<span>/mo</span></div>
+      <div class="calc-sub">Enter a price to start</div>
+    </div>
+    <div class="calc-grid" id="calc-grid"></div>
+  </div>
+</section>
+
+<!-- ===== SAVED ===== -->
+<section id="saved" class="screen">
+  <header class="topbar">
+    <button class="tb-btn" data-go="home">‹ Back</button>
+    <span class="tb-title">Saved &amp; Alerts</span>
+    <span class="tb-btn ghost"></span>
+  </header>
+  <div id="saved-list" class="card-list"></div>
+</section>
+
+<!-- ===== FILTER SHEET (shared) ===== -->
+<div id="sheet" class="sheet-overlay">
+  <div class="sheet glass">
+    <header class="sheet-head">
+      <button class="tb-btn" data-act="sheet-back">‹ Back</button>
+      <span class="tb-title" id="sheet-title">Filters</span>
+      <button class="tb-btn" data-act="sheet-reset">Start Over</button>
     </header>
+    <div id="sheet-body" class="sheet-body"></div>
+    <button id="sheet-apply" class="apply-btn">Show results</button>
+  </div>
+</div>
 
-    <!-- ====== INVENTORY TAB ====== -->
-    <div id="tab-inventory" class="tab-content active">
-        <!-- Search & Filters -->
-        <section id="search-section">
-            <div class="search-bar">
-                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-                </svg>
-                <input type="text" id="search-input" placeholder="Search make, model, dealer..." autocomplete="off">
-                <button id="clear-search" class="clear-btn" aria-label="Clear search">&#10005;</button>
-            </div>
-            <div class="filter-row">
-                <select id="filter-make"><option value="">All Makes</option></select>
-                <select id="filter-year"><option value="">All Years</option></select>
-                <select id="filter-price"><option value="">Any Price</option>
-                    <option value="0-10000">Under $10k</option>
-                    <option value="10000-20000">$10k - $20k</option>
-                    <option value="20000-30000">$20k - $30k</option>
-                    <option value="30000-50000">$30k - $50k</option>
-                    <option value="50000-999999">$50k+</option>
-                </select>
-            </div>
-        </section>
+<div id="toast" class="toast"></div>
 
-        <div id="stats-bar">
-            <span id="results-count">Loading...</span>
-            <span id="last-updated"></span>
-        </div>
-
-        <main id="vehicle-list"></main>
-
-        <div id="empty-state" class="hidden">
-            <div class="empty-icon">&#128269;</div>
-            <p>No vehicles match your search.</p>
-            <button id="reset-filters" class="reset-btn">Reset Filters</button>
-        </div>
-    </div>
-
-    <!-- ====== LEASES TAB ====== -->
-    <div id="tab-leases" class="tab-content">
-        <!-- Lease Filters -->
-        <section id="lease-search-section">
-            <div class="filter-row">
-                <input type="text" id="lease-zip" placeholder="Your ZIP code" maxlength="5" inputmode="numeric" class="zip-input">
-                <select id="lease-filter-make"><option value="">All Makes</option></select>
-                <select id="lease-filter-body"><option value="">All Body Styles</option></select>
-            </div>
-            <div class="filter-row" style="margin-top:6px">
-                <label class="slider-label">Max Monthly: <span id="lease-max-label">$1,500</span></label>
-                <input type="range" id="lease-max-payment" min="100" max="1500" step="50" value="1500" class="range-slider">
-            </div>
-        </section>
-
-        <div id="lease-stats-bar">
-            <span id="lease-results-count">Loading...</span>
-        </div>
-
-        <main id="lease-list"></main>
-
-        <div id="lease-empty-state" class="hidden">
-            <div class="empty-icon">&#128269;</div>
-            <p>No lease offers match your filters.</p>
-            <button id="lease-reset-filters" class="reset-btn">Reset Filters</button>
-        </div>
-    </div>
-
-    <!-- Loading State -->
-    <div id="loading-state">
-        <div class="loader"></div>
-        <p>Loading data...</p>
-    </div>
-
-    <script src="app.js"></script>
+<script src="vendor/httpvfs.js"></script>
+<script src="engine.js"></script>
+<script src="db.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

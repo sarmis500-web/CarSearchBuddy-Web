@@ -1,53 +1,51 @@
-const CACHE_NAME = 'csb-v2';
+const CACHE_NAME = 'csb-v3';
 const ASSETS = [
     './',
     './index.html',
     './style.css',
     './app.js',
-    './data.json',
+    './engine.js',
+    './db.js',
+    './manifest.json',
+    './showroom.jpg',
+    './apple-touch-icon.png',
+    './filters.json',
     './leases.json',
     './dealers.json',
     './zip_coords.json',
-    './apple-touch-icon.png'
+    './vendor/httpvfs.js',
+    './vendor/sqlite.worker.js',
+    './vendor/sql-wasm.wasm'
 ];
 
-// Install — cache all assets
 self.addEventListener('install', event => {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
-    );
+    event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS).catch(() => {})));
     self.skipWaiting();
 });
 
-// Activate — clean old caches
 self.addEventListener('activate', event => {
     event.waitUntil(
-        caches.keys().then(keys =>
-            Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
-        )
+        caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))))
     );
     self.clients.claim();
 });
 
-// Fetch — network first for JSON data (get fresh data), cache first for everything else
 self.addEventListener('fetch', event => {
     const url = new URL(event.request.url);
 
+    // Never intercept the R2 database (cross-origin range requests) — let the browser
+    // and httpvfs handle those directly, untouched.
+    if (url.origin !== location.origin) return;
+
     if (url.pathname.endsWith('.json')) {
-        // Network-first for all JSON data — always try to get latest
+        // Network-first for JSON data so a refresh picks up new leases/dealers.
         event.respondWith(
             fetch(event.request)
-                .then(resp => {
-                    const clone = resp.clone();
-                    caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-                    return resp;
-                })
+                .then(resp => { const c = resp.clone(); caches.open(CACHE_NAME).then(cache => cache.put(event.request, c)); return resp; })
                 .catch(() => caches.match(event.request))
         );
     } else {
-        // Cache-first for static assets
-        event.respondWith(
-            caches.match(event.request).then(cached => cached || fetch(event.request))
-        );
+        // Cache-first for the app shell + wasm (fast, offline-capable loads).
+        event.respondWith(caches.match(event.request).then(cached => cached || fetch(event.request)));
     }
 });

@@ -1,11 +1,11 @@
 {
-    "name": "CarSearchBuddy",
-    "short_name": "CarSearch",
-    "description": "Search hundreds of used cars across Michigan dealerships.",
+    "name": "Car Lease Buddy",
+    "short_name": "Lease Buddy",
+    "description": "Nationwide lease deals re-priced for any term, used-car search, and an auto-loan payment calculator.",
     "start_url": "./",
     "display": "standalone",
-    "background_color": "#0a0e1a",
-    "theme_color": "#0a0e1a",
+    "background_color": "#0a0a0a",
+    "theme_color": "#0a0a0a",
     "orientation": "portrait",
     "icons": [
         {
