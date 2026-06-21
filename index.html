@@ -12,17 +12,18 @@
 <body>
 <div id="bg"></div>
 
-<!-- ===== HOME ===== -->
+<!-- ===== HOME (mirrors native App.kt HomeScreen exactly) ===== -->
 <section id="home" class="screen active">
   <div class="home-inner">
     <h1 class="home-title">Car Lease Buddy</h1>
-    <p class="home-sub">Nationwide lease deals · used-car search · payment math</p>
-    <div class="home-buttons">
-      <button class="home-btn" data-go="leases"><span class="hb-title">Find Lease Deals</span><span class="hb-sub">Advertised leases, re-priced for any term</span></button>
-      <button class="home-btn" data-go="inventory"><span class="hb-title">Search Used Cars</span><span class="hb-sub">368k+ cars nationwide, near you</span></button>
-      <button class="home-btn" data-go="calculator"><span class="hb-title">Payment Calculator</span><span class="hb-sub">Auto-loan payment estimator</span></button>
+    <p class="home-sub">New Car Lease &amp; Used Car Deal Finder</p>
+    <div class="home-row top">
+      <button class="home-btn" data-go="leases">Find Lease Deals</button>
+      <button class="home-btn" data-go="inventory">Search Used Cars</button>
     </div>
-    <button class="home-saved" data-go="saved">★ Saved &amp; Alerts</button>
+    <div class="home-row center">
+      <button class="home-btn" data-go="calculator">Payment Calculator</button>
+    </div>
   </div>
 </section>
 
