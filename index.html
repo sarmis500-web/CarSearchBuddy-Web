@@ -30,7 +30,7 @@
 <!-- ===== INVENTORY ===== -->
 <section id="inventory" class="screen">
   <header class="topbar">
-    <button class="tb-btn" data-go="home">‹ Back</button>
+    <button class="tb-btn tb-back" data-go="home" aria-label="Back">←</button>
     <span class="tb-title">Used Cars</span>
     <button class="tb-btn" data-act="inv-filter">Filters</button>
   </header>
@@ -47,7 +47,7 @@
 <!-- ===== LEASES ===== -->
 <section id="leases" class="screen">
   <header class="topbar">
-    <button class="tb-btn" data-go="home">‹ Back</button>
+    <button class="tb-btn tb-back" data-go="home" aria-label="Back">←</button>
     <span class="tb-title">Lease Deals</span>
     <button class="tb-btn" data-act="lease-filter">Filters</button>
   </header>
@@ -66,26 +66,27 @@
   <div id="lease-more"></div>
 </section>
 
-<!-- ===== CALCULATOR ===== -->
+<!-- ===== CALCULATOR (mirrors native PaymentCalculatorScreen.kt) ===== -->
 <section id="calculator" class="screen">
+  <div class="calc-dim"></div>
   <header class="topbar">
-    <button class="tb-btn" data-go="home">‹ Back</button>
+    <button class="tb-btn tb-back" data-go="home" aria-label="Back">←</button>
     <span class="tb-title">Payment Calculator</span>
     <span class="tb-btn ghost"></span>
   </header>
-  <div class="calc-wrap glass">
-    <div id="calc-result" class="calc-result">
-      <div class="calc-monthly">$0<span>/mo</span></div>
-      <div class="calc-sub">Enter a price to start</div>
-    </div>
-    <div class="calc-grid" id="calc-grid"></div>
+  <div class="calc-col">
+    <div id="calc-fields"></div>
+    <div class="calc-term-label">Loan term</div>
+    <div id="calc-terms" class="term-chips"></div>
+    <button id="calc-go" class="calc-go-btn" disabled>Enter a vehicle price</button>
+    <div id="calc-result"></div>
   </div>
 </section>
 
 <!-- ===== SAVED ===== -->
 <section id="saved" class="screen">
   <header class="topbar">
-    <button class="tb-btn" data-go="home">‹ Back</button>
+    <button class="tb-btn tb-back" data-go="home" aria-label="Back">←</button>
     <span class="tb-title">Saved &amp; Alerts</span>
     <span class="tb-btn ghost"></span>
   </header>

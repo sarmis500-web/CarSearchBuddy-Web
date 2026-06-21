@@ -178,35 +178,79 @@
   // ===================================================================
   // CALCULATOR
   // ===================================================================
-  const calcInputs = { vehiclePrice: 0, downPayment: 0, aprPct: 6.9, termMonths: 72, salesTaxRatePct: 6, docFee: 0, titleLicenseFee: 0, tradeInValue: 0, tradeInPayoff: 0, taxFullPrice: false };
+  const calcInputs = { vehiclePrice: 0, docFee: 0, titleLicenseFee: 0, salesTaxRatePct: 0,
+    taxFullPrice: false, tradeInValue: 0, tradeInPayoff: 0, downPayment: 0, aprPct: 0, termMonths: 72 };
+  let calcShown = false;
+  const CALC_TERMS = [24, 36, 48, 60, 72, 84];
+  // Native field order (PaymentCalculatorScreen.kt): price → doc → title → tax rate →
+  // [full-price tax checkbox] → trade-in → still-owed → down → APR.
   const CALC_FIELDS = [
-    ["vehiclePrice", "Vehicle Price", "$"], ["downPayment", "Down Payment", "$"],
-    ["aprPct", "APR %", "%"], ["termMonths", "Term (months)", ""],
-    ["salesTaxRatePct", "Sales Tax %", "%"], ["docFee", "Doc Fee", "$"],
-    ["titleLicenseFee", "Title / License", "$"], ["tradeInValue", "Trade-in Value", "$"],
-    ["tradeInPayoff", "Trade-in Payoff", "$"],
+    { k: "vehiclePrice",    label: "Vehicle price",          affix: "$", accent: true },
+    { k: "docFee",          label: "Doc fee",                affix: "$" },
+    { k: "titleLicenseFee", label: "Title & license",        affix: "$" },
+    { k: "salesTaxRatePct", label: "Sales tax rate",         affix: "%" },
+    { check: true, k: "taxFullPrice", label: "My state taxes the full price (no trade-in credit)" },
+    { k: "tradeInValue",    label: "Trade-in value",         affix: "$" },
+    { k: "tradeInPayoff",   label: "Still owed on trade-in", affix: "$" },
+    { k: "downPayment",     label: "Down payment",           affix: "$" },
+    { k: "aprPct",          label: "Interest rate (APR)",    affix: "%" },
   ];
+
   function buildCalc() {
-    const g = $("calc-grid"); g.innerHTML = "";
-    CALC_FIELDS.forEach(([k, label]) => {
-      const wrap = el("div", "fgroup");
-      wrap.innerHTML = `<label>${label}</label><input inputmode="decimal" data-k="${k}" value="${calcInputs[k] || ""}">`;
-      wrap.querySelector("input").addEventListener("input", e => { calcInputs[k] = parseFloat(e.target.value) || 0; recalc(); });
-      g.appendChild(wrap);
+    const box = $("calc-fields"); box.innerHTML = "";
+    CALC_FIELDS.forEach(f => {
+      if (f.check) {
+        const row = el("div", "calc-check"); const id = "chk_" + f.k;
+        row.innerHTML = `<input type="checkbox" id="${id}" ${calcInputs[f.k] ? "checked" : ""}><label for="${id}">${f.label}</label>`;
+        row.querySelector("input").addEventListener("change", e => { calcInputs[f.k] = e.target.checked; recalc(); });
+        box.appendChild(row); return;
+      }
+      const pre = f.affix === "$";
+      const w = el("div", "mfield " + (pre ? "pre" : "suf") + (f.accent ? " accent" : ""));
+      const v = calcInputs[f.k] ? String(calcInputs[f.k]) : "";
+      w.innerHTML = `<input inputmode="decimal" placeholder=" " value="${v}"><label>${f.label}</label><span class="affix ${pre ? "pre" : "suf"}">${f.affix}</span>`;
+      w.querySelector("input").addEventListener("input", e => { calcInputs[f.k] = parseFloat(e.target.value) || 0; recalc(); });
+      box.appendChild(w);
     });
-    const tax = el("div", "fgroup full");
-    tax.innerHTML = `<label><input type="checkbox" data-k="taxFullPrice"> Tax full price (CA, VA, HI…) instead of price − trade-in</label>`;
-    tax.querySelector("input").addEventListener("change", e => { calcInputs.taxFullPrice = e.target.checked; recalc(); });
-    g.appendChild(tax);
+    buildTermChips();
     recalc();
+  }
+  function buildTermChips() {
+    const box = $("calc-terms"); box.innerHTML = "";
+    CALC_TERMS.forEach(m => {
+      const c = el("div", "term-chip" + (calcInputs.termMonths === m ? " on" : ""), m + " mo");
+      c.onclick = () => { calcInputs.termMonths = m; box.querySelectorAll(".term-chip").forEach(x => x.classList.remove("on")); c.classList.add("on"); recalc(); };
+      box.appendChild(c);
+    });
   }
   function recalc() {
     const r = computeLoan(calcInputs);
-    $("calc-result").innerHTML = r.computable
-      ? `<div class="calc-monthly">${fmt(r.monthlyPayment)}<span>/mo</span></div><div class="calc-sub">${calcInputs.termMonths} mo · financing ${fmt(r.amountFinanced)} · tax ${fmt(r.salesTax)}</div>`
-      : `<div class="calc-monthly">$0<span>/mo</span></div><div class="calc-sub">Enter a price and term to start</div>`;
+    const btn = $("calc-go");
+    btn.disabled = !r.computable;
+    btn.textContent = r.computable ? "Calculate Payment" : "Enter a vehicle price";
+    // Result appears only after Calculate is tapped (or when arriving from a card); then it tracks edits.
+    $("calc-result").innerHTML = (calcShown && r.computable) ? resultCard(r) : "";
   }
-  function openCalculatorWith(price) { calcInputs.vehiclePrice = price > 0 ? Math.round(price) : 0; buildCalc(); show("calculator"); toast("Price filled in"); }
+  function resultCard(r) {
+    const i = calcInputs;
+    const row = (label, amt, prefix = "", em = false) => `<div class="brow${em ? " em" : ""}"><span>${label}</span><span>${prefix}${fmt(amt)}</span></div>`;
+    let rows = row("Vehicle price", i.vehiclePrice);
+    if (i.docFee > 0) rows += row("Doc fee", i.docFee);
+    if (i.titleLicenseFee > 0) rows += row("Title & license", i.titleLicenseFee);
+    if (r.salesTax > 0) rows += row("Sales tax", r.salesTax);
+    if (i.tradeInValue > 0) rows += row("Trade-in", i.tradeInValue, "−");
+    if (i.tradeInPayoff > 0) rows += row("Owed on trade-in", i.tradeInPayoff, "+");
+    if (i.downPayment > 0) rows += row("Down payment", i.downPayment, "−");
+    return `<div class="calc-card">
+      <div class="lbl">Estimated monthly payment</div>
+      <div class="big">${fmt(r.monthlyPayment)}/mo</div>
+      <div class="terms">${i.termMonths} months at ${i.aprPct || 0}% APR</div>
+      <hr>${rows}<hr class="tight">${row("Amount financed", r.amountFinanced, "", true)}</div>`;
+  }
+  function openCalculatorWith(price) {
+    calcInputs.vehiclePrice = price > 0 ? Math.round(price) : 0;
+    calcShown = true; buildCalc(); show("calculator"); toast("Price filled in");
+  }
 
   // ===================================================================
   // SAVED
@@ -312,6 +356,11 @@
     $("inv-geo").onclick = useGeolocation;
     $("lease-zip").addEventListener("input", e => { clearTimeout(leaseZipT); const v = e.target.value; leaseZipT = setTimeout(() => setZip(v, "lease"), 350); });
     $("lease-term").addEventListener("click", e => { const s = e.target.closest(".seg"); if (!s) return; $("lease-term").querySelectorAll(".seg").forEach(x => x.classList.remove("active")); s.classList.add("active"); leaseState.term = s.dataset.term; leaseState.shown = PAGE; runLeases(); });
+    $("calc-go").onclick = () => {
+      if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+      calcShown = true; recalc();
+      setTimeout(() => { const c = $("calc-result").firstElementChild; if (c) c.scrollIntoView({ behavior: "smooth", block: "end" }); }, 120);
+    };
     buildCalc();
   }
 
