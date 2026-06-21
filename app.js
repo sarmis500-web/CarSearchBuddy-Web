@@ -133,12 +133,23 @@
   }
   function runLeases() {
     const list = filteredLeases();
-    $("lease-count").textContent = `${list.length} lease offer${list.length === 1 ? "" : "s"}` + (leaseState.term !== "adv" ? ` · re-priced to ${leaseState.term} mo` : "");
+    $("lease-count").textContent = `${list.length} offer${list.length === 1 ? "" : "s"}`;
+    renderLeaseChips();
     const box = $("lease-list"); box.innerHTML = "";
-    if (!list.length) { box.innerHTML = `<div class="empty">No lease deals match your filters.</div>`; $("lease-more").innerHTML = ""; return; }
+    if (!list.length) { box.innerHTML = `<div class="empty">No offers match your filters</div>`; $("lease-more").innerHTML = ""; return; }
     list.slice(0, leaseState.shown).forEach(o => box.appendChild(leaseCard(o)));
     $("lease-more").innerHTML = "";
     if (list.length > leaseState.shown) { const b = el("button", "load-more", `Load more (${list.length - leaseState.shown})`); b.onclick = () => { leaseState.shown += PAGE; runLeases(); }; $("lease-more").appendChild(b); }
+  }
+  // Active-filter chips in the FilterBar (native: makes/models/body styles, horizontal scroll)
+  function renderLeaseChips() {
+    const f = leaseState.filter, chips = [];
+    (f.makes || []).forEach(m => chips.push(m));
+    (f.models || []).forEach(m => chips.push(m));
+    (f.bodies || []).forEach(b => chips.push(b));
+    if (f.maxPay) chips.push(`≤ ${fmt(f.maxPay)}/mo`);
+    if (f.maxDown != null) chips.push(`≤ ${fmt(f.maxDown)} down`);
+    $("lease-chips").innerHTML = chips.map(c => `<span class="lease-chip">${c}</span>`).join("");
   }
 
   function nearestDealers(make, n) {
@@ -147,33 +158,65 @@
     if (geo) return ds.map(d => ({ ...d, dist: haversine(geo.lat, geo.lng, d.lat, d.lng) })).sort((a, b) => a.dist - b.dist).slice(0, n);
     return ds.slice(0, n).map(d => ({ ...d, dist: null }));
   }
+
+  // Card layout transcribed from LeaseScreen.kt LeaseOfferCard.
   function leaseCard(o) {
     const pr = leasePayment(o);
-    const c = el("div", "card glass");
-    const apr = o.money_factor != null && o.can_recompute ? (o.money_factor * 2400).toFixed(1) + "% APR" : null;
-    const eff = (pr.dueAtSigning != null && pr.termMonths) ? Math.round((pr.dueAtSigning + pr.monthly * pr.termMonths) / pr.termMonths) : null;
-    const confLabel = LEASE_CONFIDENCE[pr.confidence];
-    const ds = nearestDealers(o.make, 4);
-    const dchips = ds.length ? `<div class="dealer-chips">${ds.map(d => { let u = d.website || ""; if (u && !/^https?:/.test(u)) u = "https://" + u; return `<a class="dealer-chip" href="${u}" target="_blank" rel="noopener">${d.name}${d.dist != null ? ` <span class="mi">${Math.round(d.dist)} mi</span>` : ""}</a>`; }).join("")}</div>` : "";
+    const term = leaseState.term === "adv" ? null : parseInt(leaseState.term, 10);
+    const isTermAdj = term != null && term !== o.term_months && pr.computable;
+    const isAdjusted = isTermAdj;
+    const mileage = (o.annual_mileage ?? 10000).toLocaleString();
+    const dealerCount = (dealersByMake[o.make] || []).length;
+    const nearest = nearestDealers(o.make, 1)[0];
+    const distText = (nearest && nearest.dist != null) ? ` · ${Math.round(nearest.dist)} mi` : "";
+    const moreText = dealerCount > 1 ? `(+${dealerCount - 1} more nearby)` : "";
+    const c = el("div", "lease-card");
+    const trim = o.trim ? " " + o.trim : "";
     c.innerHTML = `
-      <button class="bell ${isFav(o) ? "saved" : ""}">${isFav(o) ? "★" : "☆"}</button>
-      <div class="card-top">
-        <div class="card-name">${o.year} ${o.make} ${o.model}${o.trim ? " " + o.trim : ""}</div>
-        <div class="card-price">${fmt(pr.monthly)}<span style="font-size:13px;color:var(--text-dim)">/mo</span></div>
+      <div class="lc-name">${o.year} ${o.make} ${o.model}${trim}</div>
+      <div class="lc-body">${o.body_style || ""}</div>
+      <div class="lc-pay">
+        <div class="lc-pay-l">
+          <div class="lc-lbl">${isAdjusted ? "Your monthly" : "Monthly"}</div>
+          <div class="lc-monthly">${fmt(pr.monthly)}/mo</div>
+        </div>
+        <div class="lc-pay-r">
+          <div class="lc-lbl">${isAdjusted ? "Your down payment" : "Due at signing"}</div>
+          <div class="lc-due">${fmt(pr.dueAtSigning)}</div>
+        </div>
       </div>
-      <div class="chips">
-        <span class="tag">${pr.termMonths} mo</span>
-        <span class="tag">${fmt(pr.dueAtSigning)} down</span>
-        <span class="tag">${(o.annual_mileage / 1000).toFixed(0)}k mi/yr</span>
-        ${eff != null ? `<span class="tag">${fmt(eff)}/mo effective</span>` : ""}
-        ${apr ? `<span class="tag amber">${apr}</span>` : ""}
-        ${o.offer_end_date ? `<span class="tag">ends ${o.offer_end_date}</span>` : ""}
+      <div class="lc-details">
+        <span class="${isTermAdj ? "adj" : ""}">${pr.termMonths} months</span>
+        <span>${mileage} mi/yr</span>
       </div>
-      <div class="conf">${pr.confidence === "EXACT" ? "✓ <b>Advertised</b> terms" : "<b>" + confLabel + "</b>"}${o.msrp ? " · MSRP " + fmt(o.msrp) : ""}</div>
-      ${dchips}`;
-    c.querySelector(".bell").onclick = e => { toggleFav(o, "lease"); const on = isFav(o); e.currentTarget.classList.toggle("saved", on); e.currentTarget.textContent = on ? "★" : "☆"; };
+      ${pr.confidence !== "EXACT" ? `<div class="lc-conf">${LEASE_CONFIDENCE[pr.confidence]}</div>` : ""}
+      ${(o.msrp && o.msrp > 100) ? `<div class="lc-msrp">MSRP: ${fmt(o.msrp)}</div>` : ""}
+      ${nearest ? `<div class="lc-dealer">Nearest dealer: ${nearest.name}${distText}</div>${moreText ? `<div class="lc-more">${moreText}</div>` : ""}` : ""}
+      <button class="lc-btn">${dealerCount > 0 ? "View Nearby Dealers" : "Dealer Website"}</button>`;
+    c.onclick = () => openDealerSheet(o);
     return c;
   }
+
+  // Dealer links popup (native DealerLinksSheet) — homepage links only (never 404).
+  function openDealerSheet(o) {
+    const hasGeo = !!geo;
+    const ds = nearestDealers(o.make, 8);
+    const trim = o.trim ? " " + o.trim : "";
+    let html = `<div class="dsheet-title">${o.year} ${o.make} ${o.model}${trim}</div>`;
+    html += `<div class="dsheet-sub">${hasGeo ? `Nearest ${o.make} dealers` : `${o.make} dealers`} — tap to view inventory</div>`;
+    if (!ds.length) {
+      html += `<div class="dsheet-sub">No ${o.make} dealers found in our database</div>`;
+    } else {
+      html += ds.map(d => {
+        let u = d.website || ""; if (u && !/^https?:/.test(u)) u = "https://" + u;
+        const dist = (hasGeo && d.dist != null) ? ` <span class="mi">${Math.round(d.dist)} mi</span>` : "";
+        return `<a class="dsheet-dealer" href="${u}" target="_blank" rel="noopener">${d.name}${dist}</a>`;
+      }).join("");
+    }
+    $("dsheet-body").innerHTML = html;
+    $("dealer-sheet").classList.add("open");
+  }
+  function closeDealerSheet() { $("dealer-sheet").classList.remove("open"); }
 
   // ===================================================================
   // CALCULATOR
@@ -346,16 +389,16 @@
       const a = act.dataset.act;
       if (a === "inv-filter") openSheet("inv");
       if (a === "lease-filter") openSheet("lease");
+      if (a === "lease-clear") { leaseState.filter = {}; leaseState.shown = PAGE; runLeases(); }
       if (a === "sheet-back") closeSheet();
       if (a === "sheet-reset") resetSheet();
     });
     $("sheet-apply").onclick = applySheet;
     sheetEl.addEventListener("click", e => { if (e.target === sheetEl) closeSheet(); });
-    let invZipT, leaseZipT;
+    $("dealer-sheet").addEventListener("click", e => { if (e.target === $("dealer-sheet")) closeDealerSheet(); });
+    let invZipT;
     $("inv-zip").addEventListener("input", e => { clearTimeout(invZipT); const v = e.target.value; invZipT = setTimeout(() => setZip(v, "inv"), 350); });
     $("inv-geo").onclick = useGeolocation;
-    $("lease-zip").addEventListener("input", e => { clearTimeout(leaseZipT); const v = e.target.value; leaseZipT = setTimeout(() => setZip(v, "lease"), 350); });
-    $("lease-term").addEventListener("click", e => { const s = e.target.closest(".seg"); if (!s) return; $("lease-term").querySelectorAll(".seg").forEach(x => x.classList.remove("active")); s.classList.add("active"); leaseState.term = s.dataset.term; leaseState.shown = PAGE; runLeases(); });
     $("calc-go").onclick = () => {
       if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
       calcShown = true; recalc();

@@ -44,25 +44,24 @@
   <div id="inv-more"></div>
 </section>
 
-<!-- ===== LEASES ===== -->
+<!-- ===== LEASES (mirrors native LeaseScreen.kt: FilterBar + LeaseOfferCard) ===== -->
 <section id="leases" class="screen">
   <header class="topbar">
     <button class="tb-btn tb-back" data-go="home" aria-label="Back">←</button>
     <span class="tb-title">Lease Deals</span>
-    <button class="tb-btn" data-act="lease-filter">Filters</button>
+    <span class="tb-btn ghost"></span>
   </header>
-  <div class="loc-row">
-    <input id="lease-zip" class="zip-input" inputmode="numeric" maxlength="5" placeholder="ZIP for dealers">
-    <div class="term-seg" id="lease-term">
-      <button class="seg active" data-term="adv">Advertised</button>
-      <button class="seg" data-term="24">24</button>
-      <button class="seg" data-term="36">36</button>
-      <button class="seg" data-term="39">39</button>
-      <button class="seg" data-term="48">48</button>
+  <div class="lease-bar">
+    <div class="lease-bar-row">
+      <span id="lease-count" class="lease-count">0 offers</span>
+      <span class="lease-bar-actions">
+        <button class="lease-clear" data-act="lease-clear">Clear</button>
+        <button class="lease-filters" data-act="lease-filter">Filters</button>
+      </span>
     </div>
+    <div id="lease-chips" class="lease-active-chips"></div>
   </div>
-  <div id="lease-count" class="count-row"></div>
-  <div id="lease-list" class="card-list"></div>
+  <div id="lease-list" class="card-list lease-list"></div>
   <div id="lease-more"></div>
 </section>
 
@@ -103,6 +102,14 @@
     </header>
     <div id="sheet-body" class="sheet-body"></div>
     <button id="sheet-apply" class="apply-btn">Show results</button>
+  </div>
+</div>
+
+<!-- ===== DEALER LINKS POPUP (native DealerLinksSheet) ===== -->
+<div id="dealer-sheet" class="sheet-overlay">
+  <div class="dsheet">
+    <div class="dsheet-grab"></div>
+    <div id="dsheet-body" class="dsheet-body"></div>
   </div>
 </div>
 

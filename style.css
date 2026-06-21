@@ -73,6 +73,54 @@ body{
   font-size:13px;font-weight:600;cursor:pointer}
 .term-seg .seg.active{background:var(--amber);color:#1a1400}
 
+/* ---- Lease screen (mirrors LeaseScreen.kt) ---- */
+/* FilterBar: full-bleed 60%-black surface, "N offers" + Clear + white Filters pill */
+.lease-bar{margin:0 -14px 0;padding:8px 12px;background:rgba(0,0,0,.60)}
+.lease-bar-row{display:flex;justify-content:space-between;align-items:center}
+.lease-count{font-size:14px;font-weight:600;color:#fff}
+.lease-bar-actions{display:flex;align-items:center;gap:2px}
+.lease-clear{background:transparent;border:0;color:#fff;font-size:14px;font-weight:600;padding:8px 12px;cursor:pointer}
+.lease-filters{background:#fff;color:#000;border:0;border-radius:20px;padding:9px 22px;font-size:14px;font-weight:600;cursor:pointer}
+.lease-active-chips{display:flex;gap:6px;overflow-x:auto;margin-top:6px;-ms-overflow-style:none;scrollbar-width:none}
+.lease-active-chips::-webkit-scrollbar{display:none}
+.lease-active-chips:empty{display:none}
+.lease-chip{flex:0 0 auto;font-size:11px;color:#fff;background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.5);border-radius:999px;padding:4px 11px;white-space:nowrap}
+.lease-list{padding-top:8px;gap:8px}
+
+/* LeaseOfferCard: 60% black, 1.5px white@85 border, 16px pad, 12px radius */
+.lease-card{background:rgba(0,0,0,.60);border:1.5px solid rgba(255,255,255,.85);border-radius:12px;
+  padding:16px;cursor:pointer}
+.lc-name{font-size:16px;font-weight:700;color:#fff;line-height:1.25}
+.lc-body{font-size:11px;font-weight:600;color:rgba(255,255,255,.92);margin-top:2px}
+.lc-pay{display:flex;justify-content:space-between;align-items:flex-start;margin-top:8px}
+.lc-pay-r{text-align:right}
+.lc-lbl{font-size:11px;font-weight:600;color:#fff}
+.lc-monthly{font-size:24px;font-weight:700;color:var(--amber);line-height:1.15;margin-top:2px}
+.lc-due{font-size:16px;font-weight:500;color:#fff;margin-top:2px}
+.lc-details{display:flex;justify-content:space-between;margin-top:8px}
+.lc-details span{font-size:12px;font-weight:500;color:#fff}
+.lc-details span.adj{color:var(--amber)}
+.lc-conf{font-size:11px;font-weight:500;color:var(--amber);margin-top:4px}
+.lc-msrp{font-size:12px;font-weight:500;color:#fff;margin-top:4px}
+.lc-dealer{font-size:12px;font-weight:600;color:#fff;margin-top:8px}
+.lc-more{font-size:11px;font-weight:600;color:rgba(255,255,255,.85);margin-top:1px}
+.lc-btn{width:100%;margin-top:12px;background:transparent;border:1.5px solid var(--amber);color:#fff;
+  border-radius:20px;padding:11px;font-size:14px;font-weight:600;cursor:pointer}
+
+/* Dealer links popup (native DealerLinksSheet — Material bottom sheet) */
+.dsheet{width:100%;max-height:80vh;display:flex;flex-direction:column;background:rgba(18,18,18,.96);
+  border:1px solid var(--glass-stroke-soft);border-radius:20px 20px 0 0;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);animation:slideup .22s ease}
+.dsheet-grab{width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.4);margin:10px auto 4px}
+.dsheet-body{overflow-y:auto;padding:8px 20px calc(20px + env(safe-area-inset-bottom));display:flex;
+  flex-direction:column;gap:10px}
+.dsheet-title{font-size:16px;font-weight:700;color:#fff;margin-top:6px}
+.dsheet-sub{font-size:14px;font-weight:500;color:var(--text-dim)}
+.dsheet-dealer{width:100%;text-align:left;background:rgba(255,255,255,.10);border:1px solid var(--glass-stroke-soft);
+  color:#fff;border-radius:12px;padding:13px 16px;font-size:15px;font-weight:500;cursor:pointer;text-decoration:none;display:block}
+.dsheet-dealer .mi{color:var(--amber);font-weight:700}
+
 /* ---- Cards ---- */
 .card-list{display:flex;flex-direction:column;gap:12px}
 .card{position:relative;padding:14px 16px}
