@@ -316,7 +316,8 @@
   }
 
   async function boot() {
-    if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+    // No service worker for now — kept the app online-only to avoid stale-cache issues.
+    // The deployed sw.js is a self-healing kill-switch that clears old caches; we don't re-register.
     wire();
     try {
       const [lz, ld, ll] = await Promise.all([fetch("zip_coords.json"), fetch("dealers.json"), fetch("leases.json")]);
