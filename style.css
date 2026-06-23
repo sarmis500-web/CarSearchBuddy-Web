@@ -140,6 +140,24 @@ body{
 .bell{position:absolute;top:12px;right:14px;background:transparent;border:0;font-size:20px;
   cursor:pointer;color:var(--text);line-height:1}
 .bell.saved{color:var(--amber)}
+
+/* ---- Used-car card (mirrors native InventoryCard: 16dp pad, 1.5dp .85 stroke) ---- */
+.card.uc{padding:16px;border:1.5px solid var(--glass-stroke)}
+.uc-title{font-size:16px;font-weight:700;line-height:1.25;color:#fff}          /* titleMedium */
+.uc-cond{display:inline-block;margin-top:4px;background:rgba(255,255,255,.18);   /* condition badge */
+  border-radius:4px;padding:2px 6px;font-size:11px;color:#fff}                   /* labelSmall */
+.uc-pricerow{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.uc-price{font-size:24px;font-weight:700;color:var(--amber)}                     /* headlineSmall, amber */
+.uc-price.muted{font-size:16px;font-weight:600;color:var(--text-dim)}
+.uc-mileage{text-align:right}
+.uc-mi-label{font-size:11px;color:#fff}                                          /* labelSmall */
+.uc-mi-val{font-size:16px;color:#fff}                                            /* titleMedium */
+.uc-dealer{margin-top:4px;font-size:14px;color:#fff}                             /* bodyMedium */
+.uc-actions{display:flex;gap:8px;margin-top:12px}
+.uc-btn{flex:1;text-align:center;background:transparent;border:1.5px solid var(--amber);
+  color:#fff;border-radius:20px;padding:9px 4px;font-size:13px;font-weight:600;   /* M3 OutlinedButton pill */
+  cursor:pointer;text-decoration:none;display:inline-block}
+.uc-btn[disabled]{opacity:.5;cursor:default}
 .dealer-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;
   padding-top:10px;border-top:1px solid var(--glass-stroke-soft)}
 .dealer-chip{font-size:12px;color:var(--text);background:rgba(255,255,255,.08);

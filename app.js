@@ -84,26 +84,28 @@
     } catch (e) { if (myToken === invToken && reset) $("inv-list").innerHTML = `<div class="empty">Couldn't load cars.<br><small>${e}</small></div>`; }
   }
 
+  // Mirrors native InventoryCard (InventoryScreen.kt): title, condition badge, a big amber
+  // price paired with a right-aligned Mileage column, the dealer line with "· X mi away"
+  // folded in, then two equal-width outlined-amber buttons. No save star (native has none).
   function invCard(v, snapGeo = geo) {
-    const c = el("div", "card glass");
+    const c = el("div", "card glass uc");
     const dist = (snapGeo && v.dealer_lat != null) ? Math.round(haversine(snapGeo.lat, snapGeo.lng, v.dealer_lat, v.dealer_lng)) : null;
-    const price = v.price > 0 ? `<div class="card-price">${fmt(v.price)}</div>` : `<div class="card-price muted">Call for price</div>`;
+    const price = v.price > 0 ? `<div class="uc-price">${fmt(v.price)}</div>` : `<div class="uc-price muted">Call for price</div>`;
+    const mileage = (v.mileage && v.mileage > 0)
+      ? `<div class="uc-mileage"><div class="uc-mi-label">Mileage</div><div class="uc-mi-val">${v.mileage.toLocaleString()} mi</div></div>` : "";
+    const dealer = `${v.dealer_name || ""}${v.dealer_city ? " — " + v.dealer_city + ", " + v.dealer_state : ""}${dist != null ? " · " + dist + " mi away" : ""}`;
+    const dealerBtn = v.source_url
+      ? `<a class="uc-btn" href="${v.source_url}" target="_blank" rel="noopener">Dealer Website</a>`
+      : `<button class="uc-btn" disabled>Dealer Website</button>`;
     c.innerHTML = `
-      <button class="bell ${isFav(v) ? "saved" : ""}">${isFav(v) ? "★" : "☆"}</button>
-      <div class="card-top"><div class="card-name">${v.year} ${v.make} ${v.model}${v.trim ? " " + v.trim : ""}</div>${price}</div>
-      <div class="chips">
-        ${v.condition ? `<span class="tag">${v.condition}</span>` : ""}
-        ${v.mileage ? `<span class="tag">${v.mileage.toLocaleString()} mi</span>` : ""}
-        ${v.body_style ? `<span class="tag">${v.body_style}</span>` : ""}
-        ${v.cylinders ? `<span class="tag">${v.cylinders}-cyl</span>` : ""}
-        ${dist != null ? `<span class="tag amber">${dist} mi</span>` : ""}
-      </div>
-      <div class="card-dealer">${v.dealer_name || ""}${v.dealer_city ? " · " + v.dealer_city + ", " + v.dealer_state : ""}</div>
-      <div class="card-actions">
-        <button class="btn-sm amber" data-calc>Calculate Payment</button>
-        ${v.source_url ? `<a class="btn-sm" href="${v.source_url}" target="_blank" rel="noopener">View listing</a>` : ""}
+      <div class="uc-title">${v.year} ${v.make} ${v.model}${v.trim ? " " + v.trim : ""}</div>
+      ${v.condition ? `<div class="uc-cond">${v.condition}</div>` : ""}
+      <div class="uc-pricerow">${price}${mileage}</div>
+      <div class="uc-dealer">${dealer}</div>
+      <div class="uc-actions">
+        <button class="uc-btn" data-calc>Payment Calculator</button>
+        ${dealerBtn}
       </div>`;
-    c.querySelector(".bell").onclick = e => { toggleFav(v, "car"); const b = e.currentTarget; const on = isFav(v); b.classList.toggle("saved", on); b.textContent = on ? "★" : "☆"; };
     c.querySelector("[data-calc]").onclick = () => openCalculatorWith(v.price);
     return c;
   }
