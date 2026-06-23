@@ -67,15 +67,17 @@
     const snapGeo = geo; // freeze the location used for this query so labels/distances stay consistent
     const q = { filter: invState.filter, sort: invState.sort, userLat: snapGeo?.lat, userLng: snapGeo?.lng, radiusMiles: invState.radius, limit: PAGE, offset: invState.offset };
     if (reset) {
+      renderInvChips();
       $("inv-list").innerHTML = `<div class="loading">Searching…</div>`; $("inv-more").innerHTML = ""; $("inv-count").textContent = "Searching…";
-      CSBData.count(q).then(n => { if (myToken !== invToken) return; $("inv-count").textContent = `${n.toLocaleString()} car${n === 1 ? "" : "s"}${snapGeo ? " within " + invState.radius + " mi" : ""}`; }).catch(() => {});
+      // Native FilterBar label is just "{N} vehicles" (no "within X mi"; distance shows as a chip).
+      CSBData.count(q).then(n => { if (myToken !== invToken) return; $("inv-count").textContent = `${n.toLocaleString()} vehicle${n === 1 ? "" : "s"}`; }).catch(() => {});
     } else { $("inv-more").innerHTML = `<div class="loading">Loading…</div>`; }
     try {
       const rows = await CSBData.search(q);
       if (myToken !== invToken) return; // a newer query superseded this one — drop stale results
       if (reset) {
         $("inv-list").innerHTML = "";
-        if (!rows.length) { $("inv-list").innerHTML = `<div class="empty">No cars match. ${snapGeo ? "Try a larger distance or " : ""}adjust filters.</div>`; $("inv-count").textContent = "0 cars"; }
+        if (!rows.length) { $("inv-list").innerHTML = `<div class="empty">No cars match. ${snapGeo ? "Try a larger distance or " : ""}adjust filters.</div>`; $("inv-count").textContent = "0 vehicles"; }
       }
       rows.forEach(r => $("inv-list").appendChild(invCard(r, snapGeo)));
       invState.offset += rows.length;
@@ -87,6 +89,22 @@
   // Mirrors native InventoryCard (InventoryScreen.kt): title, condition badge, a big amber
   // price paired with a right-aligned Mileage column, the dealer line with "· X mi away"
   // folded in, then two equal-width outlined-amber buttons. No save star (native has none).
+  // Active-filter chips under the FilterBar (mirrors native FilterBar's chip row); also
+  // toggles the "Clear" button so it only shows when something is actually set.
+  function renderInvChips() {
+    const f = invState.filter || {};
+    const chips = [];
+    if (f.minYear) chips.push(f.minYear + "+");
+    if (f.maxPrice) chips.push("Under $" + Math.round(f.maxPrice / 1000) + "K");
+    if (f.maxMileage) chips.push("Under " + Math.round(f.maxMileage / 1000) + "K mi");
+    (f.makes || []).forEach(m => chips.push(m));
+    (f.models || []).forEach(m => chips.push(m));
+    (f.bodyStyles || []).forEach(b => chips.push(b));
+    (f.cylinders || []).forEach(c => chips.push(c + "-cyl"));
+    $("inv-chips").innerHTML = chips.map(c => `<span class="lease-chip">${c}</span>`).join("");
+    $("inv-clear").hidden = chips.length === 0;
+  }
+
   function invCard(v, snapGeo = geo) {
     const c = el("div", "card glass uc");
     const dist = (snapGeo && v.dealer_lat != null) ? Math.round(haversine(snapGeo.lat, snapGeo.lng, v.dealer_lat, v.dealer_lng)) : null;
@@ -390,6 +408,7 @@
       const act = e.target.closest("[data-act]"); if (!act) return;
       const a = act.dataset.act;
       if (a === "inv-filter") openSheet("inv");
+      if (a === "inv-clear") { invState.filter = {}; invState.sort = "DISTANCE"; invState.offset = 0; runInventory(true); }
       if (a === "lease-filter") openSheet("lease");
       if (a === "lease-clear") { leaseState.filter = {}; leaseState.shown = PAGE; runLeases(); }
       if (a === "sheet-back") closeSheet();
@@ -398,9 +417,7 @@
     $("sheet-apply").onclick = applySheet;
     sheetEl.addEventListener("click", e => { if (e.target === sheetEl) closeSheet(); });
     $("dealer-sheet").addEventListener("click", e => { if (e.target === $("dealer-sheet")) closeDealerSheet(); });
-    let invZipT;
-    $("inv-zip").addEventListener("input", e => { clearTimeout(invZipT); const v = e.target.value; invZipT = setTimeout(() => setZip(v, "inv"), 350); });
-    $("inv-geo").onclick = useGeolocation;
+    // (ZIP/“Near me” live in the filter sheet now — native has no ZIP row on this screen.)
     $("calc-go").onclick = () => {
       if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
       calcShown = true; recalc();

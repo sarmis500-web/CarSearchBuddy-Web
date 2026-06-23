@@ -27,19 +27,25 @@
   </div>
 </section>
 
-<!-- ===== INVENTORY ===== -->
+<!-- ===== INVENTORY (mirrors native InventoryScreen.kt: top bar + FilterBar) ===== -->
 <section id="inventory" class="screen">
   <header class="topbar">
     <button class="tb-btn tb-back" data-go="home" aria-label="Back">←</button>
     <span class="tb-title">Used Cars</span>
-    <button class="tb-btn" data-act="inv-filter">Filters</button>
+    <span class="tb-btn ghost"></span>
   </header>
-  <div class="loc-row">
-    <input id="inv-zip" class="zip-input" inputmode="numeric" maxlength="5" placeholder="ZIP for distance">
-    <button id="inv-geo" class="chip">📍 Near me</button>
-    <span id="inv-loc-label" class="loc-label"></span>
+  <!-- Native FilterBar: "{N} vehicles" left, white Filters pill right, active chips below.
+       ZIP/distance live INSIDE the filter sheet (native has no ZIP row on this screen). -->
+  <div class="lease-bar">
+    <div class="lease-bar-row">
+      <span id="inv-count" class="lease-count">Loading…</span>
+      <span class="lease-bar-actions">
+        <button id="inv-clear" class="lease-clear" data-act="inv-clear" hidden>Clear</button>
+        <button class="lease-filters" data-act="inv-filter">Filters</button>
+      </span>
+    </div>
+    <div id="inv-chips" class="lease-active-chips"></div>
   </div>
-  <div id="inv-count" class="count-row"></div>
   <div id="inv-list" class="card-list"></div>
   <div id="inv-more"></div>
 </section>
