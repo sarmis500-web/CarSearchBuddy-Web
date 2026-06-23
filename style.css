@@ -32,7 +32,7 @@ body{
 /* ---- Home (mirrors native HomeScreen: top-aligned, title+subtitle, 2 buttons then 1 centered) ---- */
 .home-inner{min-height:100vh;display:flex;flex-direction:column;align-items:center;
   justify-content:flex-start;padding:52px 24px 0}
-.home-title{font-size:32px;font-weight:800;margin:0;color:#fff;text-align:center;
+.home-title{font-size:32px;font-weight:700;margin:0;color:#fff;text-align:center;
   text-shadow:0 2px 14px rgba(0,0,0,.85)}
 .home-sub{font-size:16px;font-weight:600;color:#fff;text-align:center;margin:8px 0 0;
   text-shadow:0 2px 14px rgba(0,0,0,.85)}
@@ -40,9 +40,8 @@ body{
 .home-row.top{margin-top:33px}
 .home-row.center{margin-top:12px;justify-content:center}
 .home-btn{flex:1;min-height:76px;display:flex;align-items:center;justify-content:center;text-align:center;
-  background:rgba(0,0,0,.50);border:1.5px solid rgba(255,255,255,.85);border-radius:14px;
-  color:#fff;font-size:17px;font-weight:600;cursor:pointer;padding:8px;line-height:1.2;
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  background:rgba(0,0,0,.50);border:1.5px solid rgba(255,255,255,.85);border-radius:999px;
+  color:#fff;font-size:16px;font-weight:600;cursor:pointer;padding:8px;line-height:1.2;
   text-shadow:0 1px 8px rgba(0,0,0,.85);transition:transform .08s}
 .home-btn:active{transform:scale(.98)}
 .home-row.center .home-btn{flex:0 0 calc(50% - 6px)}
