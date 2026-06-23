@@ -131,11 +131,12 @@
   // ===================================================================
   // LEASES
   // ===================================================================
-  const leaseState = { filter: {}, term: "adv", shown: PAGE };
+  // term/mileage/down are re-price inputs (match native LeaseFilterState): null = "as advertised".
+  const leaseState = { filter: {}, term: "adv", mileage: null, down: null, shown: PAGE };
 
   function leasePayment(o) {
     const term = leaseState.term === "adv" ? null : parseInt(leaseState.term, 10);
-    return computeLeasePayment(o, { requestedTerm: term });
+    return computeLeasePayment(o, { requestedTerm: term, userAnnualMileage: leaseState.mileage, userDownPayment: leaseState.down });
   }
   function filteredLeases() {
     const f = leaseState.filter;
@@ -145,7 +146,6 @@
       if (f.bodies?.length && !f.bodies.includes(o.body_style)) return false;
       const pr = leasePayment(o);
       if (f.maxPay && pr.monthly > f.maxPay) return false;
-      if (f.maxDown != null && (pr.dueAtSigning) > f.maxDown) return false;
       return true;
     });
     list.sort((a, b) => leasePayment(a).monthly - leasePayment(b).monthly);
@@ -334,61 +334,153 @@
   // ===================================================================
   // FILTER SHEET (shared)
   // ===================================================================
-  let sheetCtx = null; // "inv" | "lease"
-  const sheetEl = $("sheet");
-  function openSheet(ctx) { sheetCtx = ctx; $("sheet-title").textContent = ctx === "inv" ? "Filter Cars" : "Filter Leases"; buildSheet(); sheetEl.classList.add("open"); }
-  function closeSheet() { sheetEl.classList.remove("open"); }
+  // Mainstream car makes only (mirrors InventoryScreen.kt MAINSTREAM_MAKES) — the DB also holds
+  // boats/semis/RVs/bikes and junk tokens ("Alcm", "Niss", "Y") nobody is shopping for here.
+  const MAINSTREAM_MAKES = new Set(["acura","alfa romeo","aston martin","audi","bentley","bmw","buick","cadillac","chevrolet","chrysler","dodge","ferrari","fiat","fisker","ford","genesis","gmc","honda","hummer","hyundai","infiniti","jaguar","jeep","kia","lamborghini","land rover","lexus","lincoln","lotus","lucid","maserati","mazda","mclaren","mercedes-benz","mercury","mini","mitsubishi","nissan","polestar","pontiac","porsche","ram","rivian","rolls-royce","saab","saturn","scion","subaru","tesla","toyota","volkswagen","volvo"]);
 
-  function chipGroup(label, options, selected, onToggle, full) {
-    const g = el("div", "fgroup" + (full ? " full" : ""));
-    g.innerHTML = `<label>${label}</label>`;
-    const wrap = el("div", "fchips");
-    options.forEach(opt => {
-      const v = typeof opt === "object" ? opt.value : opt, t = typeof opt === "object" ? opt.label : opt;
-      const ch = el("div", "fchip" + (selected.includes(v) ? " on" : ""), t);
-      ch.onclick = () => { ch.classList.toggle("on"); onToggle(v, ch.classList.contains("on")); };
-      wrap.appendChild(ch);
+  let sheetCtx = null;       // "inv" | "lease"
+  let openMenuKey = null;    // which dropdown-chip menu is open (survives a re-render)
+  const sheetEl = $("sheet");
+  function openSheet(ctx) { sheetCtx = ctx; openMenuKey = null; buildSheet(); sheetEl.classList.add("open"); }
+  function closeSheet() { openMenuKey = null; sheetEl.classList.remove("open"); }
+  function setMulti(arr, v, on) { const i = arr.indexOf(v); if (on && i < 0) arr.push(v); if (!on && i >= 0) arr.splice(i, 1); }
+  function rerunCtx() { if (sheetCtx === "inv") runInventory(true); else runLeases(); }
+
+  // A glass dropdown-chip = native FilterMenuChip. `items`: [{label,on,act}]. single → pick
+  // closes + re-renders; multi → toggle keeps the menu open (re-render reopens it).
+  function menuChip(grid, key, summary, isSet, items, multi = false) {
+    const wrap = el("div", "mchip-wrap"); wrap.dataset.key = key;
+    const chip = el("div", "mchip" + (isSet ? " set" : ""));
+    chip.innerHTML = `<span class="mchip-sum"></span><span class="mchip-caret">▾</span>`;
+    chip.querySelector(".mchip-sum").textContent = summary;
+    const menu = el("div", "mmenu"); menu.onclick = e => e.stopPropagation();
+    if (multi) { const d = el("div", "mitem done", "Done"); d.onclick = e => { e.stopPropagation(); openMenuKey = null; buildSheet(); }; menu.appendChild(d); }
+    items.forEach(it => {
+      const mi = el("div", "mitem" + (it.on ? " on" : "")); mi.textContent = (it.on ? "✓ " : "") + it.label;
+      mi.onclick = e => { e.stopPropagation(); it.act(); openMenuKey = multi ? key : null; buildSheet(); };
+      menu.appendChild(mi);
     });
-    g.appendChild(wrap); return g;
+    chip.onclick = e => { e.stopPropagation(); openMenuKey = (openMenuKey === key) ? null : key; placeOpenMenu(); };
+    wrap.appendChild(chip); wrap.appendChild(menu); grid.appendChild(wrap);
   }
-  function selectGroup(label, options, value, onChange) {
-    const g = el("div", "fgroup");
-    g.innerHTML = `<label>${label}</label>`;
-    const s = el("select");
-    options.forEach(o => { const op = el("option"); op.value = o.value; op.textContent = o.label; if (String(o.value) === String(value)) op.selected = true; s.appendChild(op); });
-    s.onchange = e => onChange(e.target.value); g.appendChild(s); return g;
+
+  // Show the one open menu, positioned (fixed) under its chip so the body's scroll can't clip it.
+  function placeOpenMenu() {
+    document.querySelectorAll("#sheet .mmenu.open").forEach(m => m.classList.remove("open"));
+    document.querySelectorAll("#sheet .mchip.active").forEach(c => c.classList.remove("active"));
+    if (!openMenuKey) return;
+    const wrap = document.querySelector(`#sheet .mchip-wrap[data-key="${openMenuKey}"]`);
+    if (!wrap) return;
+    const chip = wrap.querySelector(".mchip"), menu = wrap.querySelector(".mmenu");
+    chip.classList.add("active");
+    const r = chip.getBoundingClientRect();
+    menu.style.left = r.left + "px"; menu.style.width = r.width + "px";
+    const below = window.innerHeight - r.bottom;
+    if (below > 240 || below >= r.top) { menu.style.top = (r.bottom + 4) + "px"; menu.style.bottom = "auto"; menu.style.maxHeight = Math.min(320, below - 16) + "px"; }
+    else { menu.style.bottom = (window.innerHeight - r.top + 4) + "px"; menu.style.top = "auto"; menu.style.maxHeight = Math.min(320, r.top - 16) + "px"; }
+    menu.classList.add("open");
+  }
+
+  // Location override row (native: 📍 + status + Near me + ZIP), shared by both contexts.
+  function buildLocRow() {
+    const col = el("div", "loccol");
+    const row = el("div", "locrow");
+    const label = geo ? (geo.zip ? ("Showing near " + geo.zip) : "Using your location") : "Set a ZIP to sort by distance";
+    row.innerHTML = `<span class="pin">📍</span><span class="loc-txt"></span>`;
+    row.querySelector(".loc-txt").textContent = label;
+    const near = el("button", "loc-btn", "Near me");
+    near.onclick = e => {
+      e.stopPropagation();
+      if (!navigator.geolocation) return;
+      navigator.geolocation.getCurrentPosition(p => { geo = { lat: p.coords.latitude, lng: p.coords.longitude, label: "Near you" }; rerunCtx(); buildSheet(); });
+    };
+    row.appendChild(near);
+    col.appendChild(row);
+    const zip = el("input", "loc-zip"); zip.type = "text"; zip.inputMode = "numeric"; zip.maxLength = 5;
+    zip.placeholder = "Enter ZIP (e.g. 78664)"; zip.value = geo?.zip || "";
+    zip.onclick = e => e.stopPropagation();
+    zip.oninput = () => {
+      const v = zip.value.replace(/\D/g, "").slice(0, 5); zip.value = v;
+      if (v.length === 5) { const c = zipCoords[v]; if (c) { geo = { lat: c.lat, lng: c.lng, zip: v, label: "ZIP " + v }; rerunCtx(); buildSheet(); } }
+    };
+    col.appendChild(zip);
+    return col;
+  }
+
+  let countT;
+  function updateSheetCount() {
+    const btn = $("sheet-apply");
+    if (sheetCtx === "lease") { btn.textContent = `Show ${filteredLeases().length} Results`; return; }
+    clearTimeout(countT);
+    countT = setTimeout(() => {
+      CSBData.count({ filter: invState.filter, userLat: geo?.lat, userLng: geo?.lng, radiusMiles: invState.radius })
+        .then(n => { btn.textContent = `Show ${n.toLocaleString()} Results`; }).catch(() => { btn.textContent = "Show Results"; });
+    }, 300);
   }
 
   async function buildSheet() {
     const body = $("sheet-body"); body.innerHTML = "";
+    body.appendChild(buildLocRow());
+    body.appendChild(el("div", "fsheet-subrule"));
+    const grid = el("div", "mgrid"); body.appendChild(grid);
     const sf = CSBData.staticFilters();
     if (sheetCtx === "inv") {
-      const f = invState.filter; f.makes = f.makes || []; f.models = f.models || []; f.bodyStyles = f.bodyStyles || []; f.cylinders = f.cylinders || [];
-      const years = []; for (let y = sf.year_max; y >= sf.year_min; y--) years.push({ value: y, label: y });
-      body.appendChild(selectGroup("Min Year", [{ value: 0, label: "Any" }, ...years], f.minYear || 0, v => f.minYear = +v || 0));
-      body.appendChild(selectGroup("Max Price", [{ value: 0, label: "Any" }, 10000, 15000, 20000, 25000, 30000, 40000, 50000, 75000].map(v => typeof v === "object" ? v : { value: v, label: fmt(v) }), f.maxPrice || 0, v => f.maxPrice = +v || null));
-      body.appendChild(chipGroup("Make", sf.makes, f.makes, async (v, on) => { setMulti(f.makes, v, on); f.models = []; const models = await CSBData.modelsForMakes(f.makes); refreshModels(models, f); }, true));
+      const f = invState.filter; f.makes = f.makes || []; f.models = f.models || []; f.trims = f.trims || []; f.bodyStyles = f.bodyStyles || []; f.cylinders = f.cylinders || [];
+      const years = []; for (let y = sf.year_max; y >= sf.year_min; y--) years.push(y);
+      menuChip(grid, "year", f.minYear ? (f.minYear + " or newer") : "Min Year", !!f.minYear,
+        [{ label: "Any year", on: !f.minYear, act: () => f.minYear = 0 }, ...years.map(y => ({ label: y + " or newer", on: f.minYear === y, act: () => f.minYear = y }))]);
+      const PRICES = [10000, 15000, 20000, 25000, 30000, 40000, 50000, 75000, 100000];
+      menuChip(grid, "price", f.maxPrice ? ("Under $" + Math.round(f.maxPrice / 1000) + "K") : "Max Price", !!f.maxPrice,
+        [{ label: "No max", on: !f.maxPrice, act: () => f.maxPrice = null }, ...PRICES.map(p => ({ label: "Under $" + (p / 1000) + "K", on: f.maxPrice === p, act: () => f.maxPrice = p }))]);
+      const invMakes = sf.makes.filter(mk => MAINSTREAM_MAKES.has(mk.trim().toLowerCase()));
+      menuChip(grid, "make", f.makes.length ? ("Make (" + f.makes.length + ")") : "Make", f.makes.length > 0,
+        invMakes.map(mk => ({ label: mk, on: f.makes.includes(mk), act: () => { setMulti(f.makes, mk, !f.makes.includes(mk)); f.models = []; f.trims = []; } })), true);
       const models = await CSBData.modelsForMakes(f.makes);
-      const mg = chipGroup("Model", models, f.models, (v, on) => setMulti(f.models, v, on), true); mg.id = "sheet-models"; body.appendChild(mg);
-      body.appendChild(chipGroup("Body", sf.body_styles, f.bodyStyles, (v, on) => setMulti(f.bodyStyles, v, on), true));
-      body.appendChild(chipGroup("Cylinders", sf.cylinders.map(c => ({ value: c, label: c + "-cyl" })), f.cylinders, (v, on) => setMulti(f.cylinders, +v, on), true));
-      body.appendChild(selectGroup("Max Mileage", [{ value: 0, label: "Any" }, 30000, 60000, 90000, 120000, 150000].map(v => typeof v === "object" ? v : { value: v, label: v.toLocaleString() + " mi" }), f.maxMileage || 0, v => f.maxMileage = +v || null));
-      body.appendChild(selectGroup("Distance", [25, 50, 100, 250, 500].map(v => ({ value: v, label: v + " mi" })), invState.radius, v => invState.radius = +v));
-      body.appendChild(selectGroup("Sort", [["DISTANCE", "Nearest"], ["PRICE_LOW", "Price ↑"], ["PRICE_HIGH", "Price ↓"], ["MILEAGE_LOW", "Lowest miles"], ["YEAR_NEW", "Newest"], ["MAKE_MODEL", "Make/Model"]].map(([v, l]) => ({ value: v, label: l })), invState.sort, v => invState.sort = v));
+      menuChip(grid, "model", f.models.length ? ("Model (" + f.models.length + ")") : "Model", f.models.length > 0,
+        models.length ? models.map(m => ({ label: m, on: f.models.includes(m), act: () => { setMulti(f.models, m, !f.models.includes(m)); f.trims = []; } })) : [{ label: "Pick a make first", on: false, act: () => {} }], models.length > 0);
+      const trims = f.makes.length ? await CSBData.trims(f.makes, f.models) : [];
+      menuChip(grid, "trim", f.trims.length ? ("Trim (" + f.trims.length + ")") : "Trim", f.trims.length > 0,
+        trims.length ? trims.map(t => ({ label: t, on: f.trims.includes(t), act: () => setMulti(f.trims, t, !f.trims.includes(t)) })) : [{ label: "Pick a make first", on: false, act: () => {} }], trims.length > 0);
+      menuChip(grid, "body", f.bodyStyles.length ? ("Body (" + f.bodyStyles.length + ")") : "Body Style", f.bodyStyles.length > 0,
+        sf.body_styles.map(b => ({ label: b, on: f.bodyStyles.includes(b), act: () => setMulti(f.bodyStyles, b, !f.bodyStyles.includes(b)) })), true);
+      const DIST = [25, 50, 100, 200, 500];
+      menuChip(grid, "dist", (invState.radius && geo) ? ("Within " + invState.radius + " mi") : "Distance", !!(invState.radius && geo),
+        [...DIST.map(d => ({ label: "Within " + d + " miles", on: invState.radius === d, act: () => invState.radius = d })), { label: "Nationwide", on: !invState.radius, act: () => invState.radius = null }]);
+      const MIL = [30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000];
+      menuChip(grid, "mileage", f.maxMileage ? ("Under " + (f.maxMileage / 1000) + "K mi") : "Max Mileage", !!f.maxMileage,
+        [{ label: "Any mileage", on: !f.maxMileage, act: () => f.maxMileage = null }, ...MIL.map(m => ({ label: "Under " + (m / 1000) + "K mi", on: f.maxMileage === m, act: () => f.maxMileage = m }))]);
+      menuChip(grid, "cyl", f.cylinders.length ? ("Cyl (" + f.cylinders.length + ")") : "Cylinders", f.cylinders.length > 0,
+        sf.cylinders.map(c => ({ label: c + "-cylinder", on: f.cylinders.includes(c), act: () => setMulti(f.cylinders, c, !f.cylinders.includes(c)) })), true);
+      const SORTS = [["DISTANCE", "Nearest"], ["PRICE_LOW", "Price: Low to High"], ["PRICE_HIGH", "Price: High to Low"], ["MILEAGE_LOW", "Lowest Mileage"], ["YEAR_NEW", "Newest Year"], ["MAKE_MODEL", "Make & Model"]];
+      menuChip(grid, "sort", (SORTS.find(s => s[0] === invState.sort) || SORTS[0])[1], invState.sort !== "DISTANCE",
+        SORTS.map(([v, l]) => ({ label: l, on: invState.sort === v, act: () => invState.sort = v })));
     } else {
       const f = leaseState.filter; f.makes = f.makes || []; f.models = f.models || []; f.bodies = f.bodies || [];
       const lMakes = [...new Set(leases.map(o => o.make))].sort();
       const lBodies = [...new Set(leases.map(o => o.body_style).filter(Boolean))].sort();
-      body.appendChild(chipGroup("Make", lMakes, f.makes, (v, on) => { setMulti(f.makes, v, on); }, true));
+      const PAYS = [300, 400, 500, 600, 800, 1000, 1500];
+      menuChip(grid, "pay", f.maxPay ? ("Under $" + f.maxPay + "/mo") : "Monthly Payment", !!f.maxPay,
+        [{ label: "No max", on: !f.maxPay, act: () => f.maxPay = null }, ...PAYS.map(p => ({ label: "Under $" + p + "/mo", on: f.maxPay === p, act: () => f.maxPay = p }))]);
+      const DOWNS = [0, 1000, 2000, 3000, 5000];
+      menuChip(grid, "down", leaseState.down == null ? "Down: As advertised" : ("Down $" + leaseState.down.toLocaleString()), leaseState.down != null,
+        [{ label: "As advertised", on: leaseState.down == null, act: () => leaseState.down = null }, ...DOWNS.map(d => ({ label: "$" + d.toLocaleString() + " down", on: leaseState.down === d, act: () => leaseState.down = d }))]);
+      menuChip(grid, "lmake", f.makes.length ? ("Make (" + f.makes.length + ")") : "Make", f.makes.length > 0,
+        lMakes.map(mk => ({ label: mk, on: f.makes.includes(mk), act: () => { setMulti(f.makes, mk, !f.makes.includes(mk)); f.models = []; } })), true);
       const lModels = f.makes.length ? [...new Set(leases.filter(o => f.makes.includes(o.make)).map(o => o.model))].sort() : [];
-      body.appendChild(chipGroup("Model", lModels, f.models, (v, on) => setMulti(f.models, v, on), true));
-      body.appendChild(chipGroup("Body", lBodies, f.bodies, (v, on) => setMulti(f.bodies, v, on), true));
-      body.appendChild(selectGroup("Max Payment", [{ value: 0, label: "Any" }, 300, 400, 500, 600, 800, 1000].map(v => typeof v === "object" ? v : { value: v, label: fmt(v) + "/mo" }), f.maxPay || 0, v => f.maxPay = +v || null));
-      body.appendChild(selectGroup("Max Down", [{ value: -1, label: "Any" }, 0, 1000, 2000, 3000, 5000].map(v => typeof v === "object" ? v : { value: v, label: fmt(v) }), f.maxDown ?? -1, v => f.maxDown = +v < 0 ? null : +v));
+      menuChip(grid, "lmodel", f.models.length ? ("Model (" + f.models.length + ")") : "Model", f.models.length > 0,
+        lModels.length ? lModels.map(m => ({ label: m, on: f.models.includes(m), act: () => setMulti(f.models, m, !f.models.includes(m)) })) : [{ label: "Pick a make first", on: false, act: () => {} }], lModels.length > 0);
+      const MILES = [10000, 12000, 15000];
+      menuChip(grid, "lmiles", leaseState.mileage == null ? "Mileage: As advertised" : ((leaseState.mileage / 1000) + "K mi/yr"), leaseState.mileage != null,
+        [{ label: "As advertised", on: leaseState.mileage == null, act: () => leaseState.mileage = null }, ...MILES.map(m => ({ label: (m / 1000) + "K mi/yr", on: leaseState.mileage === m, act: () => leaseState.mileage = m }))]);
+      const TERMS = [["adv", "Advertised"], ["24", "24 months"], ["36", "36 months"], ["39", "39 months"], ["48", "48 months"]];
+      menuChip(grid, "lterm", (TERMS.find(t => t[0] === leaseState.term) || TERMS[0])[1], leaseState.term !== "adv",
+        TERMS.map(([v, l]) => ({ label: l, on: leaseState.term === v, act: () => leaseState.term = v })));
+      menuChip(grid, "lbody", f.bodies.length ? ("Body (" + f.bodies.length + ")") : "Body Style", f.bodies.length > 0,
+        lBodies.map(b => ({ label: b, on: f.bodies.includes(b), act: () => setMulti(f.bodies, b, !f.bodies.includes(b)) })), true);
     }
+    placeOpenMenu();
+    updateSheetCount();
   }
-  function setMulti(arr, v, on) { const i = arr.indexOf(v); if (on && i < 0) arr.push(v); if (!on && i >= 0) arr.splice(i, 1); }
-  function refreshModels(models, f) { const old = $("sheet-models"); if (!old) return; const ng = chipGroup("Model", models, f.models, (v, on) => setMulti(f.models, v, on), true); ng.id = "sheet-models"; old.replaceWith(ng); }
 
   function applySheet() {
     closeSheet();
@@ -396,9 +488,9 @@
     else { leaseState.shown = PAGE; runLeases(); }
   }
   function resetSheet() {
-    if (sheetCtx === "inv") { invState.filter = {}; invState.sort = "DISTANCE"; invState.radius = 50; }
-    else { leaseState.filter = {}; }
-    buildSheet();
+    if (sheetCtx === "inv") { invState.filter = {}; invState.sort = "DISTANCE"; invState.radius = null; invState.offset = 0; runInventory(true); }
+    else { leaseState.filter = {}; leaseState.term = "adv"; leaseState.mileage = null; leaseState.down = null; leaseState.shown = PAGE; runLeases(); }
+    closeSheet(); show("home");
   }
 
   // ---------- wire up ----------
@@ -415,7 +507,9 @@
       if (a === "sheet-reset") resetSheet();
     });
     $("sheet-apply").onclick = applySheet;
-    sheetEl.addEventListener("click", e => { if (e.target === sheetEl) closeSheet(); });
+    // A stray tap (anywhere not a chip/menu, which stopPropagation) closes the open dropdown.
+    sheetEl.addEventListener("click", () => { if (openMenuKey) { openMenuKey = null; placeOpenMenu(); } });
+    $("sheet-body").addEventListener("scroll", () => { if (openMenuKey) { openMenuKey = null; placeOpenMenu(); } });
     $("dealer-sheet").addEventListener("click", e => { if (e.target === $("dealer-sheet")) closeDealerSheet(); });
     // (ZIP/“Near me” live in the filter sheet now — native has no ZIP row on this screen.)
     $("calc-go").onclick = () => {

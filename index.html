@@ -98,16 +98,19 @@
   <div id="saved-list" class="card-list"></div>
 </section>
 
-<!-- ===== FILTER SHEET (shared) ===== -->
+<!-- ===== FILTER SHEET (shared; mirrors native full-screen FilterSheet over the showroom photo) ===== -->
 <div id="sheet" class="sheet-overlay">
-  <div class="sheet glass">
-    <header class="sheet-head">
-      <button class="tb-btn" data-act="sheet-back">‹ Back</button>
-      <span class="tb-title" id="sheet-title">Filters</span>
-      <button class="tb-btn" data-act="sheet-reset">Start Over</button>
+  <div class="fsheet">
+    <header class="fsheet-head">
+      <button class="fsheet-back" data-act="sheet-back" aria-label="Back">←</button>
+      <span class="fsheet-title">Filters</span>
+      <button class="fsheet-reset" data-act="sheet-reset">Start Over</button>
     </header>
-    <div id="sheet-body" class="sheet-body"></div>
-    <button id="sheet-apply" class="apply-btn">Show results</button>
+    <div class="fsheet-rule"></div>
+    <div id="sheet-body" class="fsheet-body"></div>
+    <div class="fsheet-foot">
+      <button id="sheet-apply" class="fsheet-apply">Show results</button>
+    </div>
   </div>
 </div>
 
