@@ -229,7 +229,7 @@
     } else {
       html += ds.map(d => {
         let u = d.website || ""; if (u && !/^https?:/.test(u)) u = "https://" + u;
-        const dist = (hasGeo && d.dist != null) ? ` <span class="mi">${Math.round(d.dist)} mi</span>` : "";
+        const dist = (hasGeo && d.dist != null) ? ` · <span class="mi">${Math.round(d.dist)} mi</span>` : "";
         return `<a class="dsheet-dealer" href="${u}" target="_blank" rel="noopener">${d.name}${dist}</a>`;
       }).join("");
     }
