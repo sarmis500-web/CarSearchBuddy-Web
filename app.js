@@ -386,7 +386,8 @@
     const col = el("div", "loccol");
     const row = el("div", "locrow");
     const label = geo ? (geo.zip ? ("Showing near " + geo.zip) : "Using your location") : "Set a ZIP to sort by distance";
-    row.innerHTML = `<span class="pin">📍</span><span class="loc-txt"></span>`;
+    // White Material "location_on" pin (matches native Icons.Filled.LocationOn, not the 📍 emoji).
+    row.innerHTML = `<svg class="pin" viewBox="0 0 24 24" width="18" height="18" fill="#fff" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg><span class="loc-txt"></span>`;
     row.querySelector(".loc-txt").textContent = label;
     const near = el("button", "loc-btn", "Near me");
     near.onclick = e => {

@@ -191,7 +191,7 @@ body{
 /* Location override row */
 .loccol{display:flex;flex-direction:column;gap:8px}
 .locrow{display:flex;align-items:center;gap:6px}
-.locrow .pin{font-size:16px}
+.locrow .pin{flex:0 0 auto;display:block}
 .locrow .loc-txt{flex:1;color:#fff;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   text-shadow:0 1px 8px rgba(0,0,0,.85)}
 .loc-btn{background:transparent;border:0;color:var(--amber);font-size:14px;font-weight:600;padding:6px 8px;cursor:pointer}
