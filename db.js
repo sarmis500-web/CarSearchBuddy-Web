@@ -84,7 +84,7 @@ const CSBData = (() => {
     return (hasGeo && sort !== "DISTANCE") ? "INDEXED BY idx_web_geo" : "";
   }
 
-  async function search({ filter = {}, sort = "DISTANCE", userLat, userLng, radiusMiles = 50, limit = 50, offset = 0 }) {
+  async function search({ filter = {}, sort = "DISTANCE", userLat, userLng, radiusMiles = null, limit = 50, offset = 0 }) {
     await init();
     const { where, args, hasGeo } = buildWhere(filter, userLat, userLng, radiusMiles);
     const hint = indexHint(hasGeo, sort);
@@ -92,7 +92,7 @@ const CSBData = (() => {
     return worker.db.query(sql, [...args, limit, offset]); // sql.js exec wants params as one array
   }
 
-  async function count({ filter = {}, userLat, userLng, radiusMiles = 50 }) {
+  async function count({ filter = {}, userLat, userLng, radiusMiles = null }) {
     await init();
     const { where, args, hasGeo } = buildWhere(filter, userLat, userLng, radiusMiles);
     const hint = indexHint(hasGeo, "PRICE_LOW"); // any non-distance hint → force geo index when boxed

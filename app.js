@@ -82,7 +82,10 @@
   // ===================================================================
   // INVENTORY
   // ===================================================================
-  const invState = { filter: {}, sort: "DISTANCE", radius: 50, offset: 0, total: null };
+  // radius defaults to null = Nationwide (matches native InventoryFilterState's NO_DISTANCE_CAP).
+  // A non-null default (e.g. 50) would silently hide cars the moment location is granted — the user
+  // opts into a distance via the Distance chip instead. Location just sorts by nearest by default.
+  const invState = { filter: {}, sort: "DISTANCE", radius: null, offset: 0, total: null };
   let invToken = 0; // newest-query-wins guard (avoids stale results from rapid re-queries)
 
   async function runInventory(reset) {
