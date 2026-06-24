@@ -124,7 +124,14 @@
         <button class="uc-btn" data-calc>Payment Calculator</button>
         ${dealerBtn}
       </div>`;
-    c.querySelector("[data-calc]").onclick = () => openCalculatorWith(v.price);
+    // Native InventoryCard: tapping the card body opens the dealer website (source_url);
+    // the two buttons keep their own actions (calc / website) and must not also trigger it.
+    c.querySelector("[data-calc]").onclick = (e) => { e.stopPropagation(); openCalculatorWith(v.price); };
+    if (v.source_url) {
+      c.style.cursor = "pointer";
+      c.addEventListener("click", () => window.open(v.source_url, "_blank", "noopener"));
+      const dw = c.querySelector("a.uc-btn"); if (dw) dw.addEventListener("click", (e) => e.stopPropagation());
+    }
     return c;
   }
 
