@@ -7,7 +7,9 @@
 // endpoint (instant single round-trip) without touching the UI.
 
 const CSBData = (() => {
-  const DB_URL = "https://pub-ec04fb2fbf2d481f8809ef35ba643447.r2.dev/carsearchbuddy.sqlite3";
+  // Cloudflare Worker (R2-backed, range + CORS + edge-cached per byte-range chunk).
+  // Replaces the uncached/rate-limited r2.dev "dev" URL. Worker src: worker/src/index.js.
+  const DB_URL = "https://csb-db.sarmis500.workers.dev/carsearchbuddy.sqlite3";
   const NO_PRICE_CAP = 1_000_000, NO_MILEAGE_CAP = 1_000_000;
 
   const PAGE_COLS =

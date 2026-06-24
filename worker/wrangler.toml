@@ -1,0 +1,11 @@
+name = "csb-db"
+main = "src/index.js"
+compatibility_date = "2024-09-23"
+workers_dev = true
+
+# Serves the inventory SQLite from R2 with HTTP range support, CORS, and edge
+# caching (each byte-range chunk is cached at the CDN). Front-end queries it via
+# sql.js-httpvfs. Replaces the uncached/rate-limited r2.dev "dev" URL.
+[[r2_buckets]]
+binding = "DB_BUCKET"
+bucket_name = "carsearchbuddy-db"
