@@ -44,6 +44,30 @@
       () => toast("Couldn't get location"), { enableHighAccuracy: false, timeout: 8000 });
   }
 
+  // The native app asks for location at launch; the web platform only allows a geolocation prompt
+  // from a user gesture, so we ask on the user's FIRST tap of a location-relevant home button —
+  // Used Cars or Lease Deals. We deliberately do NOT ask on the Payment Calculator (it doesn't use
+  // location; a contextless prompt there gets denied, which the browser then remembers permanently).
+  // Asked once per session; silent on denial (ZIP entry + the sheet's "Near me" still work).
+  let geoAsked = false;
+  function maybeAskGeoOnFirstNav(dest) {
+    if (geoAsked) return;
+    if (dest !== "inventory" && dest !== "leases") return; // only the two location screens count
+    geoAsked = true;
+    if (geo || !navigator.geolocation) return;             // already located (e.g. ZIP), or unsupported
+    // Must run synchronously inside the click gesture — iOS Safari ignores non-gesture requests.
+    navigator.geolocation.getCurrentPosition(
+      p => {
+        geo = { lat: p.coords.latitude, lng: p.coords.longitude, label: "Near you" };
+        // Re-run whichever location screen is showing so results sort by the new location.
+        const active = document.querySelector(".screen.active");
+        if (active && active.id === "inventory") runInventory(true);
+        else if (active && active.id === "leases") runLeases();
+      },
+      () => {},                                             // denial/error: stay silent, keep current behavior
+      { enableHighAccuracy: false, timeout: 8000 });
+  }
+
   // ---------- favorites ----------
   const favKey = it => (it.vin || `${it.year}|${it.make}|${it.model}|${it.price}`);
   const isFav = it => favorites.some(f => f.key === favKey(it));
@@ -504,7 +528,7 @@
   // ---------- wire up ----------
   function wire() {
     document.body.addEventListener("click", e => {
-      const go = e.target.closest("[data-go]"); if (go) return show(go.dataset.go);
+      const go = e.target.closest("[data-go]"); if (go) { maybeAskGeoOnFirstNav(go.dataset.go); return show(go.dataset.go); }
       const act = e.target.closest("[data-act]"); if (!act) return;
       const a = act.dataset.act;
       if (a === "inv-filter") openSheet("inv");
