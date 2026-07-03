@@ -560,7 +560,11 @@
     // The deployed sw.js is a self-healing kill-switch that clears old caches; we don't re-register.
     wire();
     try {
-      const [lz, ld, ll] = await Promise.all([fetch("zip_coords.json"), fetch("dealers.json"), fetch("leases.json")]);
+      // cache:'no-cache' → always revalidate against the server (cheap 304 when
+      // unchanged, fresh data the instant a push_web_data deploy changes them), so a
+      // returning user never sees stale leases/dealers after a data refresh.
+      const nc = { cache: "no-cache" };
+      const [lz, ld, ll] = await Promise.all([fetch("zip_coords.json", nc), fetch("dealers.json", nc), fetch("leases.json", nc)]);
       zipCoords = await lz.json();
       dealersByMake = (await ld.json()).dealers_by_make || {};
       leases = (await ll.json()).offers || [];

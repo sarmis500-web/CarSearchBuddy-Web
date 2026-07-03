@@ -7,7 +7,7 @@
 <title>Car Lease Buddy</title>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=1">
 </head>
 <body>
 <div id="bg"></div>
@@ -124,9 +124,43 @@
 
 <div id="toast" class="toast"></div>
 
-<script src="vendor/httpvfs.js"></script>
-<script src="engine.js"></script>
-<script src="db.js"></script>
-<script src="app.js"></script>
+<script src="vendor/httpvfs.js?v=1"></script>
+<script src="engine.js?v=1"></script>
+<script src="db.js?v=1"></script>
+<script src="app.js?v=1"></script>
+
+<!-- Never-stale updates: register the freshness SW and auto-refresh when a new build
+     is live. updateViaCache:'none' keeps GitHub's 10-min cache from pinning sw.js so
+     updates actually propagate. The SW only force-refreshes the HTML shell; it never
+     touches the cross-origin R2 DB range reads (see sw.js). -->
+<script>
+  if ('serviceWorker' in navigator) {
+    // Only auto-reload on a REAL update: a controller must have ALREADY been in charge
+    // when this page loaded (captured now, before register()). On a first-ever visit
+    // there's no controller yet, so we never bounce the user with a startup reload.
+    // The flag guards against controllerchange firing more than once.
+    var _csbHadController = !!navigator.serviceWorker.controller;
+    var _csbReloading = false;
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (_csbReloading || !_csbHadController) return;
+      _csbReloading = true;
+      window.location.reload();
+    });
+    var _csbReg = null;
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' })
+        .then(function (reg) { _csbReg = reg; if (reg && reg.update) reg.update(); })
+        .catch(function () {});
+    });
+    // Re-check for a fresh build every time the user reopens/returns to the tab (or
+    // resumes an installed PWA from the background). If a new build is live, the new SW
+    // installs and the controllerchange handler above reloads once — no manual refresh.
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'visible' && _csbReg && _csbReg.update) {
+        try { _csbReg.update(); } catch (e) {}
+      }
+    });
+  }
+</script>
 </body>
 </html>

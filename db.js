@@ -22,7 +22,7 @@ const CSBData = (() => {
 
   async function init() {
     if (worker) return;
-    filters = await fetch("filters.json").then(r => r.json());
+    filters = await fetch("filters.json", { cache: "no-cache" }).then(r => r.json());
     // Resolve to absolute URLs against the document so the worker doesn't re-resolve
     // the wasm path relative to its own location (and so it works under a Pages subpath).
     const workerUrl = new URL("vendor/sqlite.worker.js", location.href).href;
