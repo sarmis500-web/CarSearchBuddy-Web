@@ -220,10 +220,15 @@
     const isTermAdj = term != null && term !== o.term_months && pr.computable;
     const isAdjusted = isTermAdj;
     const mileage = (o.annual_mileage ?? 10000).toLocaleString();
-    const dealerCount = (dealersByMake[o.make] || []).length;
+    const allDealers = dealersByMake[o.make] || [];
+    const dealerCount = allDealers.length;   // national roster (drives the button below)
     const nearest = nearestDealers(o.make, 1)[0];
     const distText = (nearest && nearest.dist != null) ? ` · ${Math.round(nearest.dist)} mi` : "";
-    const moreText = dealerCount > 1 ? `(+${dealerCount - 1} more nearby)` : "";
+    // "+N more": count dealers actually NEAR the user (≤75 mi) when we have a location;
+    // with no location this is the whole national roster, so say "nationwide", not "nearby"
+    // (was showing e.g. "+593 more nearby" for Toyota's entire US dealer count).
+    const nearbyCount = geo ? allDealers.filter(d => haversine(geo.lat, geo.lng, d.lat, d.lng) <= 75).length : dealerCount;
+    const moreText = nearbyCount > 1 ? `(+${nearbyCount - 1} more ${geo ? "nearby" : "nationwide"})` : "";
     const c = el("div", "lease-card");
     const trim = o.trim ? " " + o.trim : "";
     c.innerHTML = `
@@ -436,7 +441,11 @@
     zip.onclick = e => e.stopPropagation();
     zip.oninput = () => {
       const v = zip.value.replace(/\D/g, "").slice(0, 5); zip.value = v;
-      if (v.length === 5) { const c = zipCoords[v]; if (c) { geo = { lat: c.lat, lng: c.lng, zip: v, label: "ZIP " + v }; rerunCtx(); buildSheet(); } }
+      if (v.length === 5) {
+        const c = zipCoords[v];
+        if (c) { geo = { lat: c.lat, lng: c.lng, zip: v, label: "ZIP " + v }; rerunCtx(); buildSheet(); }
+        else { toast("ZIP " + v + " not recognized"); }  // honest feedback, matches native
+      }
     };
     col.appendChild(zip);
     return col;

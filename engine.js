@@ -28,7 +28,10 @@ function leaseMileageAdj(o, userAnnualMileage, term) {
 
 function effectiveMonthlyCost(o) {
   const term = o.term_months ?? 36;
-  return term > 0 ? ((o.due_at_signing ?? 0) + o.monthly_payment * term) / term : o.monthly_payment;
+  // Due-at-signing already INCLUDES the first month's payment, so only term-1 further
+  // payments remain after signing (matches native effectiveMonthlyCost + the scraper's
+  // total_lease_cost). Counting all `term` on top double-counts month one.
+  return term > 0 ? ((o.due_at_signing ?? 0) + o.monthly_payment * (term - 1)) / term : o.monthly_payment;
 }
 
 /**
