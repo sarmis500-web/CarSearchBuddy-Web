@@ -564,6 +564,30 @@
     buildCalc();
   }
 
+  // SEO deep links — the static pages' CTAs (build_seo_pages.py in the native repo)
+  // land here as /?screen=used|leases|calc&make=…&model=…&src=seo. make/model may
+  // repeat (?model=CAMRY&model=Camry): the DB holds spelling variants of the same
+  // model, so the generator passes every variant and we filter on all of them.
+  function handleDeepLink() {
+    const p = new URLSearchParams(location.search);
+    const screen = p.get("screen");
+    if (!screen) return;
+    const makes = p.getAll("make"), models = p.getAll("model");
+    if (screen === "used") {
+      if (makes.length) invState.filter.makes = makes;
+      if (models.length) invState.filter.models = models;
+      show("inventory");
+    } else if (screen === "leases") {
+      if (makes.length) leaseState.filter.makes = makes;
+      if (models.length) leaseState.filter.models = models;
+      show("leases");
+    } else if (screen === "calc") {
+      show("calculator");
+    }
+    // Clean the URL so a reload/share doesn't re-apply the filter unexpectedly.
+    history.replaceState(null, "", location.pathname);
+  }
+
   async function boot() {
     // No service worker for now — kept the app online-only to avoid stale-cache issues.
     // The deployed sw.js is a self-healing kill-switch that clears old caches; we don't re-register.
@@ -578,6 +602,7 @@
       dealersByMake = (await ld.json()).dealers_by_make || {};
       leases = (await ll.json()).offers || [];
     } catch (e) { console.error("data load", e); }
+    handleDeepLink(); // route ?screen=… arrivals from the static SEO pages
     CSBData.init().catch(() => {}); // warm the DB connection in the background
   }
   boot();

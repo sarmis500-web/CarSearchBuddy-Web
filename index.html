@@ -4,10 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0a0a0a">
-<title>Car Lease Buddy</title>
+<title>Car Lease Buddy — New Car Lease Deals & Used Car Search</title>
+<meta name="description" content="Find manufacturer-advertised lease deals re-priced for your own term, down payment, and mileage — plus hundreds of thousands of used cars at dealers nationwide. Free, no signup.">
+<link rel="canonical" href="https://sarmis500-web.github.io/CarSearchBuddy-Web/">
+<meta property="og:title" content="Car Lease Buddy — New Car Lease Deals & Used Car Search">
+<meta property="og:description" content="Advertised lease specials re-priced for your term, down payment, and mileage — plus nationwide used-car search. Free, no signup.">
+<meta property="og:url" content="https://sarmis500-web.github.io/CarSearchBuddy-Web/">
+<meta property="og:site_name" content="Car Lease Buddy">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://sarmis500-web.github.io/CarSearchBuddy-Web/apple-touch-icon.png">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="stylesheet" href="style.css?v=1">
+<link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
 <div id="bg"></div>
@@ -24,6 +32,11 @@
     <div class="home-row center">
       <button class="home-btn" data-go="calculator">Payment Calculator</button>
     </div>
+    <!-- Crawl path into the static SEO pages (build_seo_pages.py). Kept tiny/muted
+         so the screen still reads like the native Home. -->
+    <nav class="home-browse">
+      <a href="lease-deals/">Lease deals by model</a> · <a href="used-cars/">Used car prices</a>
+    </nav>
   </div>
 </section>
 
@@ -127,7 +140,7 @@
 <script src="vendor/httpvfs.js?v=1"></script>
 <script src="engine.js?v=2"></script>
 <script src="db.js?v=1"></script>
-<script src="app.js?v=2"></script>
+<script src="app.js?v=3"></script>
 
 <!-- Never-stale updates: register the freshness SW and auto-refresh when a new build
      is live. updateViaCache:'none' keeps GitHub's 10-min cache from pinning sw.js so

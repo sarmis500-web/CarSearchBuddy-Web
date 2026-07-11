@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sarmis500-web.github.io/CarSearchBuddy-Web/sitemap.xml

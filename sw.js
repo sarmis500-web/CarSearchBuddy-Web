@@ -47,11 +47,16 @@ self.addEventListener('fetch', (event) => {
   // (b) Never touch cross-origin requests (the R2 DB lives on another origin).
   if (url.origin !== self.location.origin) return;
 
-  // Only intercept the HTML shell navigation, and serve it with the HTTP cache
-  // BYPASSED so a reopened tab can never get a stale build. Fall back to the last
-  // cached shell only if the network is unreachable (the app needs the network to
-  // work at all, so this is just a graceful-offline nicety).
-  if (req.mode === 'navigate' || url.pathname.endsWith('/') || url.pathname.endsWith('/index.html')) {
+  // Only intercept the APP SHELL navigation — EXACTLY the scope root and its
+  // index.html, nothing else. The static SEO pages (/lease-deals/…, /used-cars/…,
+  // /explore/) are also same-origin navigations ending in '/', and caching one of
+  // them under the 'index.html' key would replace the app shell with an SEO page
+  // (the bug that corrupted WeedBuddy's shell twice). Non-shell navigations pass
+  // straight through to the network, untouched. Serve the shell with the HTTP
+  // cache BYPASSED so a reopened tab can never get a stale build; fall back to
+  // the last cached shell only if the network is unreachable.
+  const scopePath = new URL(self.registration.scope).pathname; // "/CarSearchBuddy-Web/"
+  if (url.pathname === scopePath || url.pathname === scopePath + 'index.html') {
     event.respondWith(
       fetch(req.url, { cache: 'reload' })
         .then((res) => {

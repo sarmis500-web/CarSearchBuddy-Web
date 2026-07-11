@@ -280,3 +280,8 @@ body{
   background:rgba(0,0,0,.9);color:#fff;padding:11px 18px;border-radius:999px;font-size:14px;
   border:1px solid var(--glass-stroke-soft);opacity:0;pointer-events:none;transition:.25s;z-index:99}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* Tiny muted crawl-path links under the Home buttons (SEO pages; index.html .home-browse).
+   Deliberately faint so the screen still reads like the native Home. */
+.home-browse{margin-top:26px;font-size:12px;color:rgba(255,255,255,.55)}
+.home-browse a{color:rgba(255,255,255,.65);text-decoration:underline}
