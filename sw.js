@@ -19,7 +19,9 @@
  *    fetched with cache:'no-cache' by the app.
  * Refs: web.dev/articles/sw-range-requests, philna.sh Safari range-request post.
  */
-const SHELL_CACHE = 'csb-shell-v1';
+// v2: drops any entry a pre-fix SW (which intercepted ANY navigation) may have
+// cached under the shell key.
+const SHELL_CACHE = 'csb-shell-v2';
 
 self.addEventListener('install', () => self.skipWaiting());
 
@@ -60,8 +62,10 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(req.url, { cache: 'reload' })
         .then((res) => {
-          const copy = res.clone();
-          caches.open(SHELL_CACHE).then((c) => c.put('index.html', copy)).catch(() => {});
+          if (res.ok) {   // never cache an error page as the offline-fallback shell
+            const copy = res.clone();
+            caches.open(SHELL_CACHE).then((c) => c.put('index.html', copy)).catch(() => {});
+          }
           return res;
         })
         .catch(() => caches.match('index.html').then((c) => c || caches.match('./')))

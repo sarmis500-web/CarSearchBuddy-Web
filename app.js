@@ -4,6 +4,10 @@
   "use strict";
   const $ = id => document.getElementById(id);
   const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+  // Escape data before innerHTML interpolation. Filter values can arrive from the URL
+  // (handleDeepLink), so unescaped chips were a reflected-XSS hole; scraped fields
+  // (trim, dealer names) get the same treatment as hardening.
+  const escHtml = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   const fmt = n => "$" + Math.round(n).toLocaleString("en-US");
   const PAGE = 25;
 
@@ -128,7 +132,7 @@
     (f.models || []).forEach(m => chips.push(m));
     (f.bodyStyles || []).forEach(b => chips.push(b));
     (f.cylinders || []).forEach(c => chips.push(c + "-cyl"));
-    $("inv-chips").innerHTML = chips.map(c => `<span class="lease-chip">${c}</span>`).join("");
+    $("inv-chips").innerHTML = chips.map(c => `<span class="lease-chip">${escHtml(c)}</span>`).join("");
     $("inv-clear").hidden = chips.length === 0;
   }
 
@@ -143,10 +147,10 @@
       ? `<a class="uc-btn" href="${v.source_url}" target="_blank" rel="noopener">Dealer Website</a>`
       : `<button class="uc-btn" disabled>Dealer Website</button>`;
     c.innerHTML = `
-      <div class="uc-title">${v.year} ${v.make} ${v.model}${v.trim ? " " + v.trim : ""}</div>
-      ${v.condition ? `<div class="uc-cond">${v.condition}</div>` : ""}
+      <div class="uc-title">${escHtml(`${v.year} ${v.make} ${v.model}${v.trim ? " " + v.trim : ""}`)}</div>
+      ${v.condition ? `<div class="uc-cond">${escHtml(v.condition)}</div>` : ""}
       <div class="uc-pricerow">${price}${mileage}</div>
-      <div class="uc-dealer">${dealer}</div>
+      <div class="uc-dealer">${escHtml(dealer)}</div>
       <div class="uc-actions">
         <button class="uc-btn" data-calc>Payment Calculator</button>
         ${dealerBtn}
@@ -203,7 +207,7 @@
     (f.bodies || []).forEach(b => chips.push(b));
     if (f.maxPay) chips.push(`≤ ${fmt(f.maxPay)}/mo`);
     if (f.maxDown != null) chips.push(`≤ ${fmt(f.maxDown)} down`);
-    $("lease-chips").innerHTML = chips.map(c => `<span class="lease-chip">${c}</span>`).join("");
+    $("lease-chips").innerHTML = chips.map(c => `<span class="lease-chip">${escHtml(c)}</span>`).join("");
   }
 
   function nearestDealers(make, n) {
@@ -467,7 +471,14 @@
     body.appendChild(buildLocRow());
     body.appendChild(el("div", "fsheet-subrule"));
     const grid = el("div", "mgrid"); body.appendChild(grid);
+    // staticFilters() is null until the DB worker's init resolves — opening Filters in
+    // the first seconds used to throw. Wait for init (cached after the first call).
+    if (!CSBData.staticFilters()) { try { await CSBData.init(); } catch (e) {} }
     const sf = CSBData.staticFilters();
+    if (!sf && sheetCtx === "inv") {
+      body.appendChild(el("div", "empty", "Filters are still loading — try again in a moment"));
+      return;
+    }
     if (sheetCtx === "inv") {
       const f = invState.filter; f.makes = f.makes || []; f.models = f.models || []; f.trims = f.trims || []; f.bodyStyles = f.bodyStyles || []; f.cylinders = f.cylinders || [];
       const years = []; for (let y = sf.year_max; y >= sf.year_min; y--) years.push(y);

@@ -44,6 +44,7 @@ const CSBData = (() => {
     const inClause = (col, vals) => { clauses.push(`${col} IN (${vals.map(() => "?").join(",")})`); args.push(...vals); };
     if (f.makes && f.makes.length) inClause("make", f.makes);
     if (f.models && f.models.length) inClause("model", f.models);
+    if (f.trims && f.trims.length) inClause("trim", f.trims);   // was missing — Trim chip was a silent no-op
     if (f.bodyStyles && f.bodyStyles.length) inClause("body_style", f.bodyStyles);
     if (f.drivetrains && f.drivetrains.length) inClause("drivetrain", f.drivetrains);
     if (f.cylinders && f.cylinders.length) inClause("cylinders", f.cylinders);
