@@ -212,12 +212,17 @@ body{
 .mchip-sum{flex:0 1 auto;min-width:0;color:#fff;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mchip.set .mchip-sum{color:var(--amber)}
 .mchip-caret{color:#fff;font-size:11px}
-.mmenu{display:none;position:fixed;z-index:60;overflow-y:auto;background:#141414;
-  border:1px solid var(--glass-stroke-soft);border-radius:12px;box-shadow:0 10px 28px rgba(0,0,0,.6)}
-.mmenu.open{display:block}
+/* Flex column so the option LIST scrolls while the pinned "Done" footer stays put. */
+.mmenu{display:none;position:fixed;z-index:60;overflow:hidden;background:#141414;
+  border:1px solid var(--glass-stroke-soft);border-radius:12px;box-shadow:0 10px 28px rgba(0,0,0,.6);
+  flex-direction:column}
+.mmenu.open{display:flex}
+.mmenu-list{overflow-y:auto;-webkit-overflow-scrolling:touch;min-height:0;flex:1 1 auto}
 .mitem{padding:11px 14px;color:#fff;font-size:14px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mitem.on{color:var(--amber)}
-.mitem.done{font-weight:700;border-bottom:1px solid var(--glass-stroke-soft)}
+/* Pinned amber footer — always visible, even after scrolling to your pick. */
+.mitem.done{flex:0 0 auto;font-weight:700;color:var(--amber);border-top:1px solid var(--amber);
+  background:#141414;display:flex;align-items:center;justify-content:space-between}
 
 /* ---- Calculator (mirrors PaymentCalculatorScreen.kt: whole-screen 55% dim, a single
        column of 2/3-width glass fields, amber price field, term chips, Calculate, result) ---- */

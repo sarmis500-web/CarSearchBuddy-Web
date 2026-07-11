@@ -397,12 +397,15 @@
     chip.innerHTML = `<span class="mchip-sum"></span><span class="mchip-caret">▾</span>`;
     chip.querySelector(".mchip-sum").textContent = summary;
     const menu = el("div", "mmenu"); menu.onclick = e => e.stopPropagation();
-    if (multi) { const d = el("div", "mitem done", "Done"); d.onclick = e => { e.stopPropagation(); openMenuKey = null; buildSheet(); }; menu.appendChild(d); }
+    // Options scroll inside their own area; for multi-select an amber "Done" bar is
+    // pinned BELOW them so it never scrolls out of reach (matches native).
+    const list = el("div", "mmenu-list"); menu.appendChild(list);
     items.forEach(it => {
       const mi = el("div", "mitem" + (it.on ? " on" : "")); mi.textContent = (it.on ? "✓ " : "") + it.label;
       mi.onclick = e => { e.stopPropagation(); it.act(); openMenuKey = multi ? key : null; buildSheet(); };
-      menu.appendChild(mi);
+      list.appendChild(mi);
     });
+    if (multi) { const d = el("div", "mitem done", "Done ✓"); d.onclick = e => { e.stopPropagation(); openMenuKey = null; buildSheet(); }; menu.appendChild(d); }
     chip.onclick = e => { e.stopPropagation(); openMenuKey = (openMenuKey === key) ? null : key; placeOpenMenu(); };
     wrap.appendChild(chip); wrap.appendChild(menu); grid.appendChild(wrap);
   }
