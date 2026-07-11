@@ -125,12 +125,17 @@
   function renderInvChips() {
     const f = invState.filter || {};
     const chips = [];
-    if (f.minYear) chips.push(f.minYear + "+");
+    // Same chip set + order as native FilterBar (InventoryScreen.kt): distance first
+    // (with the "needs location" variant), year (incl. "only"), then the rest.
+    if (invState.radius) chips.push(geo ? `Within ${invState.radius} mi` : `Within ${invState.radius} mi (needs location)`);
+    (f.years || []).slice().sort((a, b) => b - a).forEach(y => chips.push(y === 0 ? "≤2009" : String(y)));
     if (f.maxPrice) chips.push("Under $" + Math.round(f.maxPrice / 1000) + "K");
     if (f.maxMileage) chips.push("Under " + Math.round(f.maxMileage / 1000) + "K mi");
     (f.makes || []).forEach(m => chips.push(m));
     (f.models || []).forEach(m => chips.push(m));
+    (f.trims || []).forEach(t => chips.push(t));
     (f.bodyStyles || []).forEach(b => chips.push(b));
+    (f.drivetrains || []).forEach(d => chips.push(d));
     (f.cylinders || []).forEach(c => chips.push(c + "-cyl"));
     $("inv-chips").innerHTML = chips.map(c => `<span class="lease-chip">${escHtml(c)}</span>`).join("");
     $("inv-clear").hidden = chips.length === 0;
@@ -452,20 +457,29 @@
         const c = zipCoords[v];
         if (c) { geo = { lat: c.lat, lng: c.lng, zip: v, label: "ZIP " + v }; rerunCtx(); buildSheet(); }
         else { toast("ZIP " + v + " not recognized"); }  // honest feedback, matches native
+      } else if (v.length === 0 && geo) {
+        // Deleting the ZIP clears the location (it used to stick until "Start Over").
+        // No buildSheet() here — a full re-render would steal focus mid-edit.
+        geo = null;
+        const txt = document.querySelector("#sheet .loc-txt");
+        if (txt) txt.textContent = "Set a ZIP to sort by distance";
+        rerunCtx(); updateSheetCount();
       }
     };
     col.appendChild(zip);
     return col;
   }
 
-  let countT;
+  let countT, countToken = 0; // newest-count-wins guard (same pattern as runInventory's invToken)
   function updateSheetCount() {
     const btn = $("sheet-apply");
     if (sheetCtx === "lease") { btn.textContent = `Show ${filteredLeases().length} Results`; return; }
     clearTimeout(countT);
+    const myToken = ++countToken;
     countT = setTimeout(() => {
       CSBData.count({ filter: invState.filter, userLat: geo?.lat, userLng: geo?.lng, radiusMiles: invState.radius })
-        .then(n => { btn.textContent = `Show ${n.toLocaleString()} Results`; }).catch(() => { btn.textContent = "Show Results"; });
+        .then(n => { if (myToken !== countToken) return; btn.textContent = `Show ${n.toLocaleString()} Results`; })
+        .catch(() => { if (myToken === countToken) btn.textContent = "Show Results"; });
     }, 300);
   }
 
@@ -484,31 +498,57 @@
     }
     if (sheetCtx === "inv") {
       const f = invState.filter; f.makes = f.makes || []; f.models = f.models || []; f.trims = f.trims || []; f.bodyStyles = f.bodyStyles || []; f.cylinders = f.cylinders || [];
-      const years = []; for (let y = sf.year_max; y >= sf.year_min; y--) years.push(y);
-      menuChip(grid, "year", f.minYear ? (f.minYear + " or newer") : "Min Year", !!f.minYear,
-        [{ label: "Any year", on: !f.minYear, act: () => f.minYear = 0 }, ...years.map(y => ({ label: y + " or newer", on: f.minYear === y, act: () => f.minYear = y }))]);
+      // Multi-select years (mirrors native YEAR_CHOICES + OLDER_YEARS_BUCKET): same
+      // tap-to-toggle + sticky Done as Make — picking just 2023 shows only 2023s.
+      // 0 in f.years = the "2009 & older" bucket.
+      f.years = f.years || [];
+      const YEAR_CHOICES = []; for (let y = 2027; y >= 2010; y--) YEAR_CHOICES.push(y);
+      const yearSum = !f.years.length ? "Year"
+        : (f.years.length === 1 ? (f.years[0] === 0 ? "2009 & older" : String(f.years[0])) : `Year (${f.years.length})`);
+      menuChip(grid, "year", yearSum, f.years.length > 0, [
+        ...YEAR_CHOICES.map(y => ({ label: String(y), on: f.years.includes(y), act: () => setMulti(f.years, y, !f.years.includes(y)) })),
+        { label: "2009 & older", on: f.years.includes(0), act: () => setMulti(f.years, 0, !f.years.includes(0)) },
+      ], true);
       const PRICES = [10000, 15000, 20000, 25000, 30000, 40000, 50000, 75000, 100000];
       menuChip(grid, "price", f.maxPrice ? ("Under $" + Math.round(f.maxPrice / 1000) + "K") : "Max Price", !!f.maxPrice,
         [{ label: "No max", on: !f.maxPrice, act: () => f.maxPrice = null }, ...PRICES.map(p => ({ label: "Under $" + (p / 1000) + "K", on: f.maxPrice === p, act: () => f.maxPrice = p }))]);
       const invMakes = sf.makes.filter(mk => MAINSTREAM_MAKES.has(mk.trim().toLowerCase()));
       menuChip(grid, "make", f.makes.length ? ("Make (" + f.makes.length + ")") : "Make", f.makes.length > 0,
         invMakes.map(mk => ({ label: mk, on: f.makes.includes(mk), act: () => { setMulti(f.makes, mk, !f.makes.includes(mk)); f.models = []; f.trims = []; } })), true);
-      const models = await CSBData.modelsForMakes(f.makes);
+      // Cascading facets (mirrors native): each dropdown offers only the values that
+      // exist among the cars every OTHER active filter (incl. distance) narrowed to.
+      // Picks are NEVER pruned here just because a sibling filter (price/year/…)
+      // emptied them — that silently swapped a picked model for whatever survived.
+      // (Parent-scope pruning happens in the chips' act handlers: toggling a make
+      // clears models+trims.) Union each faceted list with the current picks so an
+      // out-of-facet pick stays visible (checked) and can be un-picked; its honest
+      // result count is 0.
+      const gLat = geo?.lat, gLng = geo?.lng, gRad = invState.radius;
+      const models = [...new Set([...(await CSBData.modelsFacet(f, gLat, gLng, gRad)), ...f.models])].sort();
+      const trims = [...new Set([...(await CSBData.trimsFacet(f, gLat, gLng, gRad)), ...f.trims])].sort();
       menuChip(grid, "model", f.models.length ? ("Model (" + f.models.length + ")") : "Model", f.models.length > 0,
         models.length ? models.map(m => ({ label: m, on: f.models.includes(m), act: () => { setMulti(f.models, m, !f.models.includes(m)); f.trims = []; } })) : [{ label: "Pick a make first", on: false, act: () => {} }], models.length > 0);
-      const trims = f.makes.length ? await CSBData.trims(f.makes, f.models) : [];
       menuChip(grid, "trim", f.trims.length ? ("Trim (" + f.trims.length + ")") : "Trim", f.trims.length > 0,
         trims.length ? trims.map(t => ({ label: t, on: f.trims.includes(t), act: () => setMulti(f.trims, t, !f.trims.includes(t)) })) : [{ label: "Pick a make first", on: false, act: () => {} }], trims.length > 0);
+      const bodies = [...new Set([...(await CSBData.bodyStylesFacet(f, gLat, gLng, gRad)), ...f.bodyStyles])].sort();
       menuChip(grid, "body", f.bodyStyles.length ? ("Body (" + f.bodyStyles.length + ")") : "Body Style", f.bodyStyles.length > 0,
-        sf.body_styles.map(b => ({ label: b, on: f.bodyStyles.includes(b), act: () => setMulti(f.bodyStyles, b, !f.bodyStyles.includes(b)) })), true);
+        bodies.map(b => ({ label: b, on: f.bodyStyles.includes(b), act: () => setMulti(f.bodyStyles, b, !f.bodyStyles.includes(b)) })), true);
       const DIST = [25, 50, 100, 200, 500];
-      menuChip(grid, "dist", (invState.radius && geo) ? ("Within " + invState.radius + " mi") : "Distance", !!(invState.radius && geo),
+      // The chip reflects the selection even before a location exists (a picked distance
+      // that showed no feedback read as "filters aren't wired up"); the hint below the
+      // grid explains what it's waiting for — mirrors native's FilterSheet hint.
+      menuChip(grid, "dist", invState.radius ? ("Within " + invState.radius + " mi") : "Distance", !!invState.radius,
         [...DIST.map(d => ({ label: "Within " + d + " miles", on: invState.radius === d, act: () => invState.radius = d })), { label: "Nationwide", on: !invState.radius, act: () => invState.radius = null }]);
       const MIL = [30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000];
       menuChip(grid, "mileage", f.maxMileage ? ("Under " + (f.maxMileage / 1000) + "K mi") : "Max Mileage", !!f.maxMileage,
         [{ label: "Any mileage", on: !f.maxMileage, act: () => f.maxMileage = null }, ...MIL.map(m => ({ label: "Under " + (m / 1000) + "K mi", on: f.maxMileage === m, act: () => f.maxMileage = m }))]);
+      const cyls = [...new Set([...(await CSBData.cylindersFacet(f, gLat, gLng, gRad)), ...f.cylinders])].sort((a, b) => a - b);
       menuChip(grid, "cyl", f.cylinders.length ? ("Cyl (" + f.cylinders.length + ")") : "Cylinders", f.cylinders.length > 0,
-        sf.cylinders.map(c => ({ label: c + "-cylinder", on: f.cylinders.includes(c), act: () => setMulti(f.cylinders, c, !f.cylinders.includes(c)) })), true);
+        cyls.map(c => ({ label: c + "-cylinder", on: f.cylinders.includes(c), act: () => setMulti(f.cylinders, c, !f.cylinders.includes(c)) })), true);
+      f.drivetrains = f.drivetrains || [];
+      const drives = [...new Set([...(await CSBData.drivetrainsFacet(f, gLat, gLng, gRad)), ...f.drivetrains])].sort();
+      menuChip(grid, "drive", f.drivetrains.length ? ("Drive (" + f.drivetrains.length + ")") : "Drivetrain", f.drivetrains.length > 0,
+        drives.map(d => ({ label: d, on: f.drivetrains.includes(d), act: () => setMulti(f.drivetrains, d, !f.drivetrains.includes(d)) })), true);
       const SORTS = [["DISTANCE", "Nearest"], ["PRICE_LOW", "Price: Low to High"], ["PRICE_HIGH", "Price: High to Low"], ["MILEAGE_LOW", "Lowest Mileage"], ["YEAR_NEW", "Newest Year"], ["MAKE_MODEL", "Make & Model"]];
       menuChip(grid, "sort", (SORTS.find(s => s[0] === invState.sort) || SORTS[0])[1], invState.sort !== "DISTANCE",
         SORTS.map(([v, l]) => ({ label: l, on: invState.sort === v, act: () => invState.sort = v })));
@@ -536,6 +576,10 @@
       menuChip(grid, "lbody", f.bodies.length ? ("Body (" + f.bodies.length + ")") : "Body Style", f.bodies.length > 0,
         lBodies.map(b => ({ label: b, on: f.bodies.includes(b), act: () => setMulti(f.bodies, b, !f.bodies.includes(b)) })), true);
     }
+    // Native FilterSheet shows this amber hint whenever a distance is set with no location.
+    if (sheetCtx === "inv" && invState.radius && !geo) {
+      body.appendChild(el("div", "dist-hint", "Turn on location (or set a ZIP) to filter by distance."));
+    }
     placeOpenMenu();
     updateSheetCount();
   }
@@ -558,7 +602,7 @@
       const act = e.target.closest("[data-act]"); if (!act) return;
       const a = act.dataset.act;
       if (a === "inv-filter") openSheet("inv");
-      if (a === "inv-clear") { invState.filter = {}; invState.sort = "DISTANCE"; invState.offset = 0; runInventory(true); }
+      if (a === "inv-clear") { invState.filter = {}; invState.sort = "DISTANCE"; invState.radius = null; invState.offset = 0; runInventory(true); }
       if (a === "lease-filter") openSheet("lease");
       if (a === "lease-clear") { leaseState.filter = {}; leaseState.shown = PAGE; runLeases(); }
       if (a === "sheet-back") closeSheet();

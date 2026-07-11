@@ -40,7 +40,13 @@ const CSBData = (() => {
     if (f.maxPrice != null && f.maxPrice < NO_PRICE_CAP) { clauses.push("price <= ?"); args.push(f.maxPrice); }
     if (f.minPrice) { clauses.push("price >= ?"); args.push(f.minPrice); }
     if (f.maxMileage != null && f.maxMileage < NO_MILEAGE_CAP) { clauses.push("(mileage IS NULL OR mileage <= ?)"); args.push(f.maxMileage); }
-    if (f.minYear) { clauses.push("year >= ?"); args.push(f.minYear); }
+    if (f.years && f.years.length) {
+      // Multi-select model years; 0 = the "2009 & older" bucket (mirrors native).
+      const exact = f.years.filter(y => y !== 0), parts = [];
+      if (exact.length) { parts.push(`year IN (${exact.map(() => "?").join(",")})`); args.push(...exact); }
+      if (f.years.includes(0)) parts.push("year < 2010");
+      clauses.push("(" + parts.join(" OR ") + ")");
+    }
     const inClause = (col, vals) => { clauses.push(`${col} IN (${vals.map(() => "?").join(",")})`); args.push(...vals); };
     if (f.makes && f.makes.length) inClause("make", f.makes);
     if (f.models && f.models.length) inClause("model", f.models);
@@ -56,6 +62,10 @@ const CSBData = (() => {
       const lngDelta = radiusMiles / milesPerLngDeg;
       clauses.push("dealer_lat BETWEEN ? AND ?"); args.push(userLat - latDelta, userLat + latDelta);
       clauses.push("dealer_lng BETWEEN ? AND ?"); args.push(userLng - lngDelta, userLng + lngDelta);
+      // Exact-circle refine (equirectangular miles², arithmetic only) so the box corners
+      // beyond the radius are trimmed — mirrors native buildWhere exactly.
+      clauses.push("(((dealer_lat - ?) * 69.0) * ((dealer_lat - ?) * 69.0) + ((dealer_lng - ?) * ?) * ((dealer_lng - ?) * ?)) <= ?");
+      args.push(userLat, userLat, userLng, milesPerLngDeg, userLng, milesPerLngDeg, radiusMiles * radiusMiles);
       hasGeo = true;
     }
     return { where: clauses.length ? "WHERE " + clauses.join(" AND ") : "", args, hasGeo };
@@ -101,28 +111,51 @@ const CSBData = (() => {
     return rows[0].c;
   }
 
-  // Dropdowns: makes + models are precomputed (filters.json); trims are a small live query.
+  // Dropdowns: makes are precomputed (filters.json); the rest are CASCADING facet
+  // queries (mirrors native InventoryRepository) — each list is computed against the
+  // current filter with its own dimension cleared, so a dropdown only offers values
+  // that exist among the cars the other filters already narrowed to. All four facets
+  // require a make (the make-leading covering indexes serve them; an unscoped DISTINCT
+  // would scan the whole remote DB over HTTP) — app.js falls back to the static
+  // filters.json lists for Body/Cylinders until a make is picked.
   async function makes() { await init(); return filters.makes; }
-  async function modelsForMakes(makeList) {
+  async function facetDistinct(col, f, userLat, userLng, radiusMiles) {
     await init();
-    if (!makeList || !makeList.length) return [];
-    const set = new Set();
-    for (const mk of makeList) (filters.models_by_make[mk] || []).forEach(m => set.add(m));
-    return [...set].sort();
-  }
-  async function trims(makeList, modelList) {
-    await init();
-    if (!makeList || !makeList.length) return [];
-    const clauses = [`make IN (${makeList.map(() => "?").join(",")})`];
-    const args = [...makeList];
-    if (modelList && modelList.length) { clauses.push(`model IN (${modelList.map(() => "?").join(",")})`); args.push(...modelList); }
+    const { where, args } = buildWhere(f, userLat, userLng, radiusMiles);
+    const guard = `${col} IS NOT NULL AND ${col} <> ''`;
     const rows = await worker.db.query(
-      `SELECT DISTINCT trim FROM vehicles WHERE ${clauses.join(" AND ")} AND trim IS NOT NULL AND trim<>'' ORDER BY trim`, args);
-    return rows.map(r => r.trim);
+      `SELECT DISTINCT ${col} FROM vehicles ${where ? where + " AND " + guard : "WHERE " + guard} ORDER BY ${col}`, args);
+    return rows.map(r => r[col]).filter(Boolean);
+  }
+  async function modelsFacet(f, userLat, userLng, radiusMiles) {
+    if (!f.makes || !f.makes.length) return [];
+    // Trims are scoped UNDER the model, so a trim pick must not narrow the model list.
+    return facetDistinct("model", { ...f, models: [], trims: [] }, userLat, userLng, radiusMiles);
+  }
+  async function trimsFacet(f, userLat, userLng, radiusMiles) {
+    if (!f.makes || !f.makes.length) return [];
+    return facetDistinct("trim", { ...f, trims: [] }, userLat, userLng, radiusMiles);
+  }
+  async function bodyStylesFacet(f, userLat, userLng, radiusMiles) {
+    if (!f.makes || !f.makes.length) return filters.body_styles;
+    return facetDistinct("body_style", { ...f, bodyStyles: [] }, userLat, userLng, radiusMiles);
+  }
+  async function drivetrainsFacet(f, userLat, userLng, radiusMiles) {
+    if (!f.makes || !f.makes.length) return filters.drivetrains;
+    return facetDistinct("drivetrain", { ...f, drivetrains: [] }, userLat, userLng, radiusMiles);
+  }
+  async function cylindersFacet(f, userLat, userLng, radiusMiles) {
+    if (!f.makes || !f.makes.length) return filters.cylinders;
+    await init();
+    const { where, args } = buildWhere({ ...f, cylinders: [] }, userLat, userLng, radiusMiles);
+    const guard = "cylinders IS NOT NULL";
+    const rows = await worker.db.query(
+      `SELECT DISTINCT cylinders FROM vehicles ${where ? where + " AND " + guard : "WHERE " + guard} ORDER BY cylinders`, args);
+    return rows.map(r => r.cylinders).filter(c => c != null);
   }
   function staticFilters() { return filters; } // body_styles, drivetrains, cylinders, year range
 
-  return { init, search, count, makes, modelsForMakes, trims, staticFilters };
+  return { init, search, count, makes, modelsFacet, trimsFacet, bodyStylesFacet, drivetrainsFacet, cylindersFacet, staticFilters };
 })();
 
 if (typeof window !== "undefined") window.CSBData = CSBData;
