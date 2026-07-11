@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "imported_at": "2026-07-10T14:51:09.378295",
-    "source": "/Users/mike/Projects/CarSearchBuddy/scraper/data/leases/lease_offers.json",
+    "imported_at": "2026-07-11T01:02:40.482170",
+    "source": "/Users/mike/Projects/CarSearchBuddy/composeApp/src/commonMain/composeResources/files/leases.json",
     "total_offers": 575,
-    "re_priceable": 537
+    "re_priceable": 547
   },
   "errors": [],
   "offers": [
@@ -144,8 +144,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "90001",
-        "98101"
+        "90001"
       ]
     },
     {
@@ -257,9 +256,6 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201",
-        "85001",
         "90001"
       ]
     },
@@ -848,10 +844,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001",
-        "90001",
-        "98101"
+        "90001"
       ]
     },
     {
@@ -879,7 +872,6 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "75201",
         "77001"
       ]
     },
@@ -908,7 +900,6 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "75201",
         "77001"
       ]
     },
@@ -937,7 +928,6 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "75201",
         "77001"
       ]
     },
@@ -966,10 +956,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "75201",
-        "77001",
-        "80201",
-        "85001"
+        "77001"
       ]
     },
     {
@@ -997,7 +984,6 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "75201",
         "77001"
       ]
     },
@@ -1026,7 +1012,6 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "75201",
         "77001"
       ]
     },
@@ -1055,7 +1040,6 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "75201",
         "77001"
       ]
     },
@@ -1084,7 +1068,6 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "75201",
         "77001"
       ]
     },
@@ -1113,7 +1096,6 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "75201",
         "77001"
       ]
     },
@@ -1142,7 +1124,6 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "75201",
         "77001"
       ]
     },
@@ -1171,7 +1152,6 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "75201",
         "77001"
       ]
     },
@@ -1200,7 +1180,6 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "75201",
         "77001"
       ]
     },
@@ -1257,9 +1236,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "48202",
-        "80201",
-        "85001"
+        "48202"
       ]
     },
     {
@@ -1539,8 +1516,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "48202",
-        "98101"
+        "48202"
       ]
     },
     {
@@ -1652,9 +1628,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "48202",
-        "80201",
-        "85001"
+        "48202"
       ]
     },
     {
@@ -1766,7 +1740,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
         "33101"
       ]
     },
@@ -1795,7 +1768,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
         "33101"
       ]
     },
@@ -1824,7 +1796,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
         "33101"
       ]
     },
@@ -1853,7 +1824,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
         "33101"
       ]
     },
@@ -1882,7 +1852,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
         "33101"
       ]
     },
@@ -1911,7 +1880,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
         "33101"
       ]
     },
@@ -1940,7 +1908,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
         "33101"
       ]
     },
@@ -1969,7 +1936,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
         "33101"
       ]
     },
@@ -1998,7 +1964,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
         "33101"
       ]
     },
@@ -2027,7 +1992,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
         "33101"
       ]
     },
@@ -2056,7 +2020,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
         "33101"
       ]
     },
@@ -2085,7 +2048,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
         "33101"
       ]
     },
@@ -2114,7 +2076,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
         "33101"
       ]
     },
@@ -2143,7 +2104,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
         "33101"
       ]
     },
@@ -2172,7 +2132,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
         "33101"
       ]
     },
@@ -2201,7 +2160,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
         "33101"
       ]
     },
@@ -2230,7 +2188,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
         "33101"
       ]
     },
@@ -2259,7 +2216,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
         "33101"
       ]
     },
@@ -2288,7 +2244,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
         "33101"
       ]
     },
@@ -2317,7 +2272,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
         "33101"
       ]
     },
@@ -2542,8 +2496,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "60601"
+        "10001"
       ]
     },
     {
@@ -3075,8 +3028,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -3104,8 +3056,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -3189,9 +3140,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201",
-        "85001"
+        "60601"
       ]
     },
     {
@@ -3275,9 +3224,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201",
-        "85001"
+        "60601"
       ]
     },
     {
@@ -3417,9 +3364,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201",
-        "85001"
+        "60601"
       ]
     },
     {
@@ -3531,9 +3476,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201",
-        "85001"
+        "60601"
       ]
     },
     {
@@ -3841,8 +3784,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -3870,8 +3812,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -3899,8 +3840,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -3928,8 +3868,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -3957,8 +3896,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -3986,8 +3924,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -4015,8 +3952,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -4044,8 +3980,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -4073,8 +4008,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -4102,8 +4036,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -4131,8 +4064,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -4160,8 +4092,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -4189,8 +4120,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -4218,8 +4148,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -4247,8 +4176,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -4276,8 +4204,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -4305,8 +4232,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -4334,8 +4260,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -4363,8 +4288,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -4392,8 +4316,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -4421,8 +4344,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -4450,8 +4372,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -4479,8 +4400,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -4508,8 +4428,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -4537,8 +4456,7 @@
       "net_cap_source": "parsed",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "85001"
+        "80201"
       ]
     },
     {
@@ -4911,7 +4829,7 @@
       "year": 2026,
       "trim": "PREMIUM+ AWD",
       "body_style": "Mid-Size SUV",
-      "msrp": null,
+      "msrp": 64140.0,
       "monthly_payment": 729.0,
       "term_months": 36,
       "due_at_signing": 4999.0,
@@ -4921,14 +4839,14 @@
       "source_url": "https://www.lexus.com/offers",
       "fine_print": "Monthly lease payments of $729 per month for 36 months available on approved credit through Lexus Financial Services (LFS) at participating Lexus dealers. For only very well-qualified lessees. Closed-end lease example based on 2026 RX 350 PREMIUM+ AWD with a Total SRP of $64,140 including destination charges and an adjusted capitalized cost of $58,184 (based on $3,375 customer down payment and suggested dealer contribution). $4,999 Cash due at Signing includes $3,375 customer down payment, first month's payment of $729, and $895 Acquisition Fee. Total contract price is $30,514. Lease offer excludes document, tax, title, and license fees. Security deposit waived. Individual dealer prices and dealer contribution may vary and could affect lease payment. Must lease from participating dealer's stock and terms are subject to vehicle availability. Lessee responsible for maintenance, excess wear and use, and will pay $0.25 per mile for all mileage over 10,000 miles per year. Disposition fee of $350 may be due at lease end. Offer cannot be combined with Lexus Cash. Offer available in IA, IL, IN, KS, KY, MI, MN, MO, ND, NE, OH, SD, WI; void where prohibited. Offer expires 08-03-2026. Purchase option price at lease end is $41,050. See your participating Lexus dealer for restrictions and exclusions. LFS is a service mark of Toyota Motor Credit Corporation (TMCC). Retail installment accounts may be owned by TMCC or its securitization affiliates and lease accounts may be owned by Toyota Lease Trust (TLT) or its securitization affiliates. TMCC is the servicer for accounts owned by TMCC, TLT, and their securitization affiliates.",
       "scraped_at": "2026-07-10T14:51:09.287800",
-      "net_cap_cost": null,
-      "residual_value": null,
-      "money_factor": null,
+      "net_cap_cost": 58184.0,
+      "residual_value": 35277.0,
+      "money_factor": 0.000992,
       "total_lease_cost": 30514.0,
-      "cost_per_1k_msrp": null,
-      "residual_source": null,
-      "net_cap_source": null,
-      "can_recompute": false,
+      "cost_per_1k_msrp": 475.74,
+      "residual_source": "curve",
+      "net_cap_source": "parsed",
+      "can_recompute": true,
       "regions": [
         "48202"
       ]
@@ -4939,7 +4857,7 @@
       "year": 2026,
       "trim": "PREMIUM+ AWD",
       "body_style": "Mid-Size SUV",
-      "msrp": null,
+      "msrp": 65069.0,
       "monthly_payment": 739.0,
       "term_months": 36,
       "due_at_signing": 4999.0,
@@ -4949,14 +4867,14 @@
       "source_url": "https://www.lexus.com/offers",
       "fine_print": "Monthly lease payments of $739 per month for 36 months available on approved credit through Lexus Financial Services (LFS) at participating Lexus dealers. For only very well-qualified lessees. Closed-end lease example based on 2026 RX 350h PREMIUM+ AWD with a Total SRP of $65,069 including destination charges and an adjusted capitalized cost of $59,416 (based on $3,365 customer down payment and suggested dealer contribution). $4,999 Cash due at Signing includes $3,365 customer down payment, first month's payment of $739, and $895 Acquisition Fee. Total contract price is $30,864. Lease offer excludes document, tax, title, and license fees. Security deposit waived. Individual dealer prices and dealer contribution may vary and could affect lease payment. Must lease from participating dealer's stock and terms are subject to vehicle availability. Lessee responsible for maintenance, excess wear and use, and will pay $0.25 per mile for all mileage over 10,000 miles per year. Disposition fee of $350 may be due at lease end. Offer cannot be combined with Lexus Cash. Offer available in IA, IL, IN, KS, KY, MI, MN, MO, ND, NE, OH, SD, WI; void where prohibited. Offer expires 08-03-2026. Purchase option price at lease end is $42,946. See your participating Lexus dealer for restrictions and exclusions. LFS is a service mark of Toyota Motor Credit Corporation (TMCC). Retail installment accounts may be owned by TMCC or its securitization affiliates and lease accounts may be owned by Toyota Lease Trust (TLT) or its securitization affiliates. TMCC is the servicer for accounts owned by TMCC, TLT, and their securitization affiliates.",
       "scraped_at": "2026-07-10T14:51:09.288059",
-      "net_cap_cost": null,
-      "residual_value": null,
-      "money_factor": null,
+      "net_cap_cost": 59416.0,
+      "residual_value": 35787.95,
+      "money_factor": 0.000868,
       "total_lease_cost": 30864.0,
-      "cost_per_1k_msrp": null,
-      "residual_source": null,
-      "net_cap_source": null,
-      "can_recompute": false,
+      "cost_per_1k_msrp": 474.33,
+      "residual_source": "curve",
+      "net_cap_source": "parsed",
+      "can_recompute": true,
       "regions": [
         "48202"
       ]
@@ -4967,7 +4885,7 @@
       "year": 2026,
       "trim": "PREMIUM",
       "body_style": "Electric SUV",
-      "msrp": null,
+      "msrp": 54014.0,
       "monthly_payment": 570.0,
       "term_months": 36,
       "due_at_signing": 4999.0,
@@ -4977,14 +4895,14 @@
       "source_url": "https://www.lexus.com/offers",
       "fine_print": "Monthly lease payments of $570 per month for 36 months available on approved credit through Lexus Financial Services (LFS) at participating Lexus dealers. For only very well-qualified lessees. Closed-end lease example based on 2026 RZ 350e PREMIUM with a Total SRP of $54,014 including destination charges and an adjusted capitalized cost of $45,176 (based on $3,534 customer down payment, $3,000 Lease Cash, and suggested dealer contribution). $4,999 Cash due at Signing includes $3,534 customer down payment, first month's payment of $570, and $895 Acquisition Fee. Total contract price is $24,949. Lease offer excludes document, tax, title, and license fees. Security deposit waived. Individual dealer prices and dealer contribution may vary and could affect lease payment. Must lease from participating dealer's stock and terms are subject to vehicle availability. Lessee responsible for maintenance, excess wear and use, and will pay $0.25 per mile for all mileage over 10,000 miles per year. Disposition fee of $350 may be due at lease end. Offer cannot be combined with Lexus Cash. Offer available in IA, IL, IN, KS, KY, MI, MN, MO, ND, NE, OH, SD, WI; void where prohibited. Offer expires 08-03-2026. Purchase option price at lease end is $28,627. See your participating Lexus dealer for restrictions and exclusions. LFS is a service mark of Toyota Motor Credit Corporation (TMCC). Retail installment accounts may be owned by TMCC or its securitization affiliates and lease accounts may be owned by Toyota Lease Trust (TLT) or its securitization affiliates. TMCC is the servicer for accounts owned by TMCC, TLT, and their securitization affiliates.",
       "scraped_at": "2026-07-10T14:51:09.288316",
-      "net_cap_cost": null,
-      "residual_value": null,
-      "money_factor": null,
+      "net_cap_cost": 45176.0,
+      "residual_value": 25386.58,
+      "money_factor": 0.000288,
       "total_lease_cost": 24949.0,
-      "cost_per_1k_msrp": null,
-      "residual_source": null,
-      "net_cap_source": null,
-      "can_recompute": false,
+      "cost_per_1k_msrp": 461.9,
+      "residual_source": "curve",
+      "net_cap_source": "parsed",
+      "can_recompute": true,
       "regions": [
         "48202"
       ]
@@ -4995,7 +4913,7 @@
       "year": 2026,
       "trim": "LUXURY AWD",
       "body_style": "Mid-Size SUV",
-      "msrp": null,
+      "msrp": 74277.0,
       "monthly_payment": 819.0,
       "term_months": 36,
       "due_at_signing": 4999.0,
@@ -5005,14 +4923,14 @@
       "source_url": "https://www.lexus.com/offers",
       "fine_print": "Monthly lease payments of $819 per month for 36 months available on approved credit through Lexus Financial Services (LFS) at participating Lexus dealers. For only very well-qualified lessees. Closed-end lease example based on 2026 TX 350 LUXURY AWD with a Total SRP of $74,277 including destination charges and an adjusted capitalized cost of $67,437 (based on $3,285 customer down payment and suggested dealer contribution). $4,999 Cash due at Signing includes $3,285 customer down payment, first month's payment of $819, and $895 Acquisition Fee. Total contract price is $33,664. Lease offer excludes document, tax, title, and license fees. Security deposit waived. Individual dealer prices and dealer contribution may vary and could affect lease payment. Must lease from participating dealer's stock and terms are subject to vehicle availability. Lessee responsible for maintenance, excess wear and use, and will pay $0.25 per mile for all mileage over 10,000 miles per year. Disposition fee of $350 may be due at lease end. Offer cannot be combined with Lexus Cash. Offer available in IA, IL, IN, KS, KY, MI, MN, MO, ND, NE, OH, SD, WI; void where prohibited. Offer expires 08-03-2026. Purchase option price at lease end is $46,795. See your participating Lexus dealer for restrictions and exclusions. LFS is a service mark of Toyota Motor Credit Corporation (TMCC). Retail installment accounts may be owned by TMCC or its securitization affiliates and lease accounts may be owned by Toyota Lease Trust (TLT) or its securitization affiliates. TMCC is the servicer for accounts owned by TMCC, TLT, and their securitization affiliates.",
       "scraped_at": "2026-07-10T14:51:09.288577",
-      "net_cap_cost": null,
-      "residual_value": null,
-      "money_factor": null,
+      "net_cap_cost": 67437.0,
+      "residual_value": 40852.35,
+      "money_factor": 0.000744,
       "total_lease_cost": 33664.0,
-      "cost_per_1k_msrp": null,
-      "residual_source": null,
-      "net_cap_source": null,
-      "can_recompute": false,
+      "cost_per_1k_msrp": 453.22,
+      "residual_source": "curve",
+      "net_cap_source": "parsed",
+      "can_recompute": true,
       "regions": [
         "48202"
       ]
@@ -5023,7 +4941,7 @@
       "year": 2026,
       "trim": "F SPORT PERFORMANCE PREMIUM AWD",
       "body_style": "Mid-Size SUV",
-      "msrp": null,
+      "msrp": 73194.0,
       "monthly_payment": 909.0,
       "term_months": 36,
       "due_at_signing": 4999.0,
@@ -5033,14 +4951,14 @@
       "source_url": "https://www.lexus.com/offers",
       "fine_print": "Monthly lease payments of $909 per month for 36 months available on approved credit through Lexus Financial Services (LFS) at participating Lexus dealers. For only very well-qualified lessees. Closed-end lease example based on 2026 TX 500h F SPORT PERFORMANCE PREMIUM AWD with a Total SRP of $73,194 including destination charges and an adjusted capitalized cost of $67,421 (based on $3,195 customer down payment and suggested dealer contribution). $4,999 Cash due at Signing includes $3,195 customer down payment, first month's payment of $909, and $895 Acquisition Fee. Total contract price is $36,814. Lease offer excludes document, tax, title, and license fees. Security deposit waived. Individual dealer prices and dealer contribution may vary and could affect lease payment. Must lease from participating dealer's stock and terms are subject to vehicle availability. Lessee responsible for maintenance, excess wear and use, and will pay $0.25 per mile for all mileage over 10,000 miles per year. Disposition fee of $350 may be due at lease end. Offer cannot be combined with Lexus Cash. Offer available in IA, IL, IN, KS, KY, MI, MN, MO, ND, NE, OH, SD, WI; void where prohibited. Offer expires 08-03-2026. Purchase option price at lease end is $43,916. See your participating Lexus dealer for restrictions and exclusions. LFS is a service mark of Toyota Motor Credit Corporation (TMCC). Retail installment accounts may be owned by TMCC or its securitization affiliates and lease accounts may be owned by Toyota Lease Trust (TLT) or its securitization affiliates. TMCC is the servicer for accounts owned by TMCC, TLT, and their securitization affiliates.",
       "scraped_at": "2026-07-10T14:51:09.288838",
-      "net_cap_cost": null,
-      "residual_value": null,
-      "money_factor": null,
+      "net_cap_cost": 67421.0,
+      "residual_value": 40256.7,
+      "money_factor": 0.001434,
       "total_lease_cost": 36814.0,
-      "cost_per_1k_msrp": null,
-      "residual_source": null,
-      "net_cap_source": null,
-      "can_recompute": false,
+      "cost_per_1k_msrp": 502.96,
+      "residual_source": "curve",
+      "net_cap_source": "parsed",
+      "can_recompute": true,
       "regions": [
         "48202"
       ]
@@ -5051,7 +4969,7 @@
       "year": 2026,
       "trim": "AWD",
       "body_style": "Compact SUV",
-      "msrp": null,
+      "msrp": 50668.0,
       "monthly_payment": 529.0,
       "term_months": 36,
       "due_at_signing": 4999.0,
@@ -5061,14 +4979,14 @@
       "source_url": "https://www.lexus.com/offers",
       "fine_print": "Monthly lease payments of $529 per month for 36 months available on approved credit through Lexus Financial Services (LFS) at participating Lexus dealers. For only very well-qualified lessees. Closed-end lease example based on 2026 NX 350 AWD with a Total SRP of $50,668 including destination charges and an adjusted capitalized cost of $45,002 (based on $3,575 customer down payment and suggested dealer contribution). $4,999 Cash due at Signing includes $3,575 customer down payment, first month's payment of $529, and $895 Acquisition Fee. Total contract price is $23,514. Lease offer excludes document, tax, title, and license fees. Security deposit waived. Individual dealer prices and dealer contribution may vary and could affect lease payment. Must lease from participating dealer's stock and terms are subject to vehicle availability. Lessee responsible for maintenance, excess wear and use, and will pay $0.25 per mile for all mileage over 10,000 miles per year. Disposition fee of $350 may be due at lease end. Offer cannot be combined with Lexus Cash. Offer available in IA, IL, IN, KS, KY, MI, MN, MO, ND, NE, OH, SD, WI; void where prohibited. Offer expires 08-03-2026. Purchase option price at lease end is $33,441. See your participating Lexus dealer for restrictions and exclusions. LFS is a service mark of Toyota Motor Credit Corporation (TMCC). Retail installment accounts may be owned by TMCC or its securitization affiliates and lease accounts may be owned by Toyota Lease Trust (TLT) or its securitization affiliates. TMCC is the servicer for accounts owned by TMCC, TLT, and their securitization affiliates.",
       "scraped_at": "2026-07-10T14:51:09.289104",
-      "net_cap_cost": null,
-      "residual_value": null,
-      "money_factor": null,
+      "net_cap_cost": 45002.0,
+      "residual_value": 29387.44,
+      "money_factor": 0.001281,
       "total_lease_cost": 23514.0,
-      "cost_per_1k_msrp": null,
-      "residual_source": null,
-      "net_cap_source": null,
-      "can_recompute": false,
+      "cost_per_1k_msrp": 464.08,
+      "residual_source": "curve",
+      "net_cap_source": "parsed",
+      "can_recompute": true,
       "regions": [
         "48202"
       ]
@@ -5079,7 +4997,7 @@
       "year": 2026,
       "trim": "LUXURY AWD",
       "body_style": "Compact SUV",
-      "msrp": null,
+      "msrp": 59610.0,
       "monthly_payment": 639.0,
       "term_months": 36,
       "due_at_signing": 4999.0,
@@ -5089,14 +5007,14 @@
       "source_url": "https://www.lexus.com/offers",
       "fine_print": "Monthly lease payments of $639 per month for 36 months available on approved credit through Lexus Financial Services (LFS) at participating Lexus dealers. For only very well-qualified lessees. Closed-end lease example based on 2026 NX 350h LUXURY AWD with a Total SRP of $59,610 including destination charges and an adjusted capitalized cost of $53,491 (based on $3,465 customer down payment and suggested dealer contribution). $4,999 Cash due at Signing includes $3,465 customer down payment, first month's payment of $639, and $895 Acquisition Fee. Total contract price is $27,364. Lease offer excludes document, tax, title, and license fees. Security deposit waived. Individual dealer prices and dealer contribution may vary and could affect lease payment. Must lease from participating dealer's stock and terms are subject to vehicle availability. Lessee responsible for maintenance, excess wear and use, and will pay $0.25 per mile for all mileage over 10,000 miles per year. Disposition fee of $350 may be due at lease end. Offer cannot be combined with Lexus Cash. Offer available in IA, IL, IN, KS, KY, MI, MN, MO, ND, NE, OH, SD, WI; void where prohibited. Offer expires 08-03-2026. Purchase option price at lease end is $39,343. See your participating Lexus dealer for restrictions and exclusions. LFS is a service mark of Toyota Motor Credit Corporation (TMCC). Retail installment accounts may be owned by TMCC or its securitization affiliates and lease accounts may be owned by Toyota Lease Trust (TLT) or its securitization affiliates. TMCC is the servicer for accounts owned by TMCC, TLT, and their securitization affiliates.",
       "scraped_at": "2026-07-10T14:51:09.289362",
-      "net_cap_cost": null,
-      "residual_value": null,
-      "money_factor": null,
+      "net_cap_cost": 53491.0,
+      "residual_value": 34573.8,
+      "money_factor": 0.001289,
       "total_lease_cost": 27364.0,
-      "cost_per_1k_msrp": null,
-      "residual_source": null,
-      "net_cap_source": null,
-      "can_recompute": false,
+      "cost_per_1k_msrp": 459.05,
+      "residual_source": "curve",
+      "net_cap_source": "parsed",
+      "can_recompute": true,
       "regions": [
         "48202"
       ]
@@ -5107,7 +5025,7 @@
       "year": 2026,
       "trim": "LUXURY AWD",
       "body_style": "Compact SUV",
-      "msrp": null,
+      "msrp": 68474.0,
       "monthly_payment": 689.0,
       "term_months": 36,
       "due_at_signing": 4999.0,
@@ -5117,14 +5035,14 @@
       "source_url": "https://www.lexus.com/offers",
       "fine_print": "Monthly lease payments of $689 per month for 36 months available on approved credit through Lexus Financial Services (LFS) at participating Lexus dealers. For only very well-qualified lessees. Closed-end lease example based on 2026 NX 450h+ LUXURY AWD with a Total SRP of $68,474 including destination charges and an adjusted capitalized cost of $62,072 (based on $3,415 customer down payment and suggested dealer contribution). $4,999 Cash due at Signing includes $3,415 customer down payment, first month's payment of $689, and $895 Acquisition Fee. Total contract price is $29,114. Lease offer excludes document, tax, title, and license fees. Security deposit waived. Individual dealer prices and dealer contribution may vary and could affect lease payment. Must lease from participating dealer's stock and terms are subject to vehicle availability. Lessee responsible for maintenance, excess wear and use, and will pay $0.25 per mile for all mileage over 10,000 miles per year. Disposition fee of $350 may be due at lease end. Offer cannot be combined with Lexus Cash. Offer available in IA, IL, IN, KS, KY, MI, MN, MO, ND, NE, OH, SD, WI; void where prohibited. Offer expires 08-03-2026. Purchase option price at lease end is $43,139. See your participating Lexus dealer for restrictions and exclusions. LFS is a service mark of Toyota Motor Credit Corporation (TMCC). Retail installment accounts may be owned by TMCC or its securitization affiliates and lease accounts may be owned by Toyota Lease Trust (TLT) or its securitization affiliates. TMCC is the servicer for accounts owned by TMCC, TLT, and their securitization affiliates.",
       "scraped_at": "2026-07-10T14:51:09.289618",
-      "net_cap_cost": null,
-      "residual_value": null,
-      "money_factor": null,
+      "net_cap_cost": 62072.0,
+      "residual_value": 39714.92,
+      "money_factor": 0.000668,
       "total_lease_cost": 29114.0,
-      "cost_per_1k_msrp": null,
-      "residual_source": null,
-      "net_cap_source": null,
-      "can_recompute": false,
+      "cost_per_1k_msrp": 425.18,
+      "residual_source": "curve",
+      "net_cap_source": "parsed",
+      "can_recompute": true,
       "regions": [
         "48202"
       ]
@@ -5135,7 +5053,7 @@
       "year": 2026,
       "trim": "PREMIUM AWD",
       "body_style": "Compact SUV",
-      "msrp": null,
+      "msrp": 45650.0,
       "monthly_payment": 459.0,
       "term_months": 36,
       "due_at_signing": 4999.0,
@@ -5145,14 +5063,14 @@
       "source_url": "https://www.lexus.com/offers",
       "fine_print": "Monthly lease payments of $459 per month for 36 months available on approved credit through Lexus Financial Services (LFS) at participating Lexus dealers. For only very well-qualified lessees. Closed-end lease example based on 2026 UX 300h PREMIUM AWD with a Total SRP of $45,650 including destination charges and an adjusted capitalized cost of $40,962 (based on $3,645 customer down payment and suggested dealer contribution). $4,999 Cash due at Signing includes $3,645 customer down payment, first month's payment of $459, and $895 Acquisition Fee. Total contract price is $21,064. Lease offer excludes document, tax, title, and license fees. Security deposit waived. Individual dealer prices and dealer contribution may vary and could affect lease payment. Must lease from participating dealer's stock and terms are subject to vehicle availability. Lessee responsible for maintenance, excess wear and use, and will pay $0.25 per mile for all mileage over 10,000 miles per year. Disposition fee of $350 may be due at lease end. Offer cannot be combined with Lexus Cash. Offer available in IA, IL, IN, KS, KY, MI, MN, MO, ND, NE, OH, SD, WI; void where prohibited. Offer expires 08-03-2026. Purchase option price at lease end is $28,303. See your participating Lexus dealer for restrictions and exclusions. LFS is a service mark of Toyota Motor Credit Corporation (TMCC). Retail installment accounts may be owned by TMCC or its securitization affiliates and lease accounts may be owned by Toyota Lease Trust (TLT) or its securitization affiliates. TMCC is the servicer for accounts owned by TMCC, TLT, and their securitization affiliates.",
       "scraped_at": "2026-07-10T14:51:09.289873",
-      "net_cap_cost": null,
-      "residual_value": null,
-      "money_factor": null,
+      "net_cap_cost": 40962.0,
+      "residual_value": 26477.0,
+      "money_factor": 0.00084,
       "total_lease_cost": 21064.0,
-      "cost_per_1k_msrp": null,
-      "residual_source": null,
-      "net_cap_source": null,
-      "can_recompute": false,
+      "cost_per_1k_msrp": 461.42,
+      "residual_source": "curve",
+      "net_cap_source": "parsed",
+      "can_recompute": true,
       "regions": [
         "48202"
       ]
@@ -5163,7 +5081,7 @@
       "year": 2026,
       "trim": "F SPORT DESIGN AWD",
       "body_style": "Sedan",
-      "msrp": null,
+      "msrp": 52192.0,
       "monthly_payment": 559.0,
       "term_months": 36,
       "due_at_signing": 4999.0,
@@ -5173,14 +5091,14 @@
       "source_url": "https://www.lexus.com/offers",
       "fine_print": "Monthly lease payments of $559 per month for 36 months available on approved credit through Lexus Financial Services (LFS) at participating Lexus dealers. For only very well-qualified lessees. Closed-end lease example based on 2026 IS 350 F SPORT DESIGN AWD with a Total SRP of $52,192 including destination charges and an adjusted capitalized cost of $46,124 (based on $3,545 customer down payment and suggested dealer contribution). $4,999 Cash due at Signing includes $3,545 customer down payment, first month's payment of $559, and $895 Acquisition Fee. Total contract price is $24,564. Lease offer excludes document, tax, title, and license fees. Security deposit waived. Individual dealer prices and dealer contribution may vary and could affect lease payment. Must lease from participating dealer's stock and terms are subject to vehicle availability. Lessee responsible for maintenance, excess wear and use, and will pay $0.25 per mile for all mileage over 10,000 miles per year. Disposition fee of $350 may be due at lease end. Offer cannot be combined with Lexus Cash. Offer available in IA, IL, IN, KS, KY, MI, MN, MO, ND, NE, OH, SD, WI; void where prohibited. Offer expires 08-03-2026. Purchase option price at lease end is $33,925. See your participating Lexus dealer for restrictions and exclusions. LFS is a service mark of Toyota Motor Credit Corporation (TMCC). Retail installment accounts may be owned by TMCC or its securitization affiliates and lease accounts may be owned by Toyota Lease Trust (TLT) or its securitization affiliates. TMCC is the servicer for accounts owned by TMCC, TLT, and their securitization affiliates.",
       "scraped_at": "2026-07-10T14:51:09.290128",
-      "net_cap_cost": null,
-      "residual_value": null,
-      "money_factor": null,
+      "net_cap_cost": 46124.0,
+      "residual_value": 27661.76,
+      "money_factor": 0.000626,
       "total_lease_cost": 24564.0,
-      "cost_per_1k_msrp": null,
-      "residual_source": null,
-      "net_cap_source": null,
-      "can_recompute": false,
+      "cost_per_1k_msrp": 470.65,
+      "residual_source": "curve",
+      "net_cap_source": "parsed",
+      "can_recompute": true,
       "regions": [
         "48202"
       ]
@@ -8290,13 +8208,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "02101",
-        "10001",
-        "33101",
-        "48202",
-        "80201",
-        "85001",
-        "90001"
+        "10001"
       ]
     },
     {
@@ -8324,13 +8236,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "02101",
-        "10001",
-        "33101",
-        "48202",
-        "80201",
-        "85001",
-        "90001"
+        "10001"
       ]
     },
     {
@@ -8358,13 +8264,7 @@
       "net_cap_source": null,
       "can_recompute": false,
       "regions": [
-        "02101",
-        "10001",
-        "33101",
-        "48202",
-        "80201",
-        "85001",
-        "90001"
+        "10001"
       ]
     },
     {
@@ -8392,13 +8292,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "02101",
-        "10001",
-        "33101",
-        "48202",
-        "80201",
-        "85001",
-        "90001"
+        "10001"
       ]
     },
     {
@@ -8426,7 +8320,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "02101",
         "10001"
       ]
     },
@@ -8455,7 +8348,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "02101",
         "10001"
       ]
     },
@@ -8484,7 +8376,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "02101",
         "10001"
       ]
     },
@@ -8513,7 +8404,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "02101",
         "10001"
       ]
     },
@@ -8570,13 +8460,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "02101",
-        "10001",
-        "33101",
-        "48202",
-        "80201",
-        "85001",
-        "90001"
+        "10001"
       ]
     },
     {
@@ -8604,10 +8488,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "02101",
-        "10001",
-        "33101",
-        "80201"
+        "10001"
       ]
     },
     {
@@ -8635,12 +8516,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "02101",
-        "10001",
-        "33101",
-        "48202",
-        "85001",
-        "90001"
+        "10001"
       ]
     },
     {
@@ -8668,13 +8544,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "02101",
-        "10001",
-        "33101",
-        "48202",
-        "80201",
-        "85001",
-        "90001"
+        "10001"
       ]
     },
     {
@@ -8702,18 +8572,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "02101",
-        "10001",
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "80201",
-        "85001",
-        "90001",
-        "98101"
+        "10001"
       ]
     },
     {
@@ -8741,18 +8600,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "02101",
-        "10001",
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "80201",
-        "85001",
-        "90001",
-        "98101"
+        "10001"
       ]
     },
     {
@@ -8780,7 +8628,6 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "02101",
         "10001"
       ]
     },
@@ -8809,13 +8656,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "02101",
-        "10001",
-        "33101",
-        "48202",
-        "80201",
-        "85001",
-        "90001"
+        "10001"
       ]
     },
     {
@@ -8871,11 +8712,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "33101",
-        "48202",
-        "80201",
-        "85001",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -8903,11 +8740,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "33101",
-        "48202",
-        "80201",
-        "85001",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -8935,11 +8768,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "33101",
-        "48202",
-        "80201",
-        "85001",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -8967,11 +8796,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "33101",
-        "48202",
-        "80201",
-        "85001",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -8999,11 +8824,7 @@
       "net_cap_source": null,
       "can_recompute": false,
       "regions": [
-        "33101",
-        "48202",
-        "80201",
-        "85001",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -9031,11 +8852,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "33101",
-        "48202",
-        "80201",
-        "85001",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -9091,9 +8908,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "48202",
-        "85001",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -9149,11 +8964,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "33101",
-        "48202",
-        "80201",
-        "85001",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -9405,11 +9216,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -9437,11 +9244,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -9469,11 +9272,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -9501,11 +9300,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -9533,11 +9328,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -9565,11 +9356,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -9597,11 +9384,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -9629,11 +9412,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -9661,11 +9440,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -9693,11 +9468,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -9725,11 +9496,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -9757,11 +9524,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -9789,11 +9552,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -9821,11 +9580,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -9853,11 +9608,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -11929,10 +11680,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -11960,10 +11708,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -11991,10 +11736,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12022,10 +11764,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12053,10 +11792,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12084,10 +11820,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12115,10 +11848,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12146,10 +11876,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12177,10 +11904,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12208,10 +11932,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12239,10 +11960,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12270,10 +11988,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12301,10 +12016,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12332,10 +12044,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12363,17 +12072,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "80201",
-        "85001",
-        "90001",
-        "98101"
+        "48202"
       ]
     },
     {
@@ -12401,17 +12100,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "80201",
-        "85001",
-        "90001",
-        "98101"
+        "48202"
       ]
     },
     {
@@ -12439,17 +12128,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "80201",
-        "85001",
-        "90001",
-        "98101"
+        "48202"
       ]
     },
     {
@@ -12477,17 +12156,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "80201",
-        "85001",
-        "90001",
-        "98101"
+        "48202"
       ]
     },
     {
@@ -12515,13 +12184,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "85001"
+        "48202"
       ]
     },
     {
@@ -12549,13 +12212,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "85001"
+        "48202"
       ]
     },
     {
@@ -12583,10 +12240,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12614,10 +12268,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12645,10 +12296,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12676,10 +12324,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12707,10 +12352,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12738,10 +12380,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12769,10 +12408,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12800,10 +12436,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12831,10 +12464,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12862,10 +12492,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12893,10 +12520,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12924,10 +12548,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12955,10 +12576,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -12986,10 +12604,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -13017,13 +12632,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "85001"
+        "48202"
       ]
     },
     {
@@ -13051,13 +12660,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "85001"
+        "48202"
       ]
     },
     {
@@ -13085,13 +12688,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "85001"
+        "48202"
       ]
     },
     {
@@ -13119,14 +12716,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "85001"
+        "48202"
       ]
     },
     {
@@ -13154,13 +12744,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "85001"
+        "48202"
       ]
     },
     {
@@ -13188,13 +12772,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "85001"
+        "48202"
       ]
     },
     {
@@ -13222,10 +12800,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -13253,10 +12828,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -13284,10 +12856,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -13315,10 +12884,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -13346,13 +12912,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "85001"
+        "48202"
       ]
     },
     {
@@ -13380,13 +12940,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "85001"
+        "48202"
       ]
     },
     {
@@ -13414,14 +12968,7 @@
       "net_cap_source": "estimated",
       "can_recompute": false,
       "regions": [
-        "10001",
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "85001"
+        "48202"
       ]
     },
     {
@@ -13449,14 +12996,7 @@
       "net_cap_source": "estimated",
       "can_recompute": false,
       "regions": [
-        "10001",
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "85001"
+        "48202"
       ]
     },
     {
@@ -13484,14 +13024,7 @@
       "net_cap_source": "estimated",
       "can_recompute": false,
       "regions": [
-        "10001",
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "85001"
+        "48202"
       ]
     },
     {
@@ -13519,14 +13052,7 @@
       "net_cap_source": "estimated",
       "can_recompute": false,
       "regions": [
-        "10001",
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "85001"
+        "48202"
       ]
     },
     {
@@ -13554,10 +13080,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -13585,10 +13108,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -13616,10 +13136,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -13647,10 +13164,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -13678,10 +13192,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -13709,10 +13220,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -13740,10 +13248,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -13771,10 +13276,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "33101",
-        "48202",
-        "90001"
+        "48202"
       ]
     },
     {
@@ -13802,17 +13304,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "80201",
-        "85001",
-        "90001",
-        "98101"
+        "48202"
       ]
     },
     {
@@ -13840,17 +13332,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "80201",
-        "85001",
-        "90001",
-        "98101"
+        "48202"
       ]
     },
     {
@@ -13878,17 +13360,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "80201",
-        "85001",
-        "90001",
-        "98101"
+        "48202"
       ]
     },
     {
@@ -13916,17 +13388,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "30301",
-        "33101",
-        "48202",
-        "60601",
-        "75201",
-        "77001",
-        "80201",
-        "85001",
-        "90001",
-        "98101"
+        "48202"
       ]
     },
     {
@@ -13954,8 +13416,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -13983,8 +13444,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14012,8 +13472,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14041,8 +13500,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14070,8 +13528,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14099,8 +13556,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14128,8 +13584,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14157,8 +13612,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14186,8 +13640,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14215,8 +13668,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14244,8 +13696,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14273,8 +13724,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14302,8 +13752,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14331,8 +13780,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14360,13 +13808,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "80201",
-        "85001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -14394,13 +13836,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "80201",
-        "85001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -14428,13 +13864,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "80201",
-        "85001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -14462,13 +13892,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "80201",
-        "85001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -14496,8 +13920,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14525,8 +13948,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14554,8 +13976,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14583,8 +14004,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14612,8 +14032,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14641,8 +14060,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14670,13 +14088,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "80201",
-        "85001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -14704,13 +14116,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "80201",
-        "85001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -14738,13 +14144,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "80201",
-        "85001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -14772,13 +14172,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "80201",
-        "85001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -14806,8 +14200,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14835,8 +14228,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14864,8 +14256,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14893,8 +14284,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14922,8 +14312,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14951,8 +14340,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -14980,8 +14368,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -15009,8 +14396,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -15038,13 +14424,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "80201",
-        "85001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -15072,13 +14452,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "60601",
-        "75201",
-        "77001",
-        "80201",
-        "85001",
-        "98101"
+        "60601"
       ]
     },
     {
@@ -15106,8 +14480,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -15135,8 +14508,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "60601",
-        "80201"
+        "60601"
       ]
     },
     {
@@ -15164,10 +14536,7 @@
       "net_cap_source": "estimated",
       "can_recompute": false,
       "regions": [
-        "10001",
-        "80201",
-        "90001",
-        "98101"
+        "90001"
       ]
     },
     {
@@ -15195,10 +14564,7 @@
       "net_cap_source": "estimated",
       "can_recompute": false,
       "regions": [
-        "10001",
-        "80201",
-        "90001",
-        "98101"
+        "90001"
       ]
     },
     {
@@ -15226,10 +14592,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "80201",
-        "90001",
-        "98101"
+        "90001"
       ]
     },
     {
@@ -15257,10 +14620,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "80201",
-        "90001",
-        "98101"
+        "90001"
       ]
     },
     {
@@ -15288,9 +14648,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "90001",
-        "98101"
+        "90001"
       ]
     },
     {
@@ -15318,9 +14676,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "90001",
-        "98101"
+        "90001"
       ]
     },
     {
@@ -15348,9 +14704,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "90001",
-        "98101"
+        "90001"
       ]
     },
     {
@@ -15378,9 +14732,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "80201",
-        "90001",
-        "98101"
+        "90001"
       ]
     },
     {
@@ -15408,10 +14760,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "80201",
-        "90001",
-        "98101"
+        "90001"
       ]
     },
     {
@@ -15439,10 +14788,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "10001",
-        "80201",
-        "90001",
-        "98101"
+        "90001"
       ]
     },
     {
@@ -15470,9 +14816,7 @@
       "net_cap_source": "estimated",
       "can_recompute": false,
       "regions": [
-        "80201",
-        "90001",
-        "98101"
+        "90001"
       ]
     },
     {
@@ -15500,9 +14844,7 @@
       "net_cap_source": "estimated",
       "can_recompute": false,
       "regions": [
-        "80201",
-        "90001",
-        "98101"
+        "90001"
       ]
     },
     {
@@ -15530,9 +14872,7 @@
       "net_cap_source": "estimated",
       "can_recompute": false,
       "regions": [
-        "80201",
-        "90001",
-        "98101"
+        "90001"
       ]
     },
     {
@@ -15560,9 +14900,7 @@
       "net_cap_source": "estimated",
       "can_recompute": false,
       "regions": [
-        "80201",
-        "90001",
-        "98101"
+        "90001"
       ]
     },
     {
@@ -15590,11 +14928,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -15622,11 +14956,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -15654,11 +14984,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -15686,11 +15012,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -15718,11 +15040,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -15750,11 +15068,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -15782,11 +15096,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -15814,11 +15124,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -15846,11 +15152,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -15878,11 +15180,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -15910,11 +15208,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -15942,11 +15236,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -15974,11 +15264,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -16006,11 +15292,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -16038,11 +15320,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -16070,11 +15348,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -16102,11 +15376,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -16134,11 +15404,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -16166,11 +15432,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -16198,11 +15460,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -16230,11 +15488,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -16262,11 +15516,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -16294,11 +15544,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -16326,11 +15572,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -16358,11 +15600,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -16390,11 +15628,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -16422,11 +15656,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -16454,11 +15684,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -16486,11 +15712,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
@@ -16518,11 +15740,7 @@
       "net_cap_source": "estimated",
       "can_recompute": true,
       "regions": [
-        "30301",
-        "75201",
-        "77001",
-        "85001",
-        "98101"
+        "77001"
       ]
     },
     {
