@@ -45,7 +45,7 @@
   <header class="topbar">
     <button class="tb-btn tb-back" data-go="home" aria-label="Back">←</button>
     <span class="tb-title">Used Cars</span>
-    <span class="tb-btn ghost"></span>
+    <button class="tb-btn" data-act="inv-startover">Start Over</button>
   </header>
   <!-- Native FilterBar: "{N} vehicles" left, white Filters pill right, active chips below.
        ZIP/distance live INSIDE the filter sheet (native has no ZIP row on this screen). -->
@@ -68,7 +68,7 @@
   <header class="topbar">
     <button class="tb-btn tb-back" data-go="home" aria-label="Back">←</button>
     <span class="tb-title">Lease Deals</span>
-    <span class="tb-btn ghost"></span>
+    <button class="tb-btn" data-act="lease-startover">Start Over</button>
   </header>
   <div class="lease-bar">
     <div class="lease-bar-row">
@@ -140,7 +140,7 @@
 <script src="vendor/httpvfs.js?v=1"></script>
 <script src="engine.js?v=2"></script>
 <script src="db.js?v=3"></script>
-<script src="app.js?v=6"></script>
+<script src="app.js?v=7"></script>
 
 <!-- Never-stale updates: register the freshness SW and auto-refresh when a new build
      is live. updateViaCache:'none' keeps GitHub's 10-min cache from pinning sw.js so

@@ -188,6 +188,10 @@
       if (f.models?.length && !f.models.includes(o.model)) return false;
       if (f.bodies?.length && !f.bodies.includes(o.body_style)) return false;
       const pr = leasePayment(o);
+      // A picked term is a real constraint: hide deals the engine can't honestly
+      // re-price to it (they used to stay visible at their advertised term, which
+      // read as "I asked for 36 and got 24").
+      if (leaseState.term !== "adv" && !pr.computable) return false;
       if (f.maxPay && pr.monthly > f.maxPay) return false;
       return true;
     });
@@ -227,8 +231,21 @@
     const pr = leasePayment(o);
     const term = leaseState.term === "adv" ? null : parseInt(leaseState.term, 10);
     const isTermAdj = term != null && term !== o.term_months && pr.computable;
-    const isAdjusted = isTermAdj;
-    const mileage = (o.annual_mileage ?? 10000).toLocaleString();
+    const isDownAdj = leaseState.down != null && leaseState.down !== o.due_at_signing;
+    const isMiAdj = leaseState.mileage != null && leaseState.mileage !== o.annual_mileage;
+    const isAdjusted = isTermAdj || isDownAdj || isMiAdj;
+    // A non-standard allowance (e.g. Hyundai's 11,250) is a total-mile cap advertised
+    // as "22,500 miles total" — spell that out or the odd per-year number reads as a
+    // data error. (Mirrors the native advertised-line annotation in LeaseScreen.kt.)
+    const annualMi = o.annual_mileage ?? 10000;
+    const totalNote = [10000, 12000, 15000].includes(annualMi) ? "" :
+      ` (${Math.round(annualMi * o.term_months / 12).toLocaleString()} mi total — low-mileage lease)`;
+    // The details row shows the USER's mileage when one is picked (matches native
+    // LeaseOfferCard); the offer's own allowance moves to the Advertised line below.
+    const shownMi = leaseState.mileage ?? annualMi;
+    const mileage = shownMi.toLocaleString() + " mi/yr" + (isMiAdj ? "" : totalNote);
+    const advLine = isAdjusted ?
+      `<div class="lc-msrp">Advertised: ${fmt(o.monthly_payment)}/mo with ${fmt(o.due_at_signing)} due${isMiAdj ? ` at ${annualMi.toLocaleString()} mi/yr${totalNote}` : ""}</div>` : "";
     const allDealers = dealersByMake[o.make] || [];
     const dealerCount = allDealers.length;   // national roster (drives the button below)
     const nearest = nearestDealers(o.make, 1)[0];
@@ -255,9 +272,10 @@
       </div>
       <div class="lc-details">
         <span class="${isTermAdj ? "adj" : ""}">${pr.termMonths} months</span>
-        <span>${mileage} mi/yr</span>
+        <span>${mileage}</span>
       </div>
       ${pr.confidence !== "EXACT" ? `<div class="lc-conf">${LEASE_CONFIDENCE[pr.confidence]}</div>` : ""}
+      ${advLine}
       ${(o.msrp && o.msrp > 100) ? `<div class="lc-msrp">MSRP: ${fmt(o.msrp)}</div>` : ""}
       ${nearest ? `<div class="lc-dealer">Nearest dealer: ${nearest.name}${distText}</div>${moreText ? `<div class="lc-more">${moreText}</div>` : ""}` : ""}
       <button class="lc-btn">${dealerCount > 0 ? "View Nearby Dealers" : "Dealer Website"}</button>`;
@@ -560,7 +578,7 @@
       menuChip(grid, "pay", f.maxPay ? ("Under $" + f.maxPay + "/mo") : "Monthly Payment", !!f.maxPay,
         [{ label: "No max", on: !f.maxPay, act: () => f.maxPay = null }, ...PAYS.map(p => ({ label: "Under $" + p + "/mo", on: f.maxPay === p, act: () => f.maxPay = p }))]);
       const DOWNS = [0, 1000, 2000, 3000, 5000];
-      menuChip(grid, "down", leaseState.down == null ? "Down: As advertised" : ("Down $" + leaseState.down.toLocaleString()), leaseState.down != null,
+      menuChip(grid, "down", leaseState.down == null ? "Down Payment" : ("$" + leaseState.down.toLocaleString() + " down"), leaseState.down != null,
         [{ label: "As advertised", on: leaseState.down == null, act: () => leaseState.down = null }, ...DOWNS.map(d => ({ label: "$" + d.toLocaleString() + " down", on: leaseState.down === d, act: () => leaseState.down = d }))]);
       menuChip(grid, "lmake", f.makes.length ? ("Make (" + f.makes.length + ")") : "Make", f.makes.length > 0,
         lMakes.map(mk => ({ label: mk, on: f.makes.includes(mk), act: () => { setMulti(f.makes, mk, !f.makes.includes(mk)); f.models = []; } })), true);
@@ -568,10 +586,10 @@
       menuChip(grid, "lmodel", f.models.length ? ("Model (" + f.models.length + ")") : "Model", f.models.length > 0,
         lModels.length ? lModels.map(m => ({ label: m, on: f.models.includes(m), act: () => setMulti(f.models, m, !f.models.includes(m)) })) : [{ label: "Pick a make first", on: false, act: () => {} }], lModels.length > 0);
       const MILES = [10000, 12000, 15000];
-      menuChip(grid, "lmiles", leaseState.mileage == null ? "Mileage: As advertised" : ((leaseState.mileage / 1000) + "K mi/yr"), leaseState.mileage != null,
+      menuChip(grid, "lmiles", leaseState.mileage == null ? "Annual Mileage" : ((leaseState.mileage / 1000) + "K mi/yr"), leaseState.mileage != null,
         [{ label: "As advertised", on: leaseState.mileage == null, act: () => leaseState.mileage = null }, ...MILES.map(m => ({ label: (m / 1000) + "K mi/yr", on: leaseState.mileage === m, act: () => leaseState.mileage = m }))]);
       const TERMS = [["adv", "Advertised"], ["24", "24 months"], ["36", "36 months"], ["39", "39 months"], ["48", "48 months"]];
-      menuChip(grid, "lterm", (TERMS.find(t => t[0] === leaseState.term) || TERMS[0])[1], leaseState.term !== "adv",
+      menuChip(grid, "lterm", leaseState.term === "adv" ? "Term" : ("Term " + leaseState.term + " mo"), leaseState.term !== "adv",
         TERMS.map(([v, l]) => ({ label: l, on: leaseState.term === v, act: () => leaseState.term = v })));
       menuChip(grid, "lbody", f.bodies.length ? ("Body (" + f.bodies.length + ")") : "Body Style", f.bodies.length > 0,
         lBodies.map(b => ({ label: b, on: f.bodies.includes(b), act: () => setMulti(f.bodies, b, !f.bodies.includes(b)) })), true);
@@ -589,10 +607,16 @@
     if (sheetCtx === "inv") { invState.offset = 0; runInventory(true); }
     else { leaseState.shown = PAGE; runLeases(); }
   }
-  function resetSheet() {
-    if (sheetCtx === "inv") { invState.filter = {}; invState.sort = "DISTANCE"; invState.radius = null; invState.offset = 0; runInventory(true); }
+  // One reset behavior everywhere: the sheet's Start Over and the top-bar Start Over
+  // both clear the context's filters and return Home.
+  function startOver(ctx) {
+    if (ctx === "inv") { invState.filter = {}; invState.sort = "DISTANCE"; invState.radius = null; invState.offset = 0; runInventory(true); }
     else { leaseState.filter = {}; leaseState.term = "adv"; leaseState.mileage = null; leaseState.down = null; leaseState.shown = PAGE; runLeases(); }
-    closeSheet(); show("home");
+    show("home");
+  }
+  function resetSheet() {
+    const ctx = sheetCtx;
+    closeSheet(); startOver(ctx);
   }
 
   // ---------- wire up ----------
@@ -605,6 +629,8 @@
       if (a === "inv-clear") { invState.filter = {}; invState.sort = "DISTANCE"; invState.radius = null; invState.offset = 0; runInventory(true); }
       if (a === "lease-filter") openSheet("lease");
       if (a === "lease-clear") { leaseState.filter = {}; leaseState.shown = PAGE; runLeases(); }
+      if (a === "inv-startover") startOver("inv");
+      if (a === "lease-startover") startOver("lease");
       if (a === "sheet-back") closeSheet();
       if (a === "sheet-reset") resetSheet();
     });
@@ -661,7 +687,15 @@
       leases = (await ll.json()).offers || [];
     } catch (e) { console.error("data load", e); }
     handleDeepLink(); // route ?screen=… arrivals from the static SEO pages
-    CSBData.init().catch(() => {}); // warm the DB connection in the background
+    // Warm the DB in the background: init, then pre-run the exact first-paint queries
+    // (total count + the no-location cheapest-first page) so their pages are already
+    // in the httpvfs cache when the user taps Used Cars.
+    CSBData.init()
+      .then(() => Promise.all([
+        CSBData.count({ filter: {} }),
+        CSBData.search({ filter: {}, sort: "PRICE_LOW", limit: 25, offset: 0 }),
+      ]))
+      .catch(() => {});
   }
   boot();
 })();
