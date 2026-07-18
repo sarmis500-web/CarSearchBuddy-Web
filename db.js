@@ -11,6 +11,10 @@ const CSBData = (() => {
   // worker/, but its HEAD response doesn't expose Content-Length to mobile browsers, so
   // sql.js-httpvfs full-mode throws "length not known" there — fix that before re-using it.)
   const DB_URL = "https://pub-ec04fb2fbf2d481f8809ef35ba643447.r2.dev/carsearchbuddy.sqlite3";
+  // Bump on EVERY data refresh: R2 sends no Cache-Control, so browsers heuristically
+  // cache the old DB and show stale data. sql.js-httpvfs appends this as ?cb=… making
+  // each refresh a fresh URL. (Value = the OTA data epoch from the push.)
+  const DB_CACHE_BUST = "1784401193";
   const NO_PRICE_CAP = 1_000_000, NO_MILEAGE_CAP = 1_000_000;
 
   const PAGE_COLS =
@@ -28,7 +32,7 @@ const CSBData = (() => {
     const workerUrl = new URL("vendor/sqlite.worker.js", location.href).href;
     const wasmUrl = new URL("vendor/sql-wasm.wasm", location.href).href;
     worker = await createDbWorker(
-      [{ from: "inline", config: { serverMode: "full", requestChunkSize: 4096, url: DB_URL } }],
+      [{ from: "inline", config: { serverMode: "full", requestChunkSize: 4096, url: DB_URL, cacheBust: DB_CACHE_BUST } }],
       workerUrl,
       wasmUrl
     );
