@@ -10,7 +10,7 @@ const CSBData = (() => {
   // Direct R2 object URL. (A caching Worker at csb-db.sarmis500.workers.dev exists in
   // worker/, but its HEAD response doesn't expose Content-Length to mobile browsers, so
   // sql.js-httpvfs full-mode throws "length not known" there — fix that before re-using it.)
-  const DB_URL = "https://pub-ec04fb2fbf2d481f8809ef35ba643447.r2.dev/carsearchbuddy.sqlite3";
+  const DB_URL = "https://pub-ec04fb2fbf2d481f8809ef35ba643447.r2.dev/carsearchbuddy.sqlite3"; // LEGACY (chunked mode below ignores this; kept for one-line revert)
   const NO_PRICE_CAP = 1_000_000, NO_MILEAGE_CAP = 1_000_000;
 
   const PAGE_COLS =
@@ -28,7 +28,7 @@ const CSBData = (() => {
     const workerUrl = new URL("vendor/sqlite.worker.js", location.href).href;
     const wasmUrl = new URL("vendor/sql-wasm.wasm", location.href).href;
     worker = await createDbWorker(
-      [{ from: "inline", config: { serverMode: "full", requestChunkSize: 4096, url: DB_URL } }],
+      [{ from: "inline", config: { serverMode: "chunked", requestChunkSize: 4096, databaseLengthBytes: 118202368, serverChunkSize: 8388608, urlPrefix: new URL("carsearchbuddy.sqlite3.", location.href).href, suffixLength: 3 } }],
       workerUrl,
       wasmUrl
     );
