@@ -106,19 +106,46 @@ const CSBData = (() => {
     }
   }
 
-  // FIX for the 14s query: when a geo box is present and we're NOT sorting by distance,
-  // SQLite otherwise picks idx_web_price and scatter-scans cheap cars nationwide (~5 MB).
-  // Force the geo covering index so it reads only the local box (~1 MB), then sorts.
+  // When a geo box is present, force the geo covering index so SQLite reads only the
+  // local box, not the whole table. Originally excluded DISTANCE sort (planner picked a
+  // fine plan there WHEN a user radius was set); but the nationwide-nearest fix in search()
+  // supplies a box precisely so a DISTANCE sort can ride this index too — without the hint
+  // the planner full-scans 237k rows to rank by the distance expression (~6s). So force it
+  // whenever there's a box, DISTANCE included.
   function indexHint(hasGeo, sort) {
-    return (hasGeo && sort !== "DISTANCE") ? "INDEXED BY idx_web_geo" : "";
+    return hasGeo ? "INDEXED BY idx_web_geo" : "";
   }
 
-  async function search({ filter = {}, sort = "DISTANCE", userLat, userLng, radiusMiles = null, limit = 50, offset = 0 }) {
-    await init();
+  async function runSearchPage(filter, sort, userLat, userLng, radiusMiles, limit, offset) {
     const { where, args, hasGeo } = buildWhere(filter, userLat, userLng, radiusMiles);
     const hint = indexHint(hasGeo, sort);
     const sql = `SELECT ${PAGE_COLS} FROM vehicles ${hint} ${where} ${orderBy(sort, userLat, userLng, hasGeo)} LIMIT ? OFFSET ?`;
     return worker.db.query(sql, [...args, limit, offset]); // sql.js exec wants params as one array
+  }
+
+  // Distance-sort search boxes (miles) tried smallest-first when the user is located but
+  // picked NO radius. See search() — this is the fix for the ~6s nationwide distance sort.
+  const DISTANCE_SORT_BOXES = [150, 500, 1500];
+
+  async function search({ filter = {}, sort = "DISTANCE", userLat, userLng, radiusMiles = null, limit = 50, offset = 0 }) {
+    await init();
+    // ⭐ Nationwide-nearest perf fix. A located DISTANCE sort with NO user radius otherwise
+    // makes SQLite read EVERY row over HTTP (~6s measured) to rank 237k cars by distance.
+    // Instead, search OUTWARD from the user in an expanding box so the geo covering index
+    // is used (sub-second near a metro). Each wider box is a superset in the SAME distance
+    // order, so a FULL page from a box already IS the true nearest slice for this offset;
+    // we only widen when a box can't fill the page (sparse area / deep pagination). The
+    // displayed total count stays nationwide (count() is untouched) — only the row fetch is
+    // bounded. Any OTHER sort, or a user-chosen radius, takes the direct path unchanged.
+    if (sort === "DISTANCE" && userLat != null && userLng != null && !radiusMiles) {
+      for (const box of DISTANCE_SORT_BOXES) {
+        const rows = await runSearchPage(filter, sort, userLat, userLng, box, limit, offset);
+        if (rows.length === limit) return rows;
+      }
+      // Genuinely sparse location, or the final partial page: true nationwide sort (rare).
+      return runSearchPage(filter, sort, userLat, userLng, null, limit, offset);
+    }
+    return runSearchPage(filter, sort, userLat, userLng, radiusMiles, limit, offset);
   }
 
   async function count({ filter = {}, userLat, userLng, radiusMiles = null }) {
