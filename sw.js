@@ -19,9 +19,11 @@
  *    fetched with cache:'no-cache' by the app.
  * Refs: web.dev/articles/sw-range-requests, philna.sh Safari range-request post.
  */
-// v2: drops any entry a pre-fix SW (which intercepted ANY navigation) may have
-// cached under the shell key.
-const SHELL_CACHE = 'csb-shell-v2';
+// v3: bumped 2026-07-18b to force a clean re-install on returning devices — the new
+// SW skipWaiting()s, its activate purges the old v2 shell cache, then controllerchange
+// auto-reloads the page onto the latest build (db.js?v=11, 32KB httpvfs reads).
+// (v2 dropped any entry a pre-fix SW, which intercepted ANY navigation, had cached.)
+const SHELL_CACHE = 'csb-shell-v3';
 
 self.addEventListener('install', () => self.skipWaiting());
 
