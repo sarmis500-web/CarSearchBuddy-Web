@@ -32,7 +32,11 @@ const CSBData = (() => {
     const workerUrl = new URL("vendor/sqlite.worker.js", location.href).href;
     const wasmUrl = new URL("vendor/sql-wasm.wasm", location.href).href;
     worker = await createDbWorker(
-      [{ from: "inline", config: { serverMode: "full", requestChunkSize: 4096, url: DB_URL, cacheBust: DB_CACHE_BUST } }],
+      // requestChunkSize 32768 (8 SQLite pages/read) — measured 2026-07-18: a cold used-cars
+      // load fell ~7.4s → ~4.7s vs the old 4096 (1 page/read). At 4KB a cold query walked the
+      // B-tree in ~85 sequential dependent round-trips to the ~200ms R2 dev URL; 32KB cuts that
+      // ~4x. Bigger (64KB) barely helped but doubled bytes (worse on cellular); 32KB is the knee.
+      [{ from: "inline", config: { serverMode: "full", requestChunkSize: 32768, url: DB_URL, cacheBust: DB_CACHE_BUST } }],
       workerUrl,
       wasmUrl
     );
