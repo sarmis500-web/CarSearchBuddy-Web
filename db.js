@@ -7,9 +7,19 @@
 // endpoint (instant single round-trip) without touching the UI.
 
 const CSBData = (() => {
-  // Direct R2 object URL. (A caching Worker at csb-db.sarmis500.workers.dev exists in
-  // worker/, but its HEAD response doesn't expose Content-Length to mobile browsers, so
-  // sql.js-httpvfs full-mode throws "length not known" there — fix that before re-using it.)
+  // Direct R2 object URL. We deliberately do NOT use the caching Worker
+  // (csb-db.sarmis500.workers.dev, worker/src/index.js) here. Measured 2026-07-18b:
+  //  - The Worker sets Cache-Control: immutable, BUT Chrome does NOT reliably disk-cache
+  //    sql.js-httpvfs's Range requests (repeat range reads came back ~50ms = an edge hop,
+  //    not ~2-5ms = browser cache). So it does NOT make reopens instant.
+  //  - What the Worker gives is a faster hop ONLY while Cloudflare's edge cache is warm
+  //    (~50ms vs the dev URL's ~200ms). A COLD Worker load is SLOWER than the dev URL
+  //    (6.2s vs 4.7s) due to the extra client->Worker->R2 hop.
+  //  - At CarSearchBuddy's low traffic the edge cache is often evicted between visits, so
+  //    real users would frequently hit that cold path = slower than the dev URL. Net: the
+  //    Worker is a gamble that backfires at this scale. Revisit if traffic grows or add an
+  //    edge keep-warm pinger. (The old "Worker HEAD hides Content-Length on mobile" note
+  //    was also WRONG — the Worker HEAD returns Content-Length + ranged 206s fine.)
   const DB_URL = "https://pub-ec04fb2fbf2d481f8809ef35ba643447.r2.dev/carsearchbuddy.sqlite3";
   // Bump on EVERY data refresh: R2 sends no Cache-Control, so browsers heuristically
   // cache the old DB and show stale data. sql.js-httpvfs appends this as ?cb=… making
