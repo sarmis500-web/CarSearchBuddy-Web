@@ -104,8 +104,16 @@
     DBG("runInventory(reset=" + reset + ") sort=" + invState.sort + " geo=" + (snapGeo ? "YES" : "none") + " radius=" + invState.radius + " offset=" + invState.offset);
     if (reset) {
       renderInvChips();
-      $("inv-list").innerHTML = `<div class="loading">Searching…</div>`; $("inv-more").innerHTML = ""; $("inv-count").textContent = "Searching…";
-      DBG("  -> list CLEARED, showing 'Searching…'");
+      // Keep the current results ON SCREEN while a re-query runs (the big one: when location
+      // resolves ~1.5s after tap and we re-sort to nearest). Only blank to "Searching…" on a
+      // truly empty list (very first load). New rows replace the old ones in place the instant
+      // search() returns below, so the user never sees the list vanish — the fix for the
+      // "everything disappears then reloads" complaint (we were wiping the list up-front every
+      // time, so it flashed even when the re-query itself was fast).
+      const keepRows = $("inv-list").firstElementChild && !$("inv-list").firstElementChild.matches(".loading, .empty");
+      if (!keepRows) { $("inv-list").innerHTML = `<div class="loading">Searching…</div>`; $("inv-count").textContent = "Searching…"; }
+      $("inv-more").innerHTML = "";
+      DBG("  -> reset (" + (keepRows ? "KEPT old rows visible — no blank" : "blanked: first load") + ")");
       // Native FilterBar label is just "{N} vehicles" (no "within X mi"; distance shows as a chip).
       const _cs = performance.now();
       CSBData.count(q).then(n => { DBG("  count() = " + n + " in " + Math.round(performance.now() - _cs) + "ms"); if (myToken !== invToken) return; $("inv-count").textContent = `${n.toLocaleString()} vehicle${n === 1 ? "" : "s"}`; }).catch(() => {});
