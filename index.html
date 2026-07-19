@@ -137,31 +137,10 @@
 
 <div id="toast" class="toast"></div>
 
-<!-- DIAG: on-screen timing logger, only when the URL has ?debug=1. Mirrors every line to
-     console.log("[CSBDBG] …") so it's also captured over the DevTools bridge. Zero effect
-     for normal users (overlay stays display:none, CSBDBG just console.logs). -->
-<div id="csbdbg" style="display:none;position:fixed;top:0;left:0;right:0;max-height:46vh;overflow:auto;z-index:99999;background:rgba(0,0,0,.82);color:#0f0;font:10px/1.35 monospace;padding:4px 6px;pointer-events:none;white-space:pre-wrap;"></div>
-<script>
-(function(){
-  var on = /[?&]debug=1/.test(location.search);
-  var t0 = performance.now(), box = null;
-  window.CSBDBG = function(msg){
-    var ms = Math.round(performance.now() - t0);
-    var line = "+" + ms + "ms  " + msg;
-    try { console.log("[CSBDBG] " + line); } catch(e){}
-    if (!on) return;
-    if (!box) { box = document.getElementById('csbdbg'); if (box) box.style.display = 'block'; }
-    if (box) { var d = document.createElement('div'); d.textContent = line; box.appendChild(d); box.scrollTop = box.scrollHeight; }
-  };
-  window.CSBDBG_ON = on;
-  CSBDBG("page script start (debug overlay " + (on ? "ON" : "off") + ")");
-})();
-</script>
-
 <script src="vendor/httpvfs.js?v=1"></script>
 <script src="engine.js?v=2"></script>
-<script src="db.js?v=13"></script>
-<script src="app.js?v=9"></script>
+<script src="db.js?v=14"></script>
+<script src="app.js?v=10"></script>
 
 <!-- Never-stale updates: register the freshness SW and auto-refresh when a new build
      is live. updateViaCache:'none' keeps GitHub's 10-min cache from pinning sw.js so

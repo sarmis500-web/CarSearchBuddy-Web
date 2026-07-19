@@ -137,19 +137,13 @@ const CSBData = (() => {
     // we only widen when a box can't fill the page (sparse area / deep pagination). The
     // displayed total count stays nationwide (count() is untouched) — only the row fetch is
     // bounded. Any OTHER sort, or a user-chosen radius, takes the direct path unchanged.
-    const DBG = m => { try { window.CSBDBG && window.CSBDBG(m); } catch (e) {} };
     if (sort === "DISTANCE" && userLat != null && userLng != null && !radiusMiles) {
       for (const box of DISTANCE_SORT_BOXES) {
-        const _t = performance.now();
         const rows = await runSearchPage(filter, sort, userLat, userLng, box, limit, offset);
-        DBG("    db box=" + box + "mi -> " + rows.length + " rows in " + Math.round(performance.now() - _t) + "ms");
         if (rows.length === limit) return rows;
       }
       // Genuinely sparse location, or the final partial page: true nationwide sort (rare).
-      const _t = performance.now();
-      const rows = await runSearchPage(filter, sort, userLat, userLng, null, limit, offset);
-      DBG("    db box=NATIONWIDE -> " + rows.length + " rows in " + Math.round(performance.now() - _t) + "ms");
-      return rows;
+      return runSearchPage(filter, sort, userLat, userLng, null, limit, offset);
     }
     return runSearchPage(filter, sort, userLat, userLng, radiusMiles, limit, offset);
   }

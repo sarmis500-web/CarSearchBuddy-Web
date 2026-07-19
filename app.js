@@ -2,7 +2,6 @@
 // from bundled leases.json re-priced by engine.js; calculator from computeLoan.
 (() => {
   "use strict";
-  const DBG = m => { try { window.CSBDBG && window.CSBDBG(m); } catch (e) {} }; // DIAG logger (no-op unless ?debug=1 or console)
   const $ = id => document.getElementById(id);
   const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
   // Escape data before innerHTML interpolation. Filter values can arrive from the URL
@@ -20,7 +19,7 @@
   function show(id) {
     document.querySelectorAll(".screen").forEach(s => s.classList.toggle("active", s.id === id));
     window.scrollTo(0, 0);
-    if (id === "inventory") { DBG("show(inventory) — user opened Used Cars"); runInventory(true); }
+    if (id === "inventory") runInventory(true);
     if (id === "leases") runLeases();
     if (id === "saved") renderSaved();
   }
@@ -60,18 +59,16 @@
     if (dest !== "inventory" && dest !== "leases") return; // only the two location screens count
     geoAsked = true;
     if (geo || !navigator.geolocation) return;             // already located (e.g. ZIP), or unsupported
-    DBG("geolocation.getCurrentPosition() requested");
     // Must run synchronously inside the click gesture — iOS Safari ignores non-gesture requests.
     navigator.geolocation.getCurrentPosition(
       p => {
         geo = { lat: p.coords.latitude, lng: p.coords.longitude, label: "Near you" };
-        DBG("geo RESOLVED (" + geo.lat.toFixed(3) + "," + geo.lng.toFixed(3) + ") — re-running location screen");
         // Re-run whichever location screen is showing so results sort by the new location.
         const active = document.querySelector(".screen.active");
         if (active && active.id === "inventory") runInventory(true);
         else if (active && active.id === "leases") runLeases();
       },
-      () => { DBG("geo denied/error"); },                   // denial/error: stay silent, keep current behavior
+      () => {},                                             // denial/error: stay silent, keep current behavior
       { enableHighAccuracy: false, timeout: 8000 });
   }
 
@@ -100,8 +97,6 @@
     const myToken = reset ? ++invToken : invToken;
     const snapGeo = geo; // freeze the location used for this query so labels/distances stay consistent
     const q = { filter: invState.filter, sort: invState.sort, userLat: snapGeo?.lat, userLng: snapGeo?.lng, radiusMiles: invState.radius, limit: PAGE, offset: invState.offset };
-    const _dbgStart = performance.now();
-    DBG("runInventory(reset=" + reset + ") sort=" + invState.sort + " geo=" + (snapGeo ? "YES" : "none") + " radius=" + invState.radius + " offset=" + invState.offset);
     if (reset) {
       renderInvChips();
       // Keep the current results ON SCREEN while a re-query runs (the big one: when location
@@ -113,14 +108,11 @@
       const keepRows = $("inv-list").firstElementChild && !$("inv-list").firstElementChild.matches(".loading, .empty");
       if (!keepRows) { $("inv-list").innerHTML = `<div class="loading">Searching…</div>`; $("inv-count").textContent = "Searching…"; }
       $("inv-more").innerHTML = "";
-      DBG("  -> reset (" + (keepRows ? "KEPT old rows visible — no blank" : "blanked: first load") + ")");
       // Native FilterBar label is just "{N} vehicles" (no "within X mi"; distance shows as a chip).
-      const _cs = performance.now();
-      CSBData.count(q).then(n => { DBG("  count() = " + n + " in " + Math.round(performance.now() - _cs) + "ms"); if (myToken !== invToken) return; $("inv-count").textContent = `${n.toLocaleString()} vehicle${n === 1 ? "" : "s"}`; }).catch(() => {});
+      CSBData.count(q).then(n => { if (myToken !== invToken) return; $("inv-count").textContent = `${n.toLocaleString()} vehicle${n === 1 ? "" : "s"}`; }).catch(() => {});
     } else { $("inv-more").innerHTML = `<div class="loading">Loading…</div>`; }
     try {
       const rows = await CSBData.search(q);
-      DBG("  search() returned " + rows.length + " rows in " + Math.round(performance.now() - _dbgStart) + "ms" + (myToken !== invToken ? " (STALE, dropped)" : ""));
       if (myToken !== invToken) return; // a newer query superseded this one — drop stale results
       if (reset) {
         $("inv-list").innerHTML = "";
@@ -706,14 +698,11 @@
     // Warm the DB in the background: init, then pre-run the exact first-paint queries
     // (total count + the no-location cheapest-first page) so their pages are already
     // in the httpvfs cache when the user taps Used Cars.
-    const _pw = performance.now();
-    DBG("boot: CSBData.init() starting (DB warm-up)");
     CSBData.init()
-      .then(() => { DBG("boot: init() done in " + Math.round(performance.now() - _pw) + "ms; prewarming count+cheapest page"); return Promise.all([
+      .then(() => Promise.all([
         CSBData.count({ filter: {} }),
         CSBData.search({ filter: {}, sort: "PRICE_LOW", limit: 25, offset: 0 }),
-      ]); })
-      .then(() => DBG("boot: prewarm COMPLETE in " + Math.round(performance.now() - _pw) + "ms — Used Cars first paint now cached"))
+      ]))
       .catch(() => {});
   }
   boot();
