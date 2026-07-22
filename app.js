@@ -696,12 +696,14 @@
     } catch (e) { console.error("data load", e); }
     handleDeepLink(); // route ?screen=… arrivals from the static SEO pages
     // Warm the DB in the background: init, then pre-run the exact first-paint queries
-    // (total count + the no-location cheapest-first page) so their pages are already
-    // in the httpvfs cache when the user taps Used Cars.
+    // (total count + the no-location first page) so their pages are already in the
+    // httpvfs cache when the user taps Used Cars. This MUST use the same sort the first
+    // paint actually issues — invState.sort is DISTANCE, which without geo now orders by
+    // newest/least-driven; prewarming PRICE_LOW would warm a page we never show.
     CSBData.init()
       .then(() => Promise.all([
         CSBData.count({ filter: {} }),
-        CSBData.search({ filter: {}, sort: "PRICE_LOW", limit: 25, offset: 0 }),
+        CSBData.search({ filter: {}, sort: "DISTANCE", limit: 25, offset: 0 }),
       ]))
       .catch(() => {});
   }

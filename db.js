@@ -24,7 +24,7 @@ const CSBData = (() => {
   // Bump on EVERY data refresh: R2 sends no Cache-Control, so browsers heuristically
   // cache the old DB and show stale data. sql.js-httpvfs appends this as ?cb=… making
   // each refresh a fresh URL. (Value = the OTA data epoch from the push.)
-  const DB_CACHE_BUST = "1784684944";
+  const DB_CACHE_BUST = "1784689083";
   const NO_PRICE_CAP = 1_000_000, NO_MILEAGE_CAP = 1_000_000;
 
   const PAGE_COLS =
@@ -97,7 +97,13 @@ const CSBData = (() => {
           return `ORDER BY (((dealer_lat-${userLat})*69.0)*((dealer_lat-${userLat})*69.0)+` +
                  `((dealer_lng-(${userLng}))*${mpl})*((dealer_lng-(${userLng}))*${mpl})) ASC`;
         }
-        return "ORDER BY price ASC";
+        // No location yet (permission not granted, or an in-app browser like Messenger
+        // that never offers geolocation at all). This used to fall through to price ASC,
+        // so a shared link opened the catalog on the 25 cheapest cars in the country —
+        // the oldest, highest-mileage listings we carry. That is the first impression for
+        // every friend the link gets forwarded to. Lead with newest + least-driven instead;
+        // the list re-sorts to true nearest the moment location resolves.
+        return "ORDER BY year DESC, mileage IS NULL, mileage ASC";
       case "PRICE_HIGH": return "ORDER BY price DESC";
       case "MILEAGE_LOW": return "ORDER BY mileage IS NULL, mileage ASC";
       case "YEAR_NEW": return "ORDER BY year DESC";
