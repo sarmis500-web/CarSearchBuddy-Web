@@ -24,7 +24,7 @@ const CSBData = (() => {
   // Bump on EVERY data refresh: R2 sends no Cache-Control, so browsers heuristically
   // cache the old DB and show stale data. sql.js-httpvfs appends this as ?cb=… making
   // each refresh a fresh URL. (Value = the OTA data epoch from the push.)
-  const DB_CACHE_BUST = "1784689083";
+  const DB_CACHE_BUST = "1784691064";
   const NO_PRICE_CAP = 1_000_000, NO_MILEAGE_CAP = 1_000_000;
 
   const PAGE_COLS =
@@ -101,9 +101,13 @@ const CSBData = (() => {
         // that never offers geolocation at all). This used to fall through to price ASC,
         // so a shared link opened the catalog on the 25 cheapest cars in the country —
         // the oldest, highest-mileage listings we carry. That is the first impression for
-        // every friend the link gets forwarded to. Lead with newest + least-driven instead;
-        // the list re-sorts to true nearest the moment location resolves.
-        return "ORDER BY year DESC, mileage IS NULL, mileage ASC";
+        // every friend the link gets forwarded to.
+        // Newest, then best-priced WITHIN each model year: recent mainstream cars at sane
+        // money (a $27k HR-V, not a $113k X7 — sorting purely by least-driven surfaced a
+        // wall of near-new luxury, which reads just as wrong for a DEAL finder). This is a
+        // pure sort, never a filter: every car is still reachable by scrolling or filtering,
+        // and the list re-sorts to true nearest the moment location resolves.
+        return "ORDER BY year DESC, price ASC";
       case "PRICE_HIGH": return "ORDER BY price DESC";
       case "MILEAGE_LOW": return "ORDER BY mileage IS NULL, mileage ASC";
       case "YEAR_NEW": return "ORDER BY year DESC";
