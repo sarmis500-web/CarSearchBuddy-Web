@@ -24,7 +24,7 @@ const CSBData = (() => {
   // Bump on EVERY data refresh: R2 sends no Cache-Control, so browsers heuristically
   // cache the old DB and show stale data. sql.js-httpvfs appends this as ?cb=… making
   // each refresh a fresh URL. (Value = the OTA data epoch from the push.)
-  const DB_CACHE_BUST = "1784674815";
+  const DB_CACHE_BUST = "1784684944";
   const NO_PRICE_CAP = 1_000_000, NO_MILEAGE_CAP = 1_000_000;
 
   const PAGE_COLS =
