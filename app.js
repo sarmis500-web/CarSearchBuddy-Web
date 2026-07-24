@@ -326,12 +326,21 @@
     // as "22,500 miles total" — spell that out or the odd per-year number reads as a
     // data error. (Mirrors the native advertised-line annotation in LeaseScreen.kt.)
     const annualMi = o.annual_mileage ?? 10000;
-    const totalNote = [10000, 12000, 15000].includes(annualMi) ? "" :
-      ` (${Math.round(annualMi * o.term_months / 12).toLocaleString()} mi total — low-mileage lease)`;
+    // ⚠️ The total must be computed from the term the line it sits on is TALKING ABOUT.
+    // These are two different terms once the user re-terms a deal, and conflating them
+    // printed "36 months … 11,250 mi/yr (22,500 mi total)" on a 24-month Hyundai ad —
+    // 22,500 is the AD's 24-month total; at 36 months it is 33,750. Caught on-device
+    // 2026-07-24. `pr.termMonths` is what the details row renders, so it is what the
+    // details row's total must use; the Advertised line keeps the advertised term.
+    const oddAllowance = mi => ![10000, 12000, 15000].includes(mi);
+    const totalNoteFor = (mi, term) =>
+      ` (${Math.round(mi * term / 12).toLocaleString()} mi total — low-mileage lease)`;
     // The details row shows the USER's mileage when one is picked (matches native
     // LeaseOfferCard); the offer's own allowance moves to the Advertised line below.
     const shownMi = leaseState.mileage ?? annualMi;
-    const mileage = shownMi.toLocaleString() + " mi/yr" + (isMiAdj ? "" : totalNote);
+    const totalNoteShown = oddAllowance(shownMi) ? totalNoteFor(shownMi, pr.termMonths) : "";
+    const totalNote = oddAllowance(annualMi) ? totalNoteFor(annualMi, o.term_months) : "";
+    const mileage = shownMi.toLocaleString() + " mi/yr" + (isMiAdj ? "" : totalNoteShown);
     const mkNote = marketNote(o);
     const mkLine = mkNote ? `<div class="lc-market">${escHtml(mkNote)}</div>` : "";
     const advLine = isAdjusted ?
