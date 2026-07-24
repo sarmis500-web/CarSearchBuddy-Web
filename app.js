@@ -582,10 +582,19 @@
       const f = leaseState.filter; f.makes = f.makes || []; f.models = f.models || []; f.bodies = f.bodies || [];
       const lMakes = [...new Set(leases.map(o => o.make))].sort();
       const lBodies = [...new Set(leases.map(o => o.body_style).filter(Boolean))].sort();
-      const PAYS = [300, 400, 500, 600, 800, 1000, 1500];
+      // Must match native LeaseScreen's list EXACTLY (it had drifted: web was
+      // 300/400/500/600/800/1000/1500 with no $50 rungs at all). $50 steps through $500
+      // then $100s — median advertised payment is $379 and $250/$500 bracket 9%/79% of
+      // offers, so 50s are the resolution that separates deals. Above $800 (92% of
+      // offers) "No max" takes over, out to the $1,949 top end.
+      const PAYS = [200, 250, 300, 350, 400, 450, 500, 600, 700, 800];
       menuChip(grid, "pay", f.maxPay ? ("Under $" + f.maxPay + "/mo") : "Monthly Payment", !!f.maxPay,
         [{ label: "No max", on: !f.maxPay, act: () => f.maxPay = null }, ...PAYS.map(p => ({ label: "Under $" + p + "/mo", on: f.maxPay === p, act: () => f.maxPay = p }))]);
-      const DOWNS = [0, 1000, 2000, 3000, 5000];
+      // Must match native LeaseScreen's list EXACTLY. This control does NOT filter — it
+      // RE-PRICES every deal to the chosen down payment, so no rung can come back empty
+      // and a smooth ladder beats a sparse one. $500 steps to $4,000 (median advertised
+      // due-at-signing $3,999; 70% at or under $4,000), then $1,000 steps.
+      const DOWNS = [0, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000];
       menuChip(grid, "down", leaseState.down == null ? "Down Payment" : ("$" + leaseState.down.toLocaleString() + " down"), leaseState.down != null,
         [{ label: "As advertised", on: leaseState.down == null, act: () => leaseState.down = null }, ...DOWNS.map(d => ({ label: "$" + d.toLocaleString() + " down", on: leaseState.down === d, act: () => leaseState.down = d }))]);
       menuChip(grid, "lmake", f.makes.length ? ("Make (" + f.makes.length + ")") : "Make", f.makes.length > 0,

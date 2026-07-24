@@ -75,14 +75,30 @@ function computeLeasePayment(o, { requestedTerm = null, userDownPayment = null, 
 
   if (canRecompute && msrp != null && msrp > 0 && netCapCost != null &&
       residualValue != null && moneyFactor != null && targetTerm > 0) {
-    const advPct = residualValue / msrp;
-    let termPct = advPct + (termMonths - targetTerm) / 12.0 * 0.07
-                - mileageResidualPenalty(o, userMiles, targetTerm);
-    termPct = Math.min(0.80, Math.max(0.20, termPct));
-    const residual = msrp * termPct;
+    // Prefer the OEM's own published residual for exactly this term. Deliberately NOT
+    // clamped to [0.20, 0.80]: these are published facts, and real ones reach 84% of MSRP
+    // on a 24-month Sportage PHEV. That band exists to bound the flat-slope EXTRAPOLATION
+    // below — applying it to a rate sheet would corrupt it. Mirrors native LeaseOffer.
+    const curveResidual = o.residual_curve ? o.residual_curve[String(targetTerm)] : null;
+    let residual;
+    if (curveResidual != null) {
+      residual = Math.max(0, curveResidual - mileageResidualPenalty(o, userMiles, targetTerm) * msrp);
+    } else {
+      const advPct = residualValue / msrp;
+      let termPct = advPct + (termMonths - targetTerm) / 12.0 * 0.07
+                  - mileageResidualPenalty(o, userMiles, targetTerm);
+      termPct = Math.min(0.80, Math.max(0.20, termPct));
+      residual = msrp * termPct;
+    }
+    // The captive's money factor is NOT flat across terms — on Kia's own sheet it climbs on
+    // all 18 models (Sportage 0.00204 @24mo -> 0.00310 @48mo, ~2.5 APR points). Re-terming
+    // on the advertised term's MF left a median $43/mo error at 39 months and $27 at 48
+    // (measured over all 177 Kia offers, 2026-07-24). Mirrors native LeaseOffer.
+    const curveMf = o.mf_curve ? o.mf_curve[String(targetTerm)] : null;
+    const mf = curveMf != null ? curveMf : moneyFactor;
     const adjCap = netCapCost - (down - dueAtSigning);
     const dep = (adjCap - residual) / targetTerm;
-    const rent = (adjCap + residual) * moneyFactor;
+    const rent = (adjCap + residual) * mf;
     const monthly = dep + rent;
 
     if (monthly <= 0 || adjCap <= residual) {
