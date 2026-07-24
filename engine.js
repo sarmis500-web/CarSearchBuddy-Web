@@ -98,6 +98,22 @@ function computeLeasePayment(o, { requestedTerm = null, userDownPayment = null, 
              confidence: "ADVERTISED_ONLY", computable: false };
   }
 
+  // ── ONE-WAY GUARD: a guessed residual may only be re-termed SHORTER ──
+  // Where the residual had to be invented (residual_source === "curve"), every error
+  // source pushes the same way, and the direction is set purely by the sign of
+  // (1/target - 1/advertised). Simulated on the one captive whose real per-term residual
+  // AND money factor we hold, processed as if it had no rate sheet:
+  //   shorten to 24mo : OVER-quotes on 78 of 78, median +$34.64  -> tolerable
+  //   lengthen to 36mo: UNDER-quotes on 67 of 67, median -$32.09, worst -$75.28
+  // Under-quoting shows a payment cheaper than the customer can actually get, which this
+  // product refuses. ⛔ Do NOT also block shortening — blocking both costs 72-91 shown
+  // cars and removes four makes from a 24-month search; this costs 17. Mirrors native
+  // LeaseOffer. (Independent audit, 2026-07-24.)
+  if (termChanged && targetTerm > termMonths && o.residual_source === "curve") {
+    return { monthly: monthlyPayment, dueAtSigning, termMonths,
+             confidence: "ADVERTISED_ONLY", computable: false };
+  }
+
   const { msrp, net_cap_cost: netCapCost, residual_value: residualValue, money_factor: moneyFactor } = o;
   const canRecompute = !!o.can_recompute;
 
