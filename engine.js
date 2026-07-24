@@ -18,12 +18,30 @@ function overageRatePerMile(make) {
   }
 }
 
+// Fallback-only: bills extra miles at the lease-end OVERAGE PENALTY rate, which is
+// not how a lessor prices a higher allowance (buying miles up front is cheaper than
+// being penalized for them later). Used only where we lack MSRP/residual and can't
+// do it properly. Mirrors native LeaseOffer.mileageAdjustment.
 function leaseMileageAdj(o, userAnnualMileage, term) {
   const annual = o.annual_mileage ?? 10000;
   const extraPerYear = Math.max(0, userAnnualMileage - annual);
   if (extraPerYear === 0 || term <= 0) return 0;
   const years = term / 12.0;
   return (extraPerYear * years * overageRatePerMile(o.make)) / term;
+}
+
+// Extra miles burn off residual at ~0.5 points of MSRP per 1,000 mi/yr ON A 36-MONTH
+// lease, pro-rated by term — how the captive lender actually prices a higher
+// allowance. Pro-rating matters because TOTAL extra miles devalue the car, not the
+// annual rate: flat-per-year charged $0.56/mile on a 13-month S 500, more than double
+// Mercedes' own $0.25 lease-end penalty. One-directional on purpose: the advertised
+// allowance is the floor, so a default filter value can never re-price a deal below
+// the ad. Mirrors native LeaseOffer.mileageResidualPenalty.
+function mileageResidualPenalty(o, userAnnualMileage, term) {
+  const annual = o.annual_mileage ?? 10000;
+  const extraPerYear = Math.max(0, userAnnualMileage - annual);
+  if (extraPerYear <= 0 || term <= 0) return 0;
+  return extraPerYear / 1000.0 * 0.005 * (term / 36.0);
 }
 
 function effectiveMonthlyCost(o) {
@@ -58,22 +76,29 @@ function computeLeasePayment(o, { requestedTerm = null, userDownPayment = null, 
   if (canRecompute && msrp != null && msrp > 0 && netCapCost != null &&
       residualValue != null && moneyFactor != null && targetTerm > 0) {
     const advPct = residualValue / msrp;
-    let termPct = advPct + (termMonths - targetTerm) / 12.0 * 0.07;
+    let termPct = advPct + (termMonths - targetTerm) / 12.0 * 0.07
+                - mileageResidualPenalty(o, userMiles, targetTerm);
     termPct = Math.min(0.80, Math.max(0.20, termPct));
     const residual = msrp * termPct;
     const adjCap = netCapCost - (down - dueAtSigning);
     const dep = (adjCap - residual) / targetTerm;
     const rent = (adjCap + residual) * moneyFactor;
-    const monthly = dep + rent + leaseMileageAdj(o, userMiles, targetTerm);
+    const monthly = dep + rent;
 
     if (monthly <= 0 || adjCap <= residual) {
       return { monthly: monthlyPayment, dueAtSigning, termMonths, confidence: "ADVERTISED_ONLY", computable: !termChanged };
     }
+    // Order matters (this used to check paramsEstimated first, which labelled a
+    // down-payment-only change "Rough estimate" on any curve-derived deal).
+    // Measured across the 292 deals where we hold the OEM's real numbers, real vs
+    // guessed params move a $0-down quote by a median $7.70 and a 15k-mile quote by
+    // $1.67 — but a 24-month re-term by $51.82. Only term changes lean on parameter
+    // quality. Mirrors native LeaseOffer.computePayment.
     const paramsEstimated = o.residual_source === "curve" || o.net_cap_source === "estimated";
     let confidence;
     if (!termChanged && !downChanged && !wantsMoreMiles) confidence = "EXACT";
-    else if (paramsEstimated) confidence = "LOW";
     else if (!termChanged) confidence = "HIGH";
+    else if (paramsEstimated) confidence = "LOW";
     else confidence = "MEDIUM";
     return { monthly, dueAtSigning: down, termMonths: targetTerm, confidence, computable: true };
   }
