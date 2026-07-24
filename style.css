@@ -103,6 +103,9 @@ body{
 .lc-details{display:flex;justify-content:space-between;margin-top:8px}
 .lc-details span{font-size:12px;font-weight:500;color:#fff}
 .lc-details span.adj{color:var(--amber)}
+/* Market note — mirrors native LeaseOfferCard: labelSmall at GlassAccent #FFD54F,
+   directly under the term/mileage row and above the Advertised line. */
+.lc-market{font-size:12px;font-weight:600;color:#FFD54F;margin-top:2px}
 .lc-conf{font-size:11px;font-weight:500;color:var(--amber);margin-top:4px}
 .lc-msrp{font-size:12px;font-weight:500;color:#fff;margin-top:4px}
 .lc-dealer{font-size:12px;font-weight:600;color:#fff;margin-top:8px}

@@ -11,7 +11,56 @@
   const fmt = n => "$" + Math.round(n).toLocaleString("en-US");
   const PAGE = 25;
 
-  let leases = [], dealersByMake = {}, zipCoords = {};
+  let leases = [], allLeases = [], dealersByMake = {}, zipCoords = {};
+
+  // ---- regional lease pricing (mirrors native Geo.kt METROS / selectForMarket) ----
+  // A lease special is a REGIONAL product: the same Tacoma is advertised at $309 in
+  // Chicago, $319 in LA and $339 in Detroit, and all three are real. Native used to
+  // collapse these with min(payment) — quoting everyone the cheapest market in the
+  // country — and the web didn't collapse them at all, so the same car appeared 3-6×.
+  const METROS = [
+    { region: "48202", label: "Detroit, MI", lat: 42.377, lng: -83.080 },
+    { region: "90001", label: "Los Angeles, CA", lat: 33.973, lng: -118.249 },
+    { region: "60601", label: "Chicago, IL", lat: 41.886, lng: -87.622 },
+    { region: "30301", label: "Atlanta, GA", lat: 33.749, lng: -84.388 },
+    { region: "10001", label: "New York, NY", lat: 40.750, lng: -73.997 },
+    { region: "80201", label: "Denver, CO", lat: 39.739, lng: -104.985 },
+    { region: "98101", label: "Seattle, WA", lat: 47.611, lng: -122.337 },
+    { region: "77001", label: "Houston, TX", lat: 29.760, lng: -95.370 },
+    { region: "85001", label: "Phoenix, AZ", lat: 33.448, lng: -112.074 },
+    { region: "19101", label: "Philadelphia, PA", lat: 39.953, lng: -75.165 },
+    { region: "75201", label: "Dallas, TX", lat: 32.781, lng: -96.797 },
+    { region: "33101", label: "Miami, FL", lat: 25.779, lng: -80.198 },
+  ];
+  const metroFor = (lat, lng) => METROS.reduce((best, m) =>
+    haversine(lat, lng, m.lat, m.lng) < haversine(lat, lng, best.lat, best.lng) ? m : best, METROS[0]);
+
+  function pickForMarket(vs, mk) {
+    const cheapest = () => vs.reduce((a, b) => b.monthly_payment < a.monthly_payment ? b : a);
+    if (vs.length === 1 || !mk) return cheapest();
+    const own = vs.find(o => o.region === mk.region); if (own) return own;
+    const nat = vs.find(o => o.region === "national"); if (nat) return nat;
+    const placed = vs.map(o => [o, METROS.find(m => m.region === o.region)]).filter(t => t[1]);
+    if (!placed.length) return cheapest();
+    return placed.reduce((a, b) =>
+      haversine(mk.lat, mk.lng, b[1].lat, b[1].lng) < haversine(mk.lat, mk.lng, a[1].lat, a[1].lng) ? b : a)[0];
+  }
+
+  // One offer per car, priced for the user's market. Recomputed whenever geo changes.
+  function selectForMarket() {
+    const mk = geo ? metroFor(geo.lat, geo.lng) : null;
+    const g = new Map();
+    for (const o of allLeases) {
+      const k = [o.make, o.model, o.trim || "", o.year, o.term_months, o.annual_mileage].join("|");
+      (g.get(k) || g.set(k, []).get(k)).push(o);
+    }
+    leases = [...g.values()].map(v => pickForMarket(v, mk));
+    leaseMarket = mk;
+  }
+  let leaseMarket = null;
+  // Shown only when the price is NOT the user's own market (or we don't know theirs).
+  const marketNote = o => (o.region === "national" || (leaseMarket && o.region === leaseMarket.region))
+    ? "" : ((METROS.find(m => m.region === o.region) || {}).label || "") + " pricing";
   let geo = null; // {lat,lng,label}
   let favorites = JSON.parse(localStorage.getItem("csb_favs") || "[]");
 
@@ -207,6 +256,7 @@
     return list;
   }
   function runLeases() {
+    selectForMarket();   // geo can arrive/change after load; re-pick the market each render
     const list = filteredLeases();
     $("lease-count").textContent = `${list.length} offer${list.length === 1 ? "" : "s"}`;
     renderLeaseChips();
@@ -252,6 +302,8 @@
     // LeaseOfferCard); the offer's own allowance moves to the Advertised line below.
     const shownMi = leaseState.mileage ?? annualMi;
     const mileage = shownMi.toLocaleString() + " mi/yr" + (isMiAdj ? "" : totalNote);
+    const mkNote = marketNote(o);
+    const mkLine = mkNote ? `<div class="lc-market">${escHtml(mkNote)}</div>` : "";
     const advLine = isAdjusted ?
       `<div class="lc-msrp">Advertised: ${fmt(o.monthly_payment)}/mo with ${fmt(o.due_at_signing)} due${isMiAdj ? ` at ${annualMi.toLocaleString()} mi/yr${totalNote}` : ""}</div>` : "";
     const allDealers = dealersByMake[o.make] || [];
@@ -283,6 +335,7 @@
         <span>${mileage}</span>
       </div>
       ${pr.confidence !== "EXACT" ? `<div class="lc-conf">${LEASE_CONFIDENCE[pr.confidence]}</div>` : ""}
+      ${mkLine}
       ${advLine}
       ${(o.msrp && o.msrp > 100) ? `<div class="lc-msrp">MSRP: ${fmt(o.msrp)}</div>` : ""}
       ${nearest ? `<div class="lc-dealer">Nearest dealer: ${nearest.name}${distText}</div>${moreText ? `<div class="lc-more">${moreText}</div>` : ""}` : ""}
@@ -701,7 +754,8 @@
       const [lz, ld, ll] = await Promise.all([fetch("zip_coords.json", nc), fetch("dealers.json", nc), fetch("leases.json", nc)]);
       zipCoords = await lz.json();
       dealersByMake = (await ld.json()).dealers_by_make || {};
-      leases = (await ll.json()).offers || [];
+      allLeases = (await ll.json()).offers || [];
+      selectForMarket();
     } catch (e) { console.error("data load", e); }
     handleDeepLink(); // route ?screen=… arrivals from the static SEO pages
     // Warm the DB in the background: init, then pre-run the exact first-paint queries
