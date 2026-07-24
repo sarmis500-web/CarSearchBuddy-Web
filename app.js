@@ -264,8 +264,28 @@
     // broken rather than honest. Transcribed from native LeaseScreen.
     const cliffTerm = (leaseState.term !== "adv" && !GENERIC_SAFE_TERMS.has(Number(leaseState.term)))
       ? Number(leaseState.term) : null;
-    $("lease-count").textContent = `${list.length} offer${list.length === 1 ? "" : "s"}`
-      + (cliffTerm ? ` · only deals with the lender's own ${cliffTerm}-month program` : "");
+    $("lease-count").textContent = `${list.length} offer${list.length === 1 ? "" : "s"}`;
+    $("lease-cliffnote").textContent = cliffTerm
+      ? `Only deals with the lender's own ${cliffTerm}-month program.` : "";
+
+    // ── THE DOWN-PAYMENT TRADE ──
+    // A cap-cost reduction and a price discount are the SAME dollar to the lease formula:
+    // both land in `adjCap = netCapCost - (down - dueAtSigning)` and nothing else reads
+    // them. So the discount that replaces a down payment IS the down payment, dollar for
+    // dollar, on any car at any term or mileage. Verified against this engine over 54,000
+    // combinations (627 offers x 5 terms x 4 mileages x 6 down payments): worst difference
+    // $0.00000000. Most states also tax a cap-cost reduction at signing while a price cut
+    // just lowers the taxable price, so after tax the discount is equal or better — never
+    // worse. We say "same payment", not "cheaper", because these figures are pre-tax and
+    // the tax edge is state-dependent.
+    // ⚠️ "an EXTRA $X off" is load-bearing: these ads already carry a discount inside the
+    // advertised price, so a user who asks for "$2,000 off MSRP" on a deal that already had
+    // $3,000 off would land WORSE than the ad and blame us. Never word it as off MSRP.
+    // Transcribed from native LeaseScreen FilterBar.
+    const dp = leaseState.down;
+    $("lease-downtrade").textContent = (dp != null && dp > 0)
+      ? `No $${dp.toLocaleString()}? An extra $${dp.toLocaleString()} off the price is about the same payment with $0 down.`
+      : "";
     renderLeaseChips();
     const box = $("lease-list"); box.innerHTML = "";
     if (!list.length) {

@@ -15,7 +15,7 @@
 <meta property="og:image" content="https://sarmis500-web.github.io/CarSearchBuddy-Web/apple-touch-icon.png">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="stylesheet" href="style.css?v=6">
+<link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
 <div id="bg"></div>
@@ -83,6 +83,10 @@
          PRE-TAX base payment — that is how OEMs quote lease specials and what the engine
          computes; lease sales tax varies by state. -->
     <div class="lease-taxnote">Payments are before tax, title &amp; fees — these vary by state.</div>
+    <!-- Dynamic explainers — same copy and same position as native FilterBar (under the
+         pre-tax note, above the active-filter chips). Filled by app.js, empty = invisible. -->
+    <div id="lease-downtrade" class="lease-note-accent"></div>
+    <div id="lease-cliffnote" class="lease-note-accent"></div>
     <div id="lease-chips" class="lease-active-chips"></div>
   </div>
   <div id="lease-list" class="card-list lease-list"></div>
@@ -145,7 +149,7 @@
 <script src="vendor/httpvfs.js?v=1"></script>
 <script src="engine.js?v=5"></script>
 <script src="db.js?v=18"></script>
-<script src="app.js?v=14"></script>
+<script src="app.js?v=15"></script>
 
 <!-- Never-stale updates: register the freshness SW and auto-refresh when a new build
      is live. updateViaCache:'none' keeps GitHub's 10-min cache from pinning sw.js so

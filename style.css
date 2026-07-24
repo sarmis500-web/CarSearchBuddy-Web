@@ -80,6 +80,10 @@ body{
 /* Native LeaseScreen renders this with typography.labelSmall (11sp, weight 500) at
    Color.White.copy(alpha = 0.75f) — transcribed from the Kotlin, not eyeballed. */
 .lease-taxnote{font-size:11px;font-weight:500;color:rgba(255,255,255,.75);margin-top:5px}
+/* Dynamic explainers under the pre-tax note. Same size/weight as .lease-taxnote but
+   amber (native GlassAccent). :empty hides them, matching .lease-active-chips. */
+.lease-note-accent{font-size:11px;font-weight:500;color:var(--amber);margin-top:5px}
+.lease-note-accent:empty{display:none}
 .lease-bar-actions{display:flex;align-items:center;gap:2px}
 .lease-clear{background:transparent;border:0;color:#fff;font-size:14px;font-weight:600;padding:8px 12px;cursor:pointer}
 .lease-filters{background:#fff;color:#000;border:0;border-radius:20px;padding:9px 22px;font-size:14px;font-weight:600;cursor:pointer}
