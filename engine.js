@@ -2,6 +2,22 @@
 // (LeaseOffer.computePayment) and the auto-loan calculator (computeLoan).
 // These MUST match the Kotlin to the penny — do not "improve" the math.
 
+// Terms the GENERIC re-pricing (flat MF + ~7 pts/12mo residual slope) is measured to
+// handle. Anything else needs the OEM's own curve. Mirrors native GENERIC_SAFE_TERMS.
+//
+// ☠️ 39 months is a PROGRAM CLIFF, not a point on a curve. Measured 2026-07-24 over all
+// 177 Kia offers (the one make whose real per-term residual AND money factor we hold):
+//   24mo median $15.05 (4.6%, over-quotes) │ 36mo $12.25 (4.0%)
+//   39mo median $98.34 (23.2%) TOO LOW on 177/177 │ 48mo $50.65 (14.6%) TOO LOW on 177/177
+// Kia's real 24→36 residual drop is 7.4 pts vs the 7.0 we assume — the slope is fine.
+// But 36→39 drops 8.4 pts in THREE months while MF jumps 0.00230→0.00310 (+35%): the
+// subvented promo doesn't extend to an odd term, so it prices at standard rates. A
+// linear model cannot represent that, which is why every single offer errs the same
+// way — always CHEAPER than reality.
+// ⛔ Do NOT fit a 39-month correction from Kia's sheet: a cliff is program structure,
+// not geometry. The OEM rate-sheet search is CLOSED — Kia is the only make that works.
+const GENERIC_SAFE_TERMS = new Set([24, 36]);
+
 const LEASE_CONFIDENCE = {
   EXACT: "Advertised",
   HIGH: "Accurate estimate",
@@ -69,6 +85,18 @@ function computeLeasePayment(o, { requestedTerm = null, userDownPayment = null, 
   const termChanged = targetTerm !== termMonths;
   const downChanged = down !== dueAtSigning;
   const wantsMoreMiles = userMiles > annualMileage;
+
+  // ── PROGRAM-CLIFF GUARD (see GENERIC_SAFE_TERMS above) ──
+  // Re-terming to 39/48 without the OEM's own curve understated the payment on 177 of
+  // 177 measured offers — median $98/mo at 39. Refuse instead of guessing. The list
+  // already hides deals it can't honestly re-price to a picked term. Deals ALREADY
+  // advertised at that term never reach here (termChanged is false → they stay EXACT).
+  if (termChanged && !GENERIC_SAFE_TERMS.has(targetTerm) &&
+      (o.residual_curve?.[String(targetTerm)] == null ||
+       o.mf_curve?.[String(targetTerm)] == null)) {
+    return { monthly: monthlyPayment, dueAtSigning, termMonths,
+             confidence: "ADVERTISED_ONLY", computable: false };
+  }
 
   const { msrp, net_cap_cost: netCapCost, residual_value: residualValue, money_factor: moneyFactor } = o;
   const canRecompute = !!o.can_recompute;

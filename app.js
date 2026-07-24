@@ -258,10 +258,20 @@
   function runLeases() {
     selectForMarket();   // geo can arrive/change after load; re-pick the market each render
     const list = filteredLeases();
-    $("lease-count").textContent = `${list.length} offer${list.length === 1 ? "" : "s"}`;
+    // A picked term outside GENERIC_SAFE_TERMS (39/48) shows ONLY deals backed by the
+    // lender's own per-term program — re-pricing the rest understated the payment on
+    // 177 of 177 measured offers. Say so, or a list dropping from 627 to 198 reads as
+    // broken rather than honest. Transcribed from native LeaseScreen.
+    const cliffTerm = (leaseState.term !== "adv" && !GENERIC_SAFE_TERMS.has(Number(leaseState.term)))
+      ? Number(leaseState.term) : null;
+    $("lease-count").textContent = `${list.length} offer${list.length === 1 ? "" : "s"}`
+      + (cliffTerm ? ` · only deals with the lender's own ${cliffTerm}-month program` : "");
     renderLeaseChips();
     const box = $("lease-list"); box.innerHTML = "";
-    if (!list.length) { box.innerHTML = `<div class="empty">No offers match your filters</div>`; $("lease-more").innerHTML = ""; return; }
+    if (!list.length) {
+      box.innerHTML = `<div class="empty">${cliffTerm ? `No deals we can price at ${cliffTerm} months` : "No offers match your filters"}</div>`;
+      $("lease-more").innerHTML = ""; return;
+    }
     list.slice(0, leaseState.shown).forEach(o => box.appendChild(leaseCard(o)));
     $("lease-more").innerHTML = "";
     if (list.length > leaseState.shown) { const b = el("button", "load-more", `Load more (${list.length - leaseState.shown})`); b.onclick = () => { leaseState.shown += PAGE; runLeases(); }; $("lease-more").appendChild(b); }
