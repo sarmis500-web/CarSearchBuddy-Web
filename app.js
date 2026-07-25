@@ -311,8 +311,7 @@
     const notes = [];
     if (pickedTerm) notes.push(`Only deals advertised at ${pickedTerm} months.`);
     if (leaseState.market) notes.push(`Only deals priced for ${(chosenMarket() || {}).label}.`);
-    else if (leaseMarket) notes.push(`All regions — priced for ${leaseMarket.label} where available, otherwise tagged with their city.`);
-    else notes.push("All regions — each deal is tagged with the city it is priced for.");
+    else notes.push("All regions.");
     $("lease-cliffnote").textContent = notes.join(" ");
 
     // ── THE DOWN-PAYMENT TRADE ──
