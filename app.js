@@ -59,8 +59,18 @@
       ((b.regions || []).length || 1) > ((a.regions || []).length || 1) ? b : a);
     if (vs.length === 1) return vs[0];
     if (!mk) return vs.find(o => o.region === "national") || broadest();
-    const own = vs.find(o => o.region === mk.region) || vs.find(o => pricedFor(o, mk.region));
-    if (own) return own;
+    // Among offers EQUALLY valid for this market, take the DEAREST. Manufacturers
+    // sometimes advertise two payments for what their own feed calls the same trim --
+    // Kia's API returns EV6 "Light Long Range" at both $329 and $389 for 24 months,
+    // same trimId 210, same description, empty modelInfo, differing only by an internal
+    // offerId (8 such groups: Honda HR-V, Prologue, Ridgeline, Kia EV6). We cannot tell
+    // which vehicle is which, so showing the cheaper one risks quoting a customer below
+    // what they can actually get. Show the higher; both are real advertised offers.
+    const dearest = xs => xs.reduce((a, b) => b.monthly_payment > a.monthly_payment ? b : a);
+    const exact = vs.filter(o => o.region === mk.region);
+    if (exact.length) return dearest(exact);
+    const here = vs.filter(o => pricedFor(o, mk.region));
+    if (here.length) return dearest(here);
     const nat = vs.find(o => o.region === "national"); if (nat) return nat;
     const placed = vs.map(o => [o, METROS.find(m => m.region === o.region)]).filter(t => t[1]);
     if (!placed.length) return cheapest();
