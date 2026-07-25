@@ -32,13 +32,24 @@
     { region: "75201", label: "Dallas, TX", lat: 32.781, lng: -96.797 },
     { region: "33101", label: "Miami, FL", lat: 25.779, lng: -80.198 },
   ];
+  // Is THIS offer priced for THIS market? An offer carries `region` (the first market it
+  // was scraped in) and `regions` (EVERY market where the identical payment + due-at-
+  // signing was seen — the importer records it, see import_leases_to_app.dedupe). Matching
+  // on `region` alone mislabelled an offer that genuinely applies in the user's city as
+  // "another market's pricing" and, with the market filter on, hid it: Phoenix saw 29 of
+  // 369 rows instead of 144, Miami 33 instead of 131 (measured 2026-07-24). `regions` is
+  // not an estimate — the same price was actually scraped in each listed market.
+  const pricedFor = (o, region) =>
+    o.region === "national" || o.region === region || (o.regions || []).includes(region);
+
   const metroFor = (lat, lng) => METROS.reduce((best, m) =>
     haversine(lat, lng, m.lat, m.lng) < haversine(lat, lng, best.lat, best.lng) ? m : best, METROS[0]);
 
   function pickForMarket(vs, mk) {
     const cheapest = () => vs.reduce((a, b) => b.monthly_payment < a.monthly_payment ? b : a);
     if (vs.length === 1 || !mk) return cheapest();
-    const own = vs.find(o => o.region === mk.region); if (own) return own;
+    const own = vs.find(o => o.region === mk.region) || vs.find(o => pricedFor(o, mk.region));
+    if (own) return own;
     const nat = vs.find(o => o.region === "national"); if (nat) return nat;
     const placed = vs.map(o => [o, METROS.find(m => m.region === o.region)]).filter(t => t[1]);
     if (!placed.length) return cheapest();
@@ -59,7 +70,7 @@
   }
   let leaseMarket = null;
   // Shown only when the price is NOT the user's own market (or we don't know theirs).
-  const marketNote = o => (o.region === "national" || (leaseMarket && o.region === leaseMarket.region))
+  const marketNote = o => (!leaseMarket || pricedFor(o, leaseMarket.region))
     ? "" : ((METROS.find(m => m.region === o.region) || {}).label || "") + " pricing";
   let geo = null; // {lat,lng,label}
   let favorites = JSON.parse(localStorage.getItem("csb_favs") || "[]");
@@ -232,7 +243,7 @@
   // LEASES
   // ===================================================================
   // term/mileage/down are re-price inputs (match native LeaseFilterState): null = "as advertised".
-  const leaseState = { filter: {}, term: "adv", mileage: null, down: null, shown: PAGE };
+  const leaseState = { filter: {}, term: "adv", mileage: null, down: null, shown: PAGE, marketOnly: true };
 
   function leasePayment(o) {
     const term = leaseState.term === "adv" ? null : parseInt(leaseState.term, 10);
@@ -250,6 +261,15 @@
       // advertised at the picked term — 36mo -> 428 of 627, 24mo -> 173. Nothing is
       // re-priced across terms; the payment shown is the manufacturer's own.
       if (leaseState.term !== "adv" && !pr.computable) return false;
+      // ── MY MARKET ONLY (default ON) ──
+      // Lease programs are REGIONAL. The same car, same term, same cash down, priced in
+      // two metros is a median $30 apart and only 2.6% of pairs land within $10 (measured
+      // 2026-07-24, 76 multi-market rows; worst $130). When we hold no ad for the user's
+      // own metro we fall back to the nearest one — an honest fallback, but it is NOT
+      // their price. Default to hiding those so every payment on screen is priced for
+      // where the user actually is. "national" offers apply everywhere, so they stay.
+      // Cannot be applied without geo: with no location there is no market to match.
+      if (leaseState.marketOnly && leaseMarket && !pricedFor(o, leaseMarket.region)) return false;
       if (f.maxPay && pr.monthly > f.maxPay) return false;
       return true;
     });
@@ -266,8 +286,13 @@
     // Transcribed from native LeaseScreen.
     const pickedTerm = leaseState.term !== "adv" ? Number(leaseState.term) : null;
     $("lease-count").textContent = `${list.length} offer${list.length === 1 ? "" : "s"}`;
-    $("lease-cliffnote").textContent = pickedTerm
-      ? `Showing only deals advertised at ${pickedTerm} months — payments are the manufacturer's own.` : "";
+    const notes = [];
+    if (pickedTerm) notes.push(`Only deals advertised at ${pickedTerm} months.`);
+    if (leaseState.marketOnly && leaseMarket) notes.push(`Priced for ${leaseMarket.label}.`);
+    else if (leaseState.marketOnly && !leaseMarket) notes.push("Turn on location to see only deals priced for your market.");
+    else if (leaseMarket) notes.push("Including other markets — each is tagged with the city it is priced for.");
+    $("lease-cliffnote").textContent = notes.length
+      ? notes.join(" ") + (leaseState.marketOnly && leaseMarket ? " Every payment is the manufacturer's own." : "") : "";
 
     // ── THE DOWN-PAYMENT TRADE ──
     // A cap-cost reduction and a price discount are the SAME dollar to the lease formula:
@@ -698,6 +723,11 @@
       const MILES = [10000, 12000, 15000];
       menuChip(grid, "lmiles", leaseState.mileage == null ? "Annual Mileage" : ((leaseState.mileage / 1000) + "K mi/yr"), leaseState.mileage != null,
         [{ label: "As advertised", on: leaseState.mileage == null, act: () => leaseState.mileage = null }, ...MILES.map(m => ({ label: (m / 1000) + "K mi/yr", on: leaseState.mileage === m, act: () => leaseState.mileage = m }))]);
+      menuChip(grid, "lmarket",
+        leaseState.marketOnly ? (leaseMarket ? leaseMarket.label : "My market") : "All markets",
+        !leaseState.marketOnly,
+        [{ label: leaseMarket ? ("Only " + leaseMarket.label) : "My market only", on: leaseState.marketOnly, act: () => leaseState.marketOnly = true },
+         { label: "All markets (other cities' pricing)", on: !leaseState.marketOnly, act: () => leaseState.marketOnly = false }]);
       const TERMS = [["adv", "Advertised"], ["24", "24 months"], ["36", "36 months"], ["39", "39 months"], ["48", "48 months"]];
       menuChip(grid, "lterm", leaseState.term === "adv" ? "Term" : ("Term " + leaseState.term + " mo"), leaseState.term !== "adv",
         TERMS.map(([v, l]) => ({ label: l, on: leaseState.term === v, act: () => leaseState.term = v })));
@@ -721,7 +751,7 @@
   // both clear the context's filters and return Home.
   function startOver(ctx) {
     if (ctx === "inv") { invState.filter = {}; invState.sort = "DISTANCE"; invState.radius = null; invState.offset = 0; runInventory(true); }
-    else { leaseState.filter = {}; leaseState.term = "adv"; leaseState.mileage = null; leaseState.down = null; leaseState.shown = PAGE; runLeases(); }
+    else { leaseState.filter = {}; leaseState.term = "adv"; leaseState.mileage = null; leaseState.down = null; leaseState.marketOnly = true; leaseState.shown = PAGE; runLeases(); }
     show("home");
   }
   function resetSheet() {
