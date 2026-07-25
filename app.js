@@ -245,9 +245,10 @@
       if (f.models?.length && !f.models.includes(o.model)) return false;
       if (f.bodies?.length && !f.bodies.includes(o.body_style)) return false;
       const pr = leasePayment(o);
-      // A picked term is a real constraint: hide deals the engine can't honestly
-      // re-price to it (they used to stay visible at their advertised term, which
-      // read as "I asked for 36 and got 24").
+      // THE TERM IS A FILTER, NOT A CALCULATOR (see engine.js header). computable is
+      // false for any term the maker did not advertise, so this keeps exactly the deals
+      // advertised at the picked term — 36mo -> 428 of 627, 24mo -> 173. Nothing is
+      // re-priced across terms; the payment shown is the manufacturer's own.
       if (leaseState.term !== "adv" && !pr.computable) return false;
       if (f.maxPay && pr.monthly > f.maxPay) return false;
       return true;
@@ -258,15 +259,15 @@
   function runLeases() {
     selectForMarket();   // geo can arrive/change after load; re-pick the market each render
     const list = filteredLeases();
-    // A picked term outside GENERIC_SAFE_TERMS (39/48) shows ONLY deals backed by the
-    // lender's own per-term program — re-pricing the rest understated the payment on
-    // 177 of 177 measured offers. Say so, or a list dropping from 627 to 198 reads as
-    // broken rather than honest. Transcribed from native LeaseScreen.
-    const cliffTerm = (leaseState.term !== "adv" && !GENERIC_SAFE_TERMS.has(Number(leaseState.term)))
-      ? Number(leaseState.term) : null;
+    // ANY picked term now narrows to deals the maker actually advertises at that term
+    // (this used to fire only for 39/48). Say so, or a list dropping from 627 to 428
+    // reads as broken rather than honest. ⚠️ GENERIC_SAFE_TERMS was deleted from
+    // engine.js with the re-terming code — referencing it here threw a ReferenceError.
+    // Transcribed from native LeaseScreen.
+    const pickedTerm = leaseState.term !== "adv" ? Number(leaseState.term) : null;
     $("lease-count").textContent = `${list.length} offer${list.length === 1 ? "" : "s"}`;
-    $("lease-cliffnote").textContent = cliffTerm
-      ? `Only deals with the lender's own ${cliffTerm}-month program.` : "";
+    $("lease-cliffnote").textContent = pickedTerm
+      ? `Showing only deals advertised at ${pickedTerm} months — payments are the manufacturer's own.` : "";
 
     // ── THE DOWN-PAYMENT TRADE ──
     // A cap-cost reduction and a price discount are the SAME dollar to the lease formula:
@@ -289,7 +290,7 @@
     renderLeaseChips();
     const box = $("lease-list"); box.innerHTML = "";
     if (!list.length) {
-      box.innerHTML = `<div class="empty">${cliffTerm ? `No deals we can price at ${cliffTerm} months` : "No offers match your filters"}</div>`;
+      box.innerHTML = `<div class="empty">${pickedTerm ? `No deals advertised at ${pickedTerm} months` : "No offers match your filters"}</div>`;
       $("lease-more").innerHTML = ""; return;
     }
     list.slice(0, leaseState.shown).forEach(o => box.appendChild(leaseCard(o)));
