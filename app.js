@@ -46,8 +46,19 @@
     haversine(lat, lng, m.lat, m.lng) < haversine(lat, lng, best.lat, best.lng) ? m : best, METROS[0]);
 
   function pickForMarket(vs, mk) {
-    const cheapest = () => vs.reduce((a, b) => b.monthly_payment < a.monthly_payment ? b : a);
-    if (vs.length === 1 || !mk) return cheapest();
+    // ⛔ NEVER fall back to the cheapest offer. With no location (which is EVERY
+    // in-app browser -- Messenger, Instagram and iMessage previews do not offer
+    // geolocation) `cheapest()` handed every visitor the lowest price in the country,
+    // systematically under-quoting them. That is the one failure this product refuses,
+    // and it is exactly what a forwarded link hits. Instead pick the most BROADLY
+    // available price -- the offer seen in the most markets -- which is representative
+    // rather than optimistic, and is deterministic so the list does not reshuffle.
+    // marketNote() labels it with its city whenever we cannot confirm it is the
+    // user's own market, so an unlocated visitor is told what they are looking at.
+    const broadest = () => vs.reduce((a, b) =>
+      ((b.regions || []).length || 1) > ((a.regions || []).length || 1) ? b : a);
+    if (vs.length === 1) return vs[0];
+    if (!mk) return vs.find(o => o.region === "national") || broadest();
     const own = vs.find(o => o.region === mk.region) || vs.find(o => pricedFor(o, mk.region));
     if (own) return own;
     const nat = vs.find(o => o.region === "national"); if (nat) return nat;
@@ -70,7 +81,10 @@
   }
   let leaseMarket = null;
   // Shown only when the price is NOT the user's own market (or we don't know theirs).
-  const marketNote = o => (!leaseMarket || pricedFor(o, leaseMarket.region))
+  // With no known market we CANNOT say this is the visitor's price, so always name the
+  // city it is priced for. Silence here is what let an unlocated visitor read another
+  // market's number as their own.
+  const marketNote = o => (o.region === "national" || (leaseMarket && pricedFor(o, leaseMarket.region)))
     ? "" : ((METROS.find(m => m.region === o.region) || {}).label || "") + " pricing";
   let geo = null; // {lat,lng,label}
   let favorites = JSON.parse(localStorage.getItem("csb_favs") || "[]");
