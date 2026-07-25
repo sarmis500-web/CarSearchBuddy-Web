@@ -69,8 +69,13 @@
   }
 
   // One offer per car, priced for the user's market. Recomputed whenever geo changes.
+  // An explicitly chosen region always wins over geolocation: someone from California
+  // visiting Michigan must be able to price the deals they will actually buy at home.
+  const chosenMarket = () => leaseState.market
+    ? METROS.find(m => m.region === leaseState.market) || null : null;
+
   function selectForMarket() {
-    const mk = geo ? metroFor(geo.lat, geo.lng) : null;
+    const mk = chosenMarket() || (geo ? metroFor(geo.lat, geo.lng) : null);
     const g = new Map();
     for (const o of allLeases) {
       const k = [o.make, o.model, o.trim || "", o.year, o.term_months, o.annual_mileage].join("|");
@@ -257,7 +262,7 @@
   // LEASES
   // ===================================================================
   // term/mileage/down are re-price inputs (match native LeaseFilterState): null = "as advertised".
-  const leaseState = { filter: {}, term: "adv", mileage: null, down: null, shown: PAGE, marketOnly: true };
+  const leaseState = { filter: {}, term: "adv", mileage: null, down: null, shown: PAGE, market: null };   // market: null = ALL REGIONS (default)
 
   function leasePayment(o) {
     const term = leaseState.term === "adv" ? null : parseInt(leaseState.term, 10);
@@ -283,7 +288,10 @@
       // their price. Default to hiding those so every payment on screen is priced for
       // where the user actually is. "national" offers apply everywhere, so they stay.
       // Cannot be applied without geo: with no location there is no market to match.
-      if (leaseState.marketOnly && leaseMarket && !pricedFor(o, leaseMarket.region)) return false;
+      // Default (market === null) hides NOTHING — every deal in the country is listed,
+      // each priced for the user's own market where that price exists and tagged with
+      // its city where it does not. Choosing a region narrows to deals priced there.
+      if (leaseState.market && !pricedFor(o, leaseState.market)) return false;
       if (f.maxPay && pr.monthly > f.maxPay) return false;
       return true;
     });
@@ -302,11 +310,10 @@
     $("lease-count").textContent = `${list.length} offer${list.length === 1 ? "" : "s"}`;
     const notes = [];
     if (pickedTerm) notes.push(`Only deals advertised at ${pickedTerm} months.`);
-    if (leaseState.marketOnly && leaseMarket) notes.push(`Priced for ${leaseMarket.label}.`);
-    else if (leaseState.marketOnly && !leaseMarket) notes.push("Turn on location to see only deals priced for your market.");
-    else if (leaseMarket) notes.push("Including other markets — each is tagged with the city it is priced for.");
-    $("lease-cliffnote").textContent = notes.length
-      ? notes.join(" ") + (leaseState.marketOnly && leaseMarket ? " Every payment is the manufacturer's own." : "") : "";
+    if (leaseState.market) notes.push(`Only deals priced for ${(chosenMarket() || {}).label}.`);
+    else if (leaseMarket) notes.push(`All regions — priced for ${leaseMarket.label} where available, otherwise tagged with their city.`);
+    else notes.push("All regions — each deal is tagged with the city it is priced for.");
+    $("lease-cliffnote").textContent = notes.join(" ");
 
     // ── THE DOWN-PAYMENT TRADE ──
     // A cap-cost reduction and a price discount are the SAME dollar to the lease formula:
@@ -738,10 +745,11 @@
       menuChip(grid, "lmiles", leaseState.mileage == null ? "Annual Mileage" : ((leaseState.mileage / 1000) + "K mi/yr"), leaseState.mileage != null,
         [{ label: "As advertised", on: leaseState.mileage == null, act: () => leaseState.mileage = null }, ...MILES.map(m => ({ label: (m / 1000) + "K mi/yr", on: leaseState.mileage === m, act: () => leaseState.mileage = m }))]);
       menuChip(grid, "lmarket",
-        leaseState.marketOnly ? (leaseMarket ? leaseMarket.label : "My market") : "All markets",
-        !leaseState.marketOnly,
-        [{ label: leaseMarket ? ("Only " + leaseMarket.label) : "My market only", on: leaseState.marketOnly, act: () => leaseState.marketOnly = true },
-         { label: "All markets (other cities' pricing)", on: !leaseState.marketOnly, act: () => leaseState.marketOnly = false }]);
+        leaseState.market ? ((chosenMarket() || {}).label || "Region") : "All regions",
+        leaseState.market != null,
+        [{ label: "All regions", on: leaseState.market == null, act: () => leaseState.market = null },
+         ...METROS.slice().sort((a, b) => a.label.localeCompare(b.label))
+           .map(m => ({ label: m.label, on: leaseState.market === m.region, act: () => leaseState.market = m.region }))]);
       const TERMS = [["adv", "Advertised"], ["24", "24 months"], ["36", "36 months"], ["39", "39 months"], ["48", "48 months"]];
       menuChip(grid, "lterm", leaseState.term === "adv" ? "Term" : ("Term " + leaseState.term + " mo"), leaseState.term !== "adv",
         TERMS.map(([v, l]) => ({ label: l, on: leaseState.term === v, act: () => leaseState.term = v })));
@@ -765,7 +773,7 @@
   // both clear the context's filters and return Home.
   function startOver(ctx) {
     if (ctx === "inv") { invState.filter = {}; invState.sort = "DISTANCE"; invState.radius = null; invState.offset = 0; runInventory(true); }
-    else { leaseState.filter = {}; leaseState.term = "adv"; leaseState.mileage = null; leaseState.down = null; leaseState.marketOnly = true; leaseState.shown = PAGE; runLeases(); }
+    else { leaseState.filter = {}; leaseState.term = "adv"; leaseState.mileage = null; leaseState.down = null; leaseState.market = null; leaseState.shown = PAGE; runLeases(); }
     show("home");
   }
   function resetSheet() {
