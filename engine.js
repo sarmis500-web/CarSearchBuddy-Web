@@ -151,8 +151,15 @@ function computeLeasePayment(o, { requestedTerm = null, userDownPayment = null, 
     const rent = (adjCap + residual) * mf;
     const monthly = dep + rent;
 
+    // ── DEGENERATE INPUTS ARE NOT COMPUTABLE ──
+    // Enough cash down drives the financed cap to or below the residual, so there is no
+    // depreciation left to bill and the lease stops being one we can honestly price.
+    // This USED to return the ADVERTISED payment with computable:true, which meant
+    // $7,500 down on a Tacoma quoted $204 and $10,000 down quoted $309 — more money
+    // down, HIGHER payment, on 160 offer/cash combinations (audit.js, 2026-07-24).
+    // Refuse instead: the row is hidden or labelled, never contradicted.
     if (monthly <= 0 || adjCap <= residual) {
-      return { monthly: monthlyPayment, dueAtSigning, termMonths, confidence: "ADVERTISED_ONLY", computable: !termChanged };
+      return { monthly: monthlyPayment, dueAtSigning, termMonths, confidence: "ADVERTISED_ONLY", computable: false };
     }
     // `termChanged` is impossible here, so the only adjustments that reach this point are
     // DOWN PAYMENT and MILEAGE — within-program arithmetic on the maker's own advertised
@@ -165,7 +172,15 @@ function computeLeasePayment(o, { requestedTerm = null, userDownPayment = null, 
   // ── Fallback: no reverse-engineered params ──
   // (A term change never reaches here either — the term guard above returns first.)
   const downAdj = (down - dueAtSigning) / termMonths;
-  const monthly = Math.max(0, monthlyPayment - downAdj + leaseMileageAdj(o, userMiles, termMonths));
+  const rawMonthly = monthlyPayment - downAdj + leaseMileageAdj(o, userMiles, termMonths);
+  // Math.max(0, ...) used to clamp this and DISPLAY $0/mo — a Chevrolet Silverado at
+  // $10,000 down showed a zero-dollar lease payment (audit.js, 2026-07-24). A payment
+  // that would go negative means the cash down exceeds what this deal can absorb, which
+  // we cannot price on the fallback path. Say so rather than print $0.
+  if (rawMonthly <= 0) {
+    return { monthly: monthlyPayment, dueAtSigning, termMonths, confidence: "ADVERTISED_ONLY", computable: false };
+  }
+  const monthly = rawMonthly;
   const confidence = (!downChanged && !wantsMoreMiles) ? "EXACT" : "LOW";
   return { monthly, dueAtSigning: down, termMonths, confidence, computable: true };
 }
