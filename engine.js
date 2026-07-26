@@ -37,6 +37,9 @@
 // lease_rates_reference.py:_SHEETS for the live list). Sheets fix down-payment/mileage
 // inputs only; re-terming stays dead (per-term incentive cash, measured above). Current
 // per-make status: native repo CLAUDE.md §1b + dated handoff doc, never this header.
+// ⚠️ 2026-07-26 PM: Mike reopened the PREMISE — per-term incentive cash turned out to be
+// DISCLOSED in the makers' desking oracles, not secret. Revival awaits a decisive
+// experiment + Mike's product decision; see the dated handoff before treating this final.
 //
 // ⚠️ One screen DID work and was still rejected: error grows as ~0.57% of MSRP ÷ term, so
 // hiding expensive-car/short-term re-prices lifts within-$15 from 83% to 95% (6-fold CV,
