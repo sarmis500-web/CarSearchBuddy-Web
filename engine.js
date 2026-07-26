@@ -25,11 +25,18 @@
 // term is cheaper is a COIN FLIP (52/48 over 81 vehicles). Unbiased scatter cannot be
 // corrected; money that is not in the ad cannot be derived.
 //
-// ⛔ Do NOT re-attempt (all measured 2026-07-24, all failed): more OEM rate sheets
-// (closed — Kia alone publishes); a fitted correction (was SHORTEN_RETERM_K, deleted —
-// Kia-fitted, applied to ten other makes, which the product owner explicitly rejected);
-// dropping outliers by solved rate (−3.3 pts); ceiling pricing (above). Residual and MF
-// were NEVER the bottleneck — Kia's perfect ones still missed by $6.48.
+// ⛔ Do NOT re-attempt (all measured 2026-07-24, all failed ON THE TERM AXIS): a fitted
+// correction (was SHORTEN_RETERM_K, deleted — Kia-fitted, applied to ten other makes,
+// which the product owner explicitly rejected); dropping outliers by solved rate
+// (−3.3 pts); ceiling pricing (above). Residual and MF were NEVER the bottleneck —
+// Kia's perfect ones still missed by $6.48.
+//
+// ⚠️ RETIRED 2026-07-26 from this list: "more OEM rate sheets (Kia alone publishes)".
+// Wrong lens — any calculator that computes a lease payment is an oracle; SEVEN makes'
+// real sheets were cashed 2026-07-26 (see the native repo's scraper/
+// lease_rates_reference.py:_SHEETS for the live list). Sheets fix down-payment/mileage
+// inputs only; re-terming stays dead (per-term incentive cash, measured above). Current
+// per-make status: native repo CLAUDE.md §1b + dated handoff doc, never this header.
 //
 // ⚠️ One screen DID work and was still rejected: error grows as ~0.57% of MSRP ÷ term, so
 // hiding expensive-car/short-term re-prices lifts within-$15 from 83% to 95% (6-fold CV,
