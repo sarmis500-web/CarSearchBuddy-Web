@@ -76,18 +76,30 @@ function leaseMileageAdj(o, userAnnualMileage, term) {
   return (extraPerYear * years * overageRatePerMile(o.make)) / term;
 }
 
-// Extra miles burn off residual at ~0.5 points of MSRP per 1,000 mi/yr ON A 36-MONTH
-// lease, pro-rated by term — how the captive lender actually prices a higher
-// allowance. Pro-rating matters because TOTAL extra miles devalue the car, not the
-// annual rate: flat-per-year charged $0.56/mile on a 13-month S 500, more than double
-// Mercedes' own $0.25 lease-end penalty. One-directional on purpose: the advertised
-// allowance is the floor, so a default filter value can never re-price a deal below
-// the ad. Mirrors native LeaseOffer.mileageResidualPenalty.
+// Extra miles burn off residual at ~0.57 points of MSRP per 1,000 mi/yr, FLAT — the
+// captives do NOT pro-rate this by term. MEASURED 2026-07-26 against three makers' own
+// published payments at multiple mileage allowances (Ford/Toyota/Hyundai, 2,969
+// comparisons on 1,118 same-vehicle groups): the residual drop per 1,000 mi/yr is
+// 0.556 pts at 24mo, 0.571 at 36mo, 0.558 at 39mo, 0.558 at 48mo, 0.600 at 60mo.
+// The old rule scaled by term/36, which is right only near 36-39 months — it undercharged
+// at 24mo (median $10.85 off) and overcharged at 60mo. Removing the scaling took the
+// median error on realistic filter moves from $4.41 to $1.36, and 90.7% -> 99.9% within
+// $15. Evidence + re-run instructions: MEASURED_MILEAGE_FILTER_2026-07-26.md (native repo).
+// ⚠️ Below 24 months we hold NO maker data (the sheets start at 24), and a flat charge on
+// a 13-month lease would bill ~$0.63/extra mile — more than double Mercedes' own $0.25
+// lease-end penalty. So under 24 months only, bound the up-front charge by what the
+// lease-end overage would cost. Do NOT extend that bound to 24mo+: it binds on expensive
+// vehicles and re-introduces undercharging (measured — worst case $16 -> $37).
+// One-directional on purpose: the advertised allowance is the floor, so a default filter
+// value can never re-price a deal below the ad. Mirrors native LeaseOffer.mileageResidualPenalty.
 function mileageResidualPenalty(o, userAnnualMileage, term) {
   const annual = o.annual_mileage ?? 10000;
   const extraPerYear = Math.max(0, userAnnualMileage - annual);
   if (extraPerYear <= 0 || term <= 0) return 0;
-  return extraPerYear / 1000.0 * 0.005 * (term / 36.0);
+  const flat = extraPerYear / 1000.0 * 0.0057;
+  if (term >= 24 || !(o.msrp > 0)) return flat;
+  const totalExtraMiles = extraPerYear * (term / 12.0);
+  return Math.min(flat, (totalExtraMiles * overageRatePerMile(o.make)) / o.msrp);
 }
 
 function effectiveMonthlyCost(o) {
