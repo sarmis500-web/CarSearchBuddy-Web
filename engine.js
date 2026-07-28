@@ -157,8 +157,19 @@ function computeLeasePayment(o, { requestedTerm = null, userDownPayment = null, 
     // trims, 10k vs 12k, exactly 1.00 point of MSRP per +2,000 mi/yr at 36mo). Down
     // payment moves adjCap by construction (G7).
     const curveResidual = o.residual_curve ? o.residual_curve[String(targetTerm)] : null;
+    // ── OEM residual at the USER'S mileage, when the maker publishes one ──
+    // Ford/Toyota/Hyundai's own systems state the residual at each allowance
+    // (offer.residual_by_mileage, dollars on the same basis as residual_value).
+    // Where the user's pick is a published point, use the maker's exact number;
+    // the flat ~0.57 pts/1,000 rule below stays as the fallback for everyone else
+    // (MEASURED_MILEAGE_FILTER_2026-07-26.md). Math.min keeps the one-way floor:
+    // a mileage move can never RAISE the residual above the advertised deal's.
+    const oemMileageResidual = (wantsMoreMiles && o.residual_by_mileage)
+      ? o.residual_by_mileage[String(userMiles)] : null;
     let residual;
-    if (curveResidual != null) {
+    if (oemMileageResidual != null) {
+      residual = Math.min(oemMileageResidual, curveResidual != null ? curveResidual : residualValue);
+    } else if (curveResidual != null) {
       residual = Math.max(0, curveResidual - mileageResidualPenalty(o, userMiles, targetTerm) * msrp);
     } else {
       const advPct = residualValue / msrp;
