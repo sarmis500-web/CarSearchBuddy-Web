@@ -273,6 +273,8 @@
   // ===================================================================
   // term/mileage/down are re-price inputs (match native LeaseFilterState): null = "as advertised".
   const leaseState = { filter: {}, term: "adv", mileage: null, down: null, shown: PAGE, market: null };   // market: null = ALL REGIONS (default)
+  // Case/space-insensitive trim key — see the trim check in filteredLeases.
+  const normTrim = t => (t || "").trim().toLowerCase();
 
   function leasePayment(o) {
     const term = leaseState.term === "adv" ? null : parseInt(leaseState.term, 10);
@@ -283,6 +285,10 @@
     let list = leases.filter(o => {
       if (f.makes?.length && !f.makes.includes(o.make)) return false;
       if (f.models?.length && !f.models.includes(o.model)) return false;
+      // Trim matches case/space-insensitively: the catalog carries e.g. BOTH
+      // "4Matic Sedan" and "4MATIC Sedan" (Mercedes) for the same trim; the sheet
+      // shows one entry, so the filter must catch every casing variant of it.
+      if (f.trims?.length && !f.trims.some(t => normTrim(t) === normTrim(o.trim))) return false;
       if (f.bodies?.length && !f.bodies.includes(o.body_style)) return false;
       const pr = leasePayment(o);
       // THE TERM IS A FILTER, NOT A CALCULATOR (see engine.js header). computable is
@@ -357,6 +363,7 @@
     const f = leaseState.filter, chips = [];
     (f.makes || []).forEach(m => chips.push(m));
     (f.models || []).forEach(m => chips.push(m));
+    (f.trims || []).forEach(t => chips.push(t));
     (f.bodies || []).forEach(b => chips.push(b));
     if (f.maxPay) chips.push(`≤ ${fmt(f.maxPay)}/mo`);
     if (f.maxDown != null) chips.push(`≤ ${fmt(f.maxDown)} down`);
@@ -727,7 +734,7 @@
       menuChip(grid, "sort", (SORTS.find(s => s[0] === invState.sort) || SORTS[0])[1], invState.sort !== "DISTANCE",
         SORTS.map(([v, l]) => ({ label: l, on: invState.sort === v, act: () => invState.sort = v })));
     } else {
-      const f = leaseState.filter; f.makes = f.makes || []; f.models = f.models || []; f.bodies = f.bodies || [];
+      const f = leaseState.filter; f.makes = f.makes || []; f.models = f.models || []; f.trims = f.trims || []; f.bodies = f.bodies || [];
       const lMakes = [...new Set(leases.map(o => o.make))].sort();
       const lBodies = [...new Set(leases.map(o => o.body_style).filter(Boolean))].sort();
       // Must match native LeaseScreen's list EXACTLY (it had drifted: web was
@@ -746,10 +753,23 @@
       menuChip(grid, "down", leaseState.down == null ? "Down Payment" : ("$" + leaseState.down.toLocaleString() + " down"), leaseState.down != null,
         [{ label: "As advertised", on: leaseState.down == null, act: () => leaseState.down = null }, ...DOWNS.map(d => ({ label: "$" + d.toLocaleString() + " down", on: leaseState.down === d, act: () => leaseState.down = d }))]);
       menuChip(grid, "lmake", f.makes.length ? ("Make (" + f.makes.length + ")") : "Make", f.makes.length > 0,
-        lMakes.map(mk => ({ label: mk, on: f.makes.includes(mk), act: () => { setMulti(f.makes, mk, !f.makes.includes(mk)); f.models = []; } })), true);
+        lMakes.map(mk => ({ label: mk, on: f.makes.includes(mk), act: () => { setMulti(f.makes, mk, !f.makes.includes(mk)); f.models = []; f.trims = []; } })), true);
       const lModels = f.makes.length ? [...new Set(leases.filter(o => f.makes.includes(o.make)).map(o => o.model))].sort() : [];
       menuChip(grid, "lmodel", f.models.length ? ("Model (" + f.models.length + ")") : "Model", f.models.length > 0,
-        lModels.length ? lModels.map(m => ({ label: m, on: f.models.includes(m), act: () => setMulti(f.models, m, !f.models.includes(m)) })) : [{ label: "Pick a make first", on: false, act: () => {} }], lModels.length > 0);
+        lModels.length ? lModels.map(m => ({ label: m, on: f.models.includes(m), act: () => { setMulti(f.models, m, !f.models.includes(m)); f.trims = []; } })) : [{ label: "Pick a make first", on: false, act: () => {} }], lModels.length > 0);
+      // Trim cascades from make(+model), mirroring the Used Cars make→model→trim chain.
+      // The catalog discloses a trim on 545/551 offers (measured 2026-07-29); dropdown
+      // entries collapse casing variants (see normTrim) and show first-seen casing.
+      // ⚠️ PWA leads native here: LeaseScreen.kt has no trim filter yet — port it to
+      // Kotlin at the next store build to restore parity.
+      const seenTrims = new Map();
+      if (f.makes.length) {
+        leases.filter(o => f.makes.includes(o.make) && (!f.models.length || f.models.includes(o.model)))
+          .forEach(o => { const k = normTrim(o.trim); if (k && !seenTrims.has(k)) seenTrims.set(k, o.trim.trim()); });
+      }
+      const lTrims = [...seenTrims.values()].sort();
+      menuChip(grid, "ltrim", f.trims.length ? ("Trim (" + f.trims.length + ")") : "Trim", f.trims.length > 0,
+        lTrims.length ? lTrims.map(t => ({ label: t, on: f.trims.includes(t), act: () => setMulti(f.trims, t, !f.trims.includes(t)) })) : [{ label: "Pick a make first", on: false, act: () => {} }], lTrims.length > 0);
       const MILES = [10000, 12000, 15000];
       menuChip(grid, "lmiles", leaseState.mileage == null ? "Annual Mileage" : ((leaseState.mileage / 1000) + "K mi/yr"), leaseState.mileage != null,
         [{ label: "As advertised", on: leaseState.mileage == null, act: () => leaseState.mileage = null }, ...MILES.map(m => ({ label: (m / 1000) + "K mi/yr", on: leaseState.mileage === m, act: () => leaseState.mileage = m }))]);
