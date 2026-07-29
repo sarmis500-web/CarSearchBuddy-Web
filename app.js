@@ -760,12 +760,21 @@
       // Trim cascades from make(+model), mirroring the Used Cars make→model→trim chain.
       // The catalog discloses a trim on 545/551 offers (measured 2026-07-29); dropdown
       // entries collapse casing variants (see normTrim) and show first-seen casing.
+      // FULLY FACETED (Mike, 2026-07-29): the option list is derived by running the REAL
+      // result filter with only the trim clause suppressed, so a trim appears ONLY if
+      // picking it would yield ≥1 result under every other active filter (payment cap,
+      // region, term, body …) — the same facet behavior as Used Cars, and it reuses
+      // filteredLeases so the menu can never drift from the results. Already-selected
+      // trims are unioned back in so they can always be unticked.
       // ⚠️ PWA leads native here: LeaseScreen.kt has no trim filter yet — port it to
       // Kotlin at the next store build to restore parity.
       const seenTrims = new Map();
       if (f.makes.length) {
-        leases.filter(o => f.makes.includes(o.make) && (!f.models.length || f.models.includes(o.model)))
-          .forEach(o => { const k = normTrim(o.trim); if (k && !seenTrims.has(k)) seenTrims.set(k, o.trim.trim()); });
+        const savedTrims = f.trims; f.trims = [];
+        const trimSource = filteredLeases();
+        f.trims = savedTrims;
+        trimSource.forEach(o => { const k = normTrim(o.trim); if (k && !seenTrims.has(k)) seenTrims.set(k, o.trim.trim()); });
+        f.trims.forEach(t => { const k = normTrim(t); if (k && !seenTrims.has(k)) seenTrims.set(k, t); });
       }
       const lTrims = [...seenTrims.values()].sort();
       menuChip(grid, "ltrim", f.trims.length ? ("Trim (" + f.trims.length + ")") : "Trim", f.trims.length > 0,
