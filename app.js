@@ -420,6 +420,12 @@
     const mileage = shownMi.toLocaleString() + " mi/yr" + (isMiAdj ? "" : totalNoteShown);
     const mkNote = marketNote(o);
     const mkLine = mkNote ? `<div class="lc-market">${escHtml(mkNote)}</div>` : "";
+    // Say the discount assumption ON the card (Mike, 2026-08-11: with only the top
+    // note explaining it, a scrolled card showing a lower payment against the SAME
+    // due-at-signing read as broken math). Same wording family as the down-trade
+    // hint — "an extra $X off the price", never "off MSRP".
+    const discLine = isDiscAdj ?
+      `<div class="lc-market">With an extra $${leaseState.discount.toLocaleString()} negotiated off the price</div>` : "";
     const advLine = isAdjusted ?
       `<div class="lc-msrp">Advertised: ${fmt(o.monthly_payment)}/mo with ${fmt(o.due_at_signing)} due${isMiAdj ? ` at ${annualMi.toLocaleString()} mi/yr${totalNote}` : ""}</div>` : "";
     const allDealers = dealersByMake[o.make] || [];
@@ -442,7 +448,7 @@
           <div class="lc-monthly">${fmt(pr.monthly)}/mo</div>
         </div>
         <div class="lc-pay-r">
-          <div class="lc-lbl">${isAdjusted ? "Your down payment" : "Due at signing"}</div>
+          <div class="lc-lbl">${isDownAdj ? "Your down payment" : "Due at signing"}</div>
           <div class="lc-due">${fmt(pr.dueAtSigning)}</div>
         </div>
       </div>
@@ -452,6 +458,7 @@
       </div>
       ${pr.confidence !== "EXACT" ? `<div class="lc-conf">${LEASE_CONFIDENCE[pr.confidence]}</div>` : ""}
       ${mkLine}
+      ${discLine}
       ${advLine}
       ${(o.msrp && o.msrp > 100) ? `<div class="lc-msrp">MSRP: ${fmt(o.msrp)}</div>` : ""}
       ${nearest ? `<div class="lc-dealer">Nearest dealer: ${nearest.name}${distText}</div>${moreText ? `<div class="lc-more">${moreText}</div>` : ""}` : ""}
