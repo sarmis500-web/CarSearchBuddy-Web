@@ -420,12 +420,14 @@
     const mileage = shownMi.toLocaleString() + " mi/yr" + (isMiAdj ? "" : totalNoteShown);
     const mkNote = marketNote(o);
     const mkLine = mkNote ? `<div class="lc-market">${escHtml(mkNote)}</div>` : "";
-    // Say the discount assumption ON the card (Mike, 2026-08-11: with only the top
-    // note explaining it, a scrolled card showing a lower payment against the SAME
-    // due-at-signing read as broken math). Same wording family as the down-trade
-    // hint — "an extra $X off the price", never "off MSRP".
-    const discLine = isDiscAdj ?
-      `<div class="lc-market">With an extra $${leaseState.discount.toLocaleString()} negotiated off the price</div>` : "";
+    // The picked discount is CARD DATA, not note text (Mike, 2026-08-11, twice: first
+    // the top-note-only version read as broken math; then "it's gotta be in every
+    // result card no different than the payments... the due at signing... the months").
+    // Own .lc-details row: a structural peer of months/mileage, amber (.adj = the
+    // user-modified signal), never sharing the mileage row (its total-note string
+    // already fills 375px). Wording stays "extra ... off", never "off MSRP".
+    const discRow = isDiscAdj ?
+      `<div class="lc-details"><span class="adj">Extra $${leaseState.discount.toLocaleString()} off — your negotiated discount</span></div>` : "";
     const advLine = isAdjusted ?
       `<div class="lc-msrp">Advertised: ${fmt(o.monthly_payment)}/mo with ${fmt(o.due_at_signing)} due${isMiAdj ? ` at ${annualMi.toLocaleString()} mi/yr${totalNote}` : ""}</div>` : "";
     const allDealers = dealersByMake[o.make] || [];
@@ -456,9 +458,9 @@
         <span class="${isTermAdj ? "adj" : ""}">${pr.termMonths} months</span>
         <span>${mileage}</span>
       </div>
+      ${discRow}
       ${pr.confidence !== "EXACT" ? `<div class="lc-conf">${LEASE_CONFIDENCE[pr.confidence]}</div>` : ""}
       ${mkLine}
-      ${discLine}
       ${advLine}
       ${(o.msrp && o.msrp > 100) ? `<div class="lc-msrp">MSRP: ${fmt(o.msrp)}</div>` : ""}
       ${nearest ? `<div class="lc-dealer">Nearest dealer: ${nearest.name}${distText}</div>${moreText ? `<div class="lc-more">${moreText}</div>` : ""}` : ""}
