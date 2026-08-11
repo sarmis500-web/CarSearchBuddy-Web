@@ -107,6 +107,14 @@ body{
 .lc-details{display:flex;justify-content:space-between;margin-top:8px}
 .lc-details span{font-size:12px;font-weight:500;color:#fff}
 .lc-details span.adj{color:var(--amber)}
+/* Spec-list card rows (2026-08-11, Mike's ordered-list layout): labels reuse .lc-lbl,
+   payment value reuses .lc-monthly, due reuses .lc-due; remaining values are one
+   uniform size. Only active when app.js LEASE_CARD_SPEC_LIST is true. */
+.lc-spec{margin-top:8px;display:flex;flex-direction:column;gap:6px}
+.lc-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.lc-row .lc-monthly,.lc-row .lc-due{margin-top:0}
+.lc-row .lc-val{font-size:14px;font-weight:600;color:#fff;text-align:right}
+.lc-row .lc-val.adj{color:var(--amber)}
 /* Market note — mirrors native LeaseOfferCard: labelSmall at GlassAccent #FFD54F,
    directly under the term/mileage row and above the Advertised line. */
 .lc-market{font-size:12px;font-weight:600;color:#FFD54F;margin-top:2px}

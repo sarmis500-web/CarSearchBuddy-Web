@@ -278,6 +278,9 @@
   // discount as 0 (bit-identical payments). ⚠️ PWA leads native here — port the chip to
   // LeaseScreen.kt at the next store build (same debt pattern as the Trim filter).
   const NEGOTIATED_DISCOUNT_FEATURE = true;
+  // Spec-list card layout (Mike 2026-08-11): false restores the old two-column
+  // pay row + details row exactly.
+  const LEASE_CARD_SPEC_LIST = true;
   const leaseState = { filter: {}, term: "adv", mileage: null, down: null, discount: null, shown: PAGE, market: null };   // market: null = ALL REGIONS (default); discount: null = no negotiated discount
   // Case/space-insensitive trim key — see the trim check in filteredLeases.
   const normTrim = t => (t || "").trim().toLowerCase();
@@ -441,9 +444,19 @@
     const moreText = nearbyCount > 1 ? `(+${nearbyCount - 1} more ${geo ? "nearby" : "nationwide"})` : "";
     const c = el("div", "lease-card");
     const trim = o.trim ? " " + o.trim : "";
-    c.innerHTML = `
-      <div class="lc-name">${o.year} ${o.make} ${o.model}${trim}</div>
-      <div class="lc-body">${o.body_style || ""}</div>
+    // ── SPEC-LIST CARD LAYOUT (Mike, 2026-08-11): "put the payment in the upper right
+    // hand corner and then just start going down from there... payment, due at signing,
+    // months, miles, discount — in order, every result card the same." One labeled row
+    // per fact, labels share a left edge, values share the right edge. The old scattered
+    // layout is kept below the switch for a one-word revert.
+    const specList = LEASE_CARD_SPEC_LIST ? `
+      <div class="lc-spec">
+        <div class="lc-row"><span class="lc-lbl">${isAdjusted ? "Your monthly" : "Monthly"}</span><span class="lc-monthly">${fmt(pr.monthly)}/mo</span></div>
+        <div class="lc-row"><span class="lc-lbl">${isDownAdj ? "Your down payment" : "Due at signing"}</span><span class="lc-due">${fmt(pr.dueAtSigning)}</span></div>
+        <div class="lc-row"><span class="lc-lbl">Term</span><span class="lc-val${isTermAdj ? " adj" : ""}">${pr.termMonths} months</span></div>
+        <div class="lc-row"><span class="lc-lbl">Miles</span><span class="lc-val${isMiAdj ? " adj" : ""}">${mileage}</span></div>
+        ${isDiscAdj ? `<div class="lc-row"><span class="lc-lbl">Extra discount</span><span class="lc-val adj">$${leaseState.discount.toLocaleString()} off</span></div>` : ""}
+      </div>` : `
       <div class="lc-pay">
         <div class="lc-pay-l">
           <div class="lc-lbl">${isAdjusted ? "Your monthly" : "Monthly"}</div>
@@ -458,7 +471,11 @@
         <span class="${isTermAdj ? "adj" : ""}">${pr.termMonths} months</span>
         <span>${mileage}</span>
       </div>
-      ${discRow}
+      ${discRow}`;
+    c.innerHTML = `
+      <div class="lc-name">${o.year} ${o.make} ${o.model}${trim}</div>
+      <div class="lc-body">${o.body_style || ""}</div>
+      ${specList}
       ${pr.confidence !== "EXACT" ? `<div class="lc-conf">${LEASE_CONFIDENCE[pr.confidence]}</div>` : ""}
       ${mkLine}
       ${advLine}
