@@ -272,13 +272,20 @@
   // LEASES
   // ===================================================================
   // term/mileage/down are re-price inputs (match native LeaseFilterState): null = "as advertised".
-  const leaseState = { filter: {}, term: "adv", mileage: null, down: null, shown: PAGE, market: null };   // market: null = ALL REGIONS (default)
+  // ── NEGOTIATED DISCOUNT (2026-08-11) ── the one-switch revert (UI_CHANGE_METHOD
+  // rule 5): false restores the pre-feature UI exactly — the chip, the assumption note
+  // and the card's adjusted flag all gate on it, and the engine treats an unset
+  // discount as 0 (bit-identical payments). ⚠️ PWA leads native here — port the chip to
+  // LeaseScreen.kt at the next store build (same debt pattern as the Trim filter).
+  const NEGOTIATED_DISCOUNT_FEATURE = true;
+  const leaseState = { filter: {}, term: "adv", mileage: null, down: null, discount: null, shown: PAGE, market: null };   // market: null = ALL REGIONS (default); discount: null = no negotiated discount
   // Case/space-insensitive trim key — see the trim check in filteredLeases.
   const normTrim = t => (t || "").trim().toLowerCase();
 
   function leasePayment(o) {
     const term = leaseState.term === "adv" ? null : parseInt(leaseState.term, 10);
-    return computeLeasePayment(o, { requestedTerm: term, userAnnualMileage: leaseState.mileage, userDownPayment: leaseState.down });
+    return computeLeasePayment(o, { requestedTerm: term, userAnnualMileage: leaseState.mileage, userDownPayment: leaseState.down,
+      negotiatedDiscount: NEGOTIATED_DISCOUNT_FEATURE ? leaseState.discount : null });
   }
   function filteredLeases() {
     const f = leaseState.filter;
@@ -348,6 +355,12 @@
     $("lease-downtrade").textContent = (dp != null && dp > 0)
       ? `No $${dp.toLocaleString()}? An extra $${dp.toLocaleString()} off the price is about the same payment with $0 down.`
       : "";
+    // The negotiated-discount assumption, said once for every card (same pattern as the
+    // down-trade line above). ⚠️ "extra … off the advertised deal" is load-bearing —
+    // never word it as off MSRP (see the down-trade comment above).
+    $("lease-discnote").textContent = (NEGOTIATED_DISCOUNT_FEATURE && leaseState.discount != null)
+      ? `Payments assume you negotiate an extra $${leaseState.discount.toLocaleString()} off the advertised deal.`
+      : "";
     renderLeaseChips();
     const box = $("lease-list"); box.innerHTML = "";
     if (!list.length) {
@@ -384,7 +397,8 @@
     const isTermAdj = term != null && term !== o.term_months && pr.computable;
     const isDownAdj = leaseState.down != null && leaseState.down !== o.due_at_signing;
     const isMiAdj = leaseState.mileage != null && leaseState.mileage !== o.annual_mileage;
-    const isAdjusted = isTermAdj || isDownAdj || isMiAdj;
+    const isDiscAdj = NEGOTIATED_DISCOUNT_FEATURE && leaseState.discount != null;
+    const isAdjusted = isTermAdj || isDownAdj || isMiAdj || isDiscAdj;
     // A non-standard allowance (e.g. Hyundai's 11,250) is a total-mile cap advertised
     // as "22,500 miles total" — spell that out or the odd per-year number reads as a
     // data error. (Mirrors the native advertised-line annotation in LeaseScreen.kt.)
@@ -793,6 +807,22 @@
         TERMS.map(([v, l]) => ({ label: l, on: leaseState.term === v, act: () => leaseState.term = v })));
       menuChip(grid, "lbody", f.bodies.length ? ("Body (" + f.bodies.length + ")") : "Body Style", f.bodies.length > 0,
         lBodies.map(b => ({ label: b, on: f.bodies.includes(b), act: () => setMulti(f.bodies, b, !f.bodies.includes(b)) })), true);
+      if (NEGOTIATED_DISCOUNT_FEATURE) {
+        // Like Down Payment this does NOT filter — it RE-PRICES every deal with an
+        // EXTRA discount the user believes they can negotiate off the advertised deal
+        // (⚠️ never "off MSRP" — the ad already carries a discount; see the down-trade
+        // note). $X off the cap == $X of down payment to the penny (G7 gates it), but
+        // the discount stays in the user's pocket at signing. Ladder tops out at
+        // $3,000: these ads are already deep-discounted specials, and promising more
+        // extra off would flatter deals dishonestly. Appended LAST so the 9 chips
+        // above keep their exact grid positions.
+        const DISCOUNTS = [500, 1000, 1500, 2000, 2500, 3000];
+        // "Extra Discount", not "Negotiated Discount": measured 2026-08-11 at 375px the
+        // longer label ellipsized 12px inside the 160px chip (~7.1px/char, ~123px usable).
+        menuChip(grid, "ldisc", leaseState.discount == null ? "Extra Discount" : ("Extra $" + leaseState.discount.toLocaleString() + " off"), leaseState.discount != null,
+          [{ label: "No extra discount", on: leaseState.discount == null, act: () => leaseState.discount = null },
+           ...DISCOUNTS.map(d => ({ label: "Extra $" + d.toLocaleString() + " off", on: leaseState.discount === d, act: () => leaseState.discount = d }))]);
+      }
     }
     // Native FilterSheet shows this amber hint whenever a distance is set with no location.
     if (sheetCtx === "inv" && invState.radius && !geo) {
@@ -811,7 +841,7 @@
   // both clear the context's filters and return Home.
   function startOver(ctx) {
     if (ctx === "inv") { invState.filter = {}; invState.sort = "DISTANCE"; invState.radius = null; invState.offset = 0; runInventory(true); }
-    else { leaseState.filter = {}; leaseState.term = "adv"; leaseState.mileage = null; leaseState.down = null; leaseState.market = null; leaseState.shown = PAGE; runLeases(); }
+    else { leaseState.filter = {}; leaseState.term = "adv"; leaseState.mileage = null; leaseState.down = null; leaseState.discount = null; leaseState.market = null; leaseState.shown = PAGE; runLeases(); }
     show("home");
   }
   function resetSheet() {

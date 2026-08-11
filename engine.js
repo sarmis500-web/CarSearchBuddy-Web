@@ -9,8 +9,9 @@
 //     then bump engine-kt/engine-kt.js?v= and engine.js?v= in index.html and push.
 //
 // ./drift-check.command (native repo) proves this adapter + bundle reproduce the Kotlin
-// engine bit-for-bit over the whole catalog (551 offers × 9 scenarios) and self-tests
-// that it can fail. Run it after any engine or adapter change.
+// engine bit-for-bit over the whole catalog (every offer × 12 scenarios — it prints the
+// live cell count) and self-tests that it can fail. Run it after any engine or adapter
+// change.
 //
 // ☠️ THE TERM IS A FILTER, NOT A CALCULATOR — the full measured rationale lives in ONE
 // place now: the HEADER COMMENT of LeaseOffer.kt (native repo). Do not re-add re-terming
@@ -45,10 +46,12 @@ function __ktOffer(o) {
 
 /**
  * THE engine (compiled Kotlin). Same contract as always: requestedTerm null → advertised
- * term. Returns { monthly, dueAtSigning, termMonths, confidence (key), computable }.
+ * term; negotiatedDiscount null → none (an EXTRA $X off the advertised deal — never
+ * "off MSRP"; G7 gates it equal to $X of down payment to the penny).
+ * Returns { monthly, dueAtSigning, termMonths, confidence (key), computable }.
  */
-function computeLeasePayment(o, { requestedTerm = null, userDownPayment = null, userAnnualMileage = null } = {}) {
-  return JSON.parse(__ktOffer(o).compute(requestedTerm, userDownPayment, userAnnualMileage));
+function computeLeasePayment(o, { requestedTerm = null, userDownPayment = null, userAnnualMileage = null, negotiatedDiscount = null } = {}) {
+  return JSON.parse(__ktOffer(o).compute(requestedTerm, userDownPayment, userAnnualMileage, negotiatedDiscount));
 }
 
 function effectiveMonthlyCost(o) {

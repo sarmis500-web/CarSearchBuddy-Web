@@ -213,8 +213,13 @@ body{
   border-radius:12px;padding:12px;font-size:15px;outline:none}
 .loc-zip:focus{border-color:#fff}
 
-/* 2-column grid of glass dropdown-chips (native FilterMenuChip) */
-.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+/* 2-column grid of glass dropdown-chips (native FilterMenuChip).
+   minmax(0,1fr), NOT bare 1fr: 1fr means minmax(auto,1fr), so one long chip label's
+   min-content width silently WIDENS its column and shrinks the other (measured
+   2026-08-11: "Negotiated Discount" pushed the right column 160→171.84px and the left
+   to 150.7). minmax(0,1fr) pins both columns equal by construction and lets
+   .mchip-sum's ellipsis handle any overflow. */
+.mgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .mchip-wrap{position:relative}
 .mchip{height:46px;display:flex;align-items:center;justify-content:center;gap:6px;padding:0 10px;
   background:rgba(0,0,0,.80);border:1px solid rgba(255,255,255,.55);border-radius:12px;cursor:pointer}
