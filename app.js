@@ -432,7 +432,7 @@
     const discRow = isDiscAdj ?
       `<div class="lc-details"><span class="adj">Extra $${leaseState.discount.toLocaleString()} off — your negotiated discount</span></div>` : "";
     const advLine = isAdjusted ?
-      `<div class="lc-msrp">Advertised: ${fmt(o.monthly_payment)}/mo with ${fmt(o.due_at_signing)} due${isMiAdj ? ` at ${annualMi.toLocaleString()} mi/yr${totalNote}` : ""}</div>` : "";
+      `<div class="lc-msrp">Advertised: ${fmt(o.monthly_payment)}/mo with ${fmt(o.due_at_signing)} due${isMiAdj ? ` at ${annualMi.toLocaleString()} mi/yr` : ""}</div>` : "";
     const allDealers = dealersByMake[o.make] || [];
     const dealerCount = allDealers.length;   // national roster (drives the button below)
     const nearest = nearestDealers(o.make, 1)[0];
@@ -451,10 +451,9 @@
     // layout is kept below the switch for a one-word revert.
     const specList = LEASE_CARD_SPEC_LIST ? `
       <div class="lc-spec">
-        <div class="lc-row"><span class="lc-lbl">${isAdjusted ? "Your monthly" : "Monthly"}</span><span class="lc-monthly">${fmt(pr.monthly)}/mo</span></div>
         <div class="lc-row"><span class="lc-lbl">${isDownAdj ? "Your down payment" : "Due at signing"}</span><span class="lc-due">${fmt(pr.dueAtSigning)}</span></div>
         <div class="lc-row"><span class="lc-lbl">Term</span><span class="lc-val${isTermAdj ? " adj" : ""}">${pr.termMonths} months</span></div>
-        <div class="lc-row"><span class="lc-lbl">Miles</span><span class="lc-val${isMiAdj ? " adj" : ""}">${mileage}</span></div>
+        <div class="lc-row"><span class="lc-lbl">Miles</span><span class="lc-val${isMiAdj ? " adj" : ""}">${shownMi.toLocaleString()} mi/yr</span></div>
         ${isDiscAdj ? `<div class="lc-row"><span class="lc-lbl">Extra discount</span><span class="lc-val adj">$${leaseState.discount.toLocaleString()} off</span></div>` : ""}
       </div>` : `
       <div class="lc-pay">
@@ -472,9 +471,23 @@
         <span>${mileage}</span>
       </div>
       ${discRow}`;
-    c.innerHTML = `
+    // Payment raised to the name line (Mike: "on a line with 2026 Hyundai Elantra SE
+    // — don't move it over, just move it up"), tiny state label tucked under it.
+    const head = LEASE_CARD_SPEC_LIST ? `
+      <div class="lc-head">
+        <div class="lc-head-l">
+          <div class="lc-name">${o.year} ${o.make} ${o.model}${trim}</div>
+          <div class="lc-body">${o.body_style || ""}</div>
+        </div>
+        <div class="lc-head-r">
+          <div class="lc-monthly">${fmt(pr.monthly)}/mo</div>
+          <div class="lc-lbl">${isAdjusted ? "Your monthly" : "Monthly"}</div>
+        </div>
+      </div>` : `
       <div class="lc-name">${o.year} ${o.make} ${o.model}${trim}</div>
-      <div class="lc-body">${o.body_style || ""}</div>
+      <div class="lc-body">${o.body_style || ""}</div>`;
+    c.innerHTML = `
+      ${head}
       ${specList}
       ${pr.confidence !== "EXACT" ? `<div class="lc-conf">${LEASE_CONFIDENCE[pr.confidence]}</div>` : ""}
       ${mkLine}
