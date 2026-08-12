@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0a">
+<title>Privacy — Car Lease Buddy</title>
+<meta name="description" content="What Car Lease Buddy measures, what it does not collect, and how to opt out.">
+<link rel="canonical" href="https://sarmis500-web.github.io/CarSearchBuddy-Web/privacy.html">
+<meta name="robots" content="index,follow">
+<!-- ⚠️ Colours and radii are the app's own tokens, copied from style.css :root so there is
+     ONE definition of the look. Do not invent values here; if the app's palette changes,
+     this page should be updated from style.css, never eyeballed to match. -->
+<style>
+:root{
+  --glass-bg: rgba(0,0,0,.60);
+  --glass-stroke-soft: rgba(255,255,255,.22);
+  --amber: #FFD54F;
+  --text: #ffffff;
+  --text-dim: rgba(255,255,255,.72);
+  --radius: 16px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:var(--text);background:#0a0a0a;line-height:1.55;
+  padding:28px 16px calc(48px + env(safe-area-inset-bottom));
+}
+.wrap{max-width:720px;margin:0 auto}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:var(--text-dim);font-size:14px;margin:0 0 22px}
+.card{background:var(--glass-bg);border:1px solid var(--glass-stroke-soft);
+  border-radius:var(--radius);padding:18px 18px 4px;margin:0 0 14px}
+h2{font-size:16px;margin:0 0 8px;color:var(--amber)}
+p,li{font-size:14px;color:var(--text-dim);margin:0 0 12px}
+strong{color:var(--text)}
+ul{margin:0 0 12px;padding-left:20px}
+code{background:rgba(255,255,255,.08);padding:1px 5px;border-radius:5px;
+  font-size:13px;color:var(--text)}
+a{color:var(--amber)}
+footer{margin-top:26px;font-size:12px;color:var(--text-dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Privacy</h1>
+<p class="sub">Car Lease Buddy · last updated 12 August 2026</p>
+
+<div class="card">
+<h2>The short version</h2>
+<p>There is no account, no sign-up and no login, so we never hold your name, email or phone
+number. We do not sell or share data with advertisers or dealers. Everything below is about
+<strong>measuring how the site is used</strong>, so we can make it better.</p>
+</div>
+
+<div class="card">
+<h2>What we measure</h2>
+<p>Two standard tools:</p>
+<ul>
+  <li><strong>Google Analytics 4</strong> — counts visits and anonymous interactions: which
+      screens you open, which filters you use, whether a search returned results, and when
+      someone taps through to a dealer's website. Aggregate counts only.</li>
+  <li><strong>Microsoft Clarity</strong> — records anonymised session playback and heatmaps
+      (where people tap and scroll, and where the page frustrates them). Clarity masks text
+      input by default, and we never send it anything you type.</li>
+</ul>
+<p>Both are loaded only after the page is interactive, and both are optional to your use of
+the site — if a content blocker stops them, everything still works.</p>
+</div>
+
+<div class="card">
+<h2>What we never collect</h2>
+<ul>
+  <li>No name, email address, phone number or payment details — we never ask for any.</li>
+  <li>Nothing you type into the payment calculator leaves your device. The calculation runs
+      in your browser. We record only that a calculation happened and the rounded shape of
+      it (price, term, rate), never a document you could be identified from.</li>
+  <li><strong>Your precise location is never sent to us or stored.</strong> If you allow
+      location access, or type a ZIP code, it is used in your browser to sort cars by
+      distance. We do record the ZIP code you type, so we know which parts of the country to
+      cover better.</li>
+  <li>Saved cars stay in your own browser's storage. They are never uploaded.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Do Not Track</h2>
+<p>If your browser sends a Do Not Track signal, <strong>we do not load Microsoft Clarity at
+all</strong> — no session recording takes place. Google Analytics does not check that signal,
+because it counts visits rather than recording them; to switch it off as well, use any content
+blocker or your browser's tracking protection, and the site will work exactly the same.</p>
+</div>
+
+<div class="card">
+<h2>Cookies</h2>
+<p>Google Analytics sets its own measurement cookies. We set no advertising cookies and run
+no ad network. The site also uses your browser's local storage to remember saved cars and
+your settings; that never leaves your device.</p>
+</div>
+
+<div class="card">
+<h2>Links to dealers</h2>
+<p>Tapping through to a dealer takes you to a site we do not control, with its own privacy
+policy. Lease figures shown here are manufacturers' advertised offers and used-car prices are
+dealer-listed asking prices — always confirm current terms with the dealer.</p>
+</div>
+
+<div class="card">
+<h2>Contact</h2>
+<p>Questions, or want something removed? Email
+<a href="mailto:sarmis500@gmail.com">sarmis500@gmail.com</a>.</p>
+</div>
+
+<footer>
+<a href="./">← Back to Car Lease Buddy</a>
+</footer>
+
+</div>
+</body>
+</html>

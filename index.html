@@ -35,7 +35,7 @@
     <!-- Crawl path into the static SEO pages (build_seo_pages.py). Kept tiny/muted
          so the screen still reads like the native Home. -->
     <nav class="home-browse">
-      <a href="lease-deals/">Lease deals by model</a> · <a href="used-cars/">Used car prices</a>
+      <a href="lease-deals/">Lease deals by model</a> · <a href="used-cars/">Used car prices</a> · <a href="privacy.html">Privacy</a>
     </nav>
   </div>
 </section>
@@ -147,11 +147,18 @@
 
 <div id="toast" class="toast"></div>
 
+<!-- Analytics. ⚠️ ORDER MATTERS TWICE: analytics.js publishes window.CSB_INTERNAL, which
+     clarity.js reads to tag (never exclude) our own devices; and both must precede app.js,
+     whose boot() logs app_open immediately. Both files are tiny and synchronous — the
+     ~28KB gtag and ~130KB Clarity tags they pull are loaded lazily on an idle callback, so
+     neither competes with first paint. Both stay inert until their id is filled in. -->
+<script src="analytics.js?v=2"></script>
+<script src="clarity.js?v=2"></script>
 <script src="vendor/httpvfs.js?v=1"></script>
 <script src="engine-kt/engine-kt.js?v=3"></script>
 <script src="engine.js?v=14"></script>
 <script src="db.js?v=21"></script>
-<script src="app.js?v=31"></script>
+<script src="app.js?v=33"></script>
 
 <!-- Never-stale updates: register the freshness SW and auto-refresh when a new build
      is live. updateViaCache:'none' keeps GitHub's 10-min cache from pinning sw.js so
