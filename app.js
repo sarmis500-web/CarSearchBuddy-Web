@@ -481,7 +481,6 @@
         </div>
         <div class="lc-head-r">
           <div class="lc-monthly">${fmt(pr.monthly)}/mo</div>
-          <div class="lc-lbl">${isAdjusted ? "Your monthly" : "Monthly"}</div>
         </div>
       </div>` : `
       <div class="lc-name">${o.year} ${o.make} ${o.model}${trim}</div>
