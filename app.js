@@ -11,6 +11,31 @@
   const fmt = n => "$" + Math.round(n).toLocaleString("en-US");
   const PAGE = 25;
 
+  // ---------- analytics ----------
+  // analytics.js defines window.CSBA. It is inert until a GA4 id is pasted into it, and it
+  // can also be BLOCKED outright (ad blockers eat googletagmanager.com), so every call goes
+  // through these guards. Analytics must never be able to break the app — if you add a
+  // tracking call anywhere below, add it as track()/pageView(), never as CSBA.* directly.
+  const track = (name, params) => { try { if (window.CSBA) window.CSBA.log(name, params || {}); } catch (e) {} };
+  const pageView = id => { try { if (window.CSBA) window.CSBA.pageView(id); } catch (e) {} };
+  // Search events fire from runLeases()/runInventory(), which re-run on every filter tweak,
+  // location fix and screen entry. Logging each one would bury the signal in duplicates, so
+  // we only report when the query itself actually changed.
+  const lastQuery = {};
+  const trackSearch = (name, sig, params) => {
+    if (lastQuery[name] === sig) return;
+    lastQuery[name] = sig;
+    track(name, params);
+  };
+  // ⚠️ GA4 buckets any HIGH-CARDINALITY dimension into "(other)" once a property exceeds its
+  // cardinality limits — and a raw result count (0, 1, 374, 237563…) is about as high as it
+  // gets. Registering `results` as a custom dimension would therefore quietly destroy the one
+  // number we most want: how often a search came back EMPTY. So we send both — `results` as
+  // the exact figure (queryable later in BigQuery, and fine as a metric), and this bucketed
+  // label as the thing that's safe to register as a dimension and group by in reports.
+  const resultsBucket = n =>
+    n === 0 ? "0 (empty)" : n <= 10 ? "1-10" : n <= 50 ? "11-50" : n <= 500 ? "51-500" : "500+";
+
   let leases = [], allLeases = [], dealersByMake = {}, zipCoords = {};
 
   // ---- regional lease pricing (mirrors native Geo.kt METROS / selectForMarket) ----
@@ -108,6 +133,10 @@
   function show(id) {
     document.querySelectorAll(".screen").forEach(s => s.classList.toggle("active", s.id === id));
     window.scrollTo(0, 0);
+    // ⭐ The virtual page_view. Without this GA4 records ONE page_view for a whole session
+    // (the URL never changes in a single-page app) and every built-in report — Pages,
+    // Landing page, Engagement — comes out empty. See analytics.js reason 2.
+    pageView(id);
     if (id === "inventory") runInventory(true);
     if (id === "leases") runLeases();
     if (id === "saved") renderSaved();
@@ -126,6 +155,9 @@
     const z = (zip || "").trim();
     if (z.length === 5 && zipCoords[z]) { geo = { lat: zipCoords[z].lat, lng: zipCoords[z].lng, label: "ZIP " + z }; }
     else if (z.length === 0) { geo = null; }
+    // Which ZIPs people type is the closest thing we have to "where are our users" that
+    // isn't GA4's coarse region — and it tells us which metros to prioritise for leases.
+    if (geo && z.length === 5) track("zip_set", { zip: z, where: who || "unknown" });
     if (who === "inv") { $("inv-loc-label").textContent = geo ? geo.label : ""; runInventory(true); }
     if (who === "lease") runLeases();
   }
@@ -133,8 +165,8 @@
     if (!navigator.geolocation) return toast("Location not available");
     toast("Locating…");
     navigator.geolocation.getCurrentPosition(
-      p => { geo = { lat: p.coords.latitude, lng: p.coords.longitude, label: "Near you" }; $("inv-loc-label").textContent = geo.label; runInventory(true); },
-      () => toast("Couldn't get location"), { enableHighAccuracy: false, timeout: 8000 });
+      p => { geo = { lat: p.coords.latitude, lng: p.coords.longitude, label: "Near you" }; $("inv-loc-label").textContent = geo.label; track("location_granted", { how: "near_me_button" }); runInventory(true); },
+      () => { track("location_denied", { how: "near_me_button" }); toast("Couldn't get location"); }, { enableHighAccuracy: false, timeout: 8000 });
   }
 
   // The native app asks for location at launch; the web platform only allows a geolocation prompt
@@ -152,12 +184,15 @@
     navigator.geolocation.getCurrentPosition(
       p => {
         geo = { lat: p.coords.latitude, lng: p.coords.longitude, label: "Near you" };
+        track("location_granted", { how: "first_nav_prompt", screen: dest });
         // Re-run whichever location screen is showing so results sort by the new location.
         const active = document.querySelector(".screen.active");
         if (active && active.id === "inventory") runInventory(true);
         else if (active && active.id === "leases") runLeases();
       },
-      () => {},                                             // denial/error: stay silent, keep current behavior
+      // Denial/error: stay silent in the UI (ZIP entry still works), but DO record it —
+      // the grant rate on this prompt decides whether distance sorting is worth anything.
+      () => { track("location_denied", { how: "first_nav_prompt", screen: dest }); },
       { enableHighAccuracy: false, timeout: 8000 });
   }
 
@@ -167,8 +202,8 @@
   function toggleFav(it, kind) {
     const k = favKey(it);
     const i = favorites.findIndex(f => f.key === k);
-    if (i >= 0) { favorites.splice(i, 1); toast("Removed from saved"); }
-    else { favorites.push({ key: k, kind, savedAt: Date.now(), snap: it }); toast("Saved ★"); }
+    if (i >= 0) { favorites.splice(i, 1); toast("Removed from saved"); track("unsave", { kind: kind, make: it.make, model: it.model }); }
+    else { favorites.push({ key: k, kind, savedAt: Date.now(), snap: it }); toast("Saved ★"); track("save", { kind: kind, make: it.make, model: it.model, year: it.year }); }
     localStorage.setItem("csb_favs", JSON.stringify(favorites));
   }
 
@@ -198,8 +233,24 @@
       if (!keepRows) { $("inv-list").innerHTML = `<div class="loading">Searching…</div>`; $("inv-count").textContent = "Searching…"; }
       $("inv-more").innerHTML = "";
       // Native FilterBar label is just "{N} vehicles" (no "within X mi"; distance shows as a chip).
-      CSBData.count(q).then(n => { if (myToken !== invToken) return; $("inv-count").textContent = `${n.toLocaleString()} vehicle${n === 1 ? "" : "s"}`; }).catch(() => {});
-    } else { $("inv-more").innerHTML = `<div class="loading">Loading…</div>`; }
+      CSBData.count(q).then(n => {
+        if (myToken !== invToken) return;
+        $("inv-count").textContent = `${n.toLocaleString()} vehicle${n === 1 ? "" : "s"}`;
+        // Logged off the COUNT, not the page of rows: this is the size of the result set
+        // the user actually asked for, and results:0 is the number that tells us a filter
+        // combination is a dead end. Deduped by query signature (see trackSearch).
+        const f = invState.filter || {};
+        trackSearch("used_search", JSON.stringify([f, invState.sort, invState.radius, !!snapGeo, n]), {
+          results: n,
+          results_bucket: resultsBucket(n),
+          makes: (f.makes || []).join(",").slice(0, 90),
+          models: (f.models || []).join(",").slice(0, 90),
+          sort: invState.sort,
+          radius: invState.radius || 0,
+          has_location: !!snapGeo
+        });
+      }).catch(() => {});
+    } else { track("used_load_more", { offset: invState.offset }); $("inv-more").innerHTML = `<div class="loading">Loading…</div>`; }
     try {
       const rows = await CSBData.search(q);
       if (myToken !== invToken) return; // a newer query superseded this one — drop stale results
@@ -259,11 +310,23 @@
       </div>`;
     // Native InventoryCard: tapping the card body opens the dealer website (source_url);
     // the two buttons keep their own actions (calc / website) and must not also trigger it.
-    c.querySelector("[data-calc]").onclick = (e) => { e.stopPropagation(); openCalculatorWith(v.price); };
+    c.querySelector("[data-calc]").onclick = (e) => {
+      e.stopPropagation();
+      track("calc_opened_from_car", { make: v.make, model: v.model, year: v.year, price: Math.round(v.price || 0) });
+      openCalculatorWith(v.price);
+    };
     if (v.source_url) {
       c.style.cursor = "pointer";
-      c.addEventListener("click", () => window.open(v.source_url, "_blank", "noopener"));
-      const dw = c.querySelector("a.uc-btn"); if (dw) dw.addEventListener("click", (e) => e.stopPropagation());
+      // ⭐ KEY EVENT. Sending a shopper to a dealer is the whole point of this screen —
+      // it is the closest thing the PWA has to a conversion. Both routes to the dealer
+      // site (card body and the button) report it, with `how` telling them apart.
+      const toDealer = how => track("used_dealer_click", {
+        how: how, make: v.make, model: v.model, year: v.year,
+        price: Math.round(v.price || 0), dealer: v.dealer_name || "", state: v.dealer_state || ""
+      });
+      c.addEventListener("click", () => { toDealer("card"); window.open(v.source_url, "_blank", "noopener"); });
+      const dw = c.querySelector("a.uc-btn");
+      if (dw) dw.addEventListener("click", (e) => { e.stopPropagation(); toDealer("button"); });
     }
     return c;
   }
@@ -333,6 +396,24 @@
     // engine.js with the re-terming code — referencing it here threw a ReferenceError.
     // Transcribed from native LeaseScreen.
     const pickedTerm = leaseState.term !== "adv" ? Number(leaseState.term) : null;
+    // What people search for, and — the part we could never see before — whether the
+    // filters they chose left them with anything. results:0 is the actionable number.
+    const f = leaseState.filter || {};
+    trackSearch("lease_search",
+      JSON.stringify([f, leaseState.term, leaseState.mileage, leaseState.down, leaseState.discount, leaseState.market, list.length]),
+      {
+        results: list.length,
+        results_bucket: resultsBucket(list.length),
+        makes: (f.makes || []).join(",").slice(0, 90),
+        models: (f.models || []).join(",").slice(0, 90),
+        bodies: (f.bodies || []).join(",").slice(0, 90),
+        term: leaseState.term, mileage: leaseState.mileage || 0,
+        down: leaseState.down == null ? "advertised" : String(leaseState.down),
+        extra_discount: leaseState.discount || 0,
+        // ⭐ Did the user move any re-pricing control? This is how we find out whether the
+        // engine — the hardest-won part of this product — is being used at all.
+        repriced: !!(leaseState.term !== "adv" || leaseState.mileage || leaseState.down != null || leaseState.discount)
+      });
     $("lease-count").textContent = `${list.length} offer${list.length === 1 ? "" : "s"}`;
     const notes = [];
     if (pickedTerm) notes.push(`Only deals advertised at ${pickedTerm} months.`);
@@ -502,6 +583,16 @@
   function openDealerSheet(o) {
     const hasGeo = !!geo;
     const ds = nearestDealers(o.make, 8);
+    // Opening the sheet is real intent on a specific deal — this is the lease equivalent
+    // of a product-detail view, and it's what tells us WHICH deals people actually chase.
+    // ⚠️ leasePayment() returns a PaymentResult OBJECT (monthly / dueAtSigning /
+    // confidence / computable), not a number. Read .monthly — don't wrap the object.
+    const pr = leasePayment(o);
+    track("lease_offer_click", {
+      make: o.make, model: o.model, year: o.year, trim: o.trim || "",
+      payment: Math.round(pr.monthly || 0), confidence: pr.confidence,
+      term: leaseState.term, dealers_shown: ds.length, has_location: hasGeo
+    });
     const trim = o.trim ? " " + o.trim : "";
     let html = `<div class="dsheet-title">${o.year} ${o.make} ${o.model}${trim}</div>`;
     html += `<div class="dsheet-sub">${hasGeo ? `Nearest ${o.make} dealers` : `${o.make} dealers`} — tap to view inventory</div>`;
@@ -515,6 +606,17 @@
       }).join("");
     }
     $("dsheet-body").innerHTML = html;
+    // ⭐ KEY EVENT — the lease-side conversion. Delegated rather than bound per-link so it
+    // survives the innerHTML rebuild above. Bound after the HTML is written, once per open;
+    // the sheet body is replaced wholesale each time, which is why re-binding is safe.
+    $("dsheet-body").onclick = (e) => {
+      const a = e.target.closest("a.dsheet-dealer");
+      if (!a) return;
+      track("lease_dealer_click", {
+        make: o.make, model: o.model, year: o.year,
+        dealer: (a.textContent || "").split("·")[0].trim(), has_location: hasGeo
+      });
+    };
     $("dealer-sheet").classList.add("open");
   }
   function closeDealerSheet() { $("dealer-sheet").classList.remove("open"); }
@@ -872,6 +974,10 @@
 
   function applySheet() {
     closeSheet();
+    // Deliberate filtering, as distinct from the re-renders that runLeases/runInventory also
+    // do (location arriving, screen re-entry). The search events tell us what the query WAS;
+    // this one tells us the user chose it on purpose.
+    track("filters_applied", { where: sheetCtx === "inv" ? "used" : "lease" });
     if (sheetCtx === "inv") { invState.offset = 0; runInventory(true); }
     else { leaseState.shown = PAGE; runLeases(); }
   }
@@ -911,6 +1017,19 @@
     $("calc-go").onclick = () => {
       if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
       calcShown = true; recalc();
+      // The calculator is the third home button and we have never had any idea whether
+      // anyone presses it. Log the shape of the deal, never anything identifying.
+      try {
+        const r = computeLoan(calcInputs);
+        track("calc_result", {
+          price: Math.round(calcInputs.vehiclePrice || 0),
+          term: calcInputs.termMonths,
+          apr: calcInputs.aprPct || 0,
+          down: Math.round(calcInputs.downPayment || 0),
+          has_trade: (calcInputs.tradeInValue || 0) > 0,
+          monthly: Math.round((r && r.monthlyPayment) || 0)
+        });
+      } catch (e) {}
       setTimeout(() => { const c = $("calc-result").firstElementChild; if (c) c.scrollIntoView({ behavior: "smooth", block: "end" }); }, 120);
     };
     buildCalc();
@@ -925,6 +1044,13 @@
     const screen = p.get("screen");
     if (!screen) return;
     const makes = p.getAll("make"), models = p.getAll("model");
+    // ⭐ Closes the loop on the 771 static SEO pages: this fires only when someone actually
+    // crossed FROM a generated page INTO the app. Without it the SEO pages look like a
+    // dead end in GA4 — traffic arrives, and nothing connects it to app usage.
+    track("seo_page_to_app", {
+      screen: screen, src: p.get("src") || "",
+      make: makes[0] || "", model: models[0] || ""
+    });
     if (screen === "used") {
       if (makes.length) invState.filter.makes = makes;
       if (models.length) invState.filter.models = models;
@@ -944,6 +1070,13 @@
     // No service worker for now — kept the app online-only to avoid stale-cache issues.
     // The deployed sw.js is a self-healing kill-switch that clears old caches; we don't re-register.
     wire();
+    const t0 = (window.performance && performance.now) ? performance.now() : 0;
+    track("app_open", { standalone: !!(window.matchMedia && matchMedia("(display-mode: standalone)").matches) });
+    // Home is the landing screen and show() is never called for it, so post its page_view
+    // here — otherwise every session's landing page would be missing from GA4. Skipped for
+    // ?screen= arrivals from the SEO pages: those land on a different screen and counting a
+    // Home view they never saw would put a phantom landing page in the report.
+    try { if (!new URLSearchParams(location.search).has("screen")) pageView("home"); } catch (e) { pageView("home"); }
     try {
       // cache:'no-cache' → always revalidate against the server (cheap 304 when
       // unchanged, fresh data the instant a push_web_data deploy changes them), so a
@@ -954,19 +1087,25 @@
       dealersByMake = (await ld.json()).dealers_by_make || {};
       allLeases = (await ll.json()).offers || [];
       selectForMarket();
-    } catch (e) { console.error("data load", e); }
+      track("lease_data_loaded", { offers: allLeases.length, ms: Math.round(((window.performance && performance.now) ? performance.now() : 0) - t0) });
+    } catch (e) { track("data_load_failed", { what: "leases" }); console.error("data load", e); }
     handleDeepLink(); // route ?screen=… arrivals from the static SEO pages
     // Warm the DB in the background: init, then pre-run the exact first-paint queries
     // (total count + the no-location first page) so their pages are already in the
     // httpvfs cache when the user taps Used Cars. This MUST use the same sort the first
     // paint actually issues — invState.sort is DISTANCE, which without geo now orders by
     // newest/least-driven; prewarming PRICE_LOW would warm a page we never show.
+    const tdb = (window.performance && performance.now) ? performance.now() : 0;
     CSBData.init()
       .then(() => Promise.all([
         CSBData.count({ filter: {} }),
         CSBData.search({ filter: {}, sort: "DISTANCE", limit: 25, offset: 0 }),
       ]))
-      .catch(() => {});
+      // The remote SQLite over HTTP range reads is the heaviest thing this app does and we
+      // have had zero visibility into how long it takes on a real phone, or how often it
+      // fails outright. Both are now numbers instead of guesses.
+      .then(() => track("db_ready", { ms: Math.round(((window.performance && performance.now) ? performance.now() : 0) - tdb) }))
+      .catch(() => { track("db_failed", { ms: Math.round(((window.performance && performance.now) ? performance.now() : 0) - tdb) }); });
   }
   boot();
 })();
