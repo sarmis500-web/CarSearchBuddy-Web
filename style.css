@@ -318,8 +318,11 @@ body{
 
 /* Tiny muted crawl-path links under the Home buttons (SEO pages; index.html .home-browse).
    Deliberately faint so the screen still reads like the native Home. */
-.home-browse{margin-top:26px;font-size:12px;color:rgba(255,255,255,.55)}
-.home-browse a{color:rgba(255,255,255,.65);text-decoration:underline}
+/* Full #fff, same as .home-sub — Mike 2026-08-11: "if we're keeping it, it's gotta be
+   bright." Hierarchy comes from the 12px size, never from fading (same-color-code rule;
+   the old .55/.65 alphas were unreadable on his phone outdoors). */
+.home-browse{margin-top:26px;font-size:12px;color:#fff}
+.home-browse a{color:#fff;text-decoration:underline}
 
 /* Amber hint under the filter grid when a distance is set but no location yet (native FilterSheet parity) */
 .dist-hint{color:var(--amber);font-size:12px;font-weight:600;margin-top:8px;text-shadow:0 1px 8px rgba(0,0,0,.85)}
