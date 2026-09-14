@@ -42,7 +42,7 @@
  *    reversible. Do not "tidy this up" by activating the filter.
  *
  * ⚠️ localStorage on this origin is SHARED. sarmis500-web.github.io also serves
- *    carsearchbuddy-flyer, FlyerBuddy, LanguageBuddy, cannabis-price-index and others, so
+ *    carsearchbuddy-flyer, LanguageBuddy, cannabis-price-index and others, so
  *    every key here is namespaced csb_*. Do not drop the prefix.
  *
  * ⚠️ Bump ?v= on this file in index.html after ANY edit — sw.js only force-refreshes
